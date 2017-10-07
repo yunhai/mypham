@@ -1,0 +1,82 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Phản hồi', alias) }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <form action='{{ 'contact/reply'|url('email') }}' method='post'>
+        <input type='hidden' name='email[target_id]' value='{{ target_id }}' />
+
+        <div class='detail contact-form'>
+            <div class="text-center form-footer">
+              <button type="submit" class="btn btn-success">
+                  {{ __('2107', 'Gửi phản hồi', alias) }}
+                  <i class="fa fa-send"></i>
+              </button>
+              <a href='{{ alias|url }}' class='btn btn-default'>
+                  {{ __('2003', 'Hủy bỏ', 'global') }}
+                  <i class="fa fa-times"></i>
+              </a>
+            </div>
+
+            <div class="info-group">
+                <label for='email-to'>{{ __('2102', 'To', alias) }}</label>
+                <input class='form-control' name='email[to]' type='text' id='email-to' value='{{ to }}' placeholder="{{ __('2102', 'To', alias) }}" />
+                {% if error is defined %}
+                    {{ error|error('email', 'to') }}
+                {% endif %}
+            </div>
+
+            <div class="info-group">
+                <label for='email-cc'>{{ __('2103', 'Cc', alias) }}</label>
+                <input class='form-control' name='email[cc]' type='text' id='email-title' value='{{ target.info.email }}' placeholder="{{ __('2103', 'Cc', alias) }}" />
+                {% if error is defined %}
+                    {{ error|error('email', 'cc') }}
+                {% endif %}
+            </div>
+
+            <div class="info-group">
+                <label for='email-bcc'>{{ __('2104', 'Bcc', alias) }}</label>
+                <input class='form-control' name='email[bcc]' type='text' id='email-title' value='{{ target.info.email }}' placeholder="{{ __('2104', 'Bcc', alias) }}" />
+                {% if error is defined %}
+                    {{ error|error('email', 'bcc') }}
+                {% endif %}
+            </div>
+
+            <div class="info-group">
+                <label for='email-title'>{{ __('2105', 'Tiêu đề', alias) }}</label>
+                <input class='form-control' name='email[title]' type='text' id='email-title' value='{{ target.title  }}' placeholder="{{ __('2105', 'Tiêu đề', alias) }}" />
+                {% if error is defined %}
+                    {{ error|error('email', 'title') }}
+                {% endif %}
+            </div>
+
+            <div class="info-group last">
+                <label for='email-content'>{{ __('2106', 'Nội dung', alias) }}</label>
+                <textarea id='email-content' class="summernote-editor form-control" rows="3" name="email[content]" data-upload='{{ request().branchUrl ~ 'file/upload/target:' ~ alias }}'>{{ target.content }}</textarea>
+                {% if error is defined %}
+                    {{ error|error('email', 'content') }}
+                {% endif %}
+            </div>
+
+            <div class="text-center form-footer">
+                <button type="submit" class="btn btn-success">
+                    {{ __('2107', 'Gửi phản hồi', alias) }}
+                    <i class="fa fa-send"></i>
+                </button>
+                <a href='{{ alias|url }}' class='btn btn-default'>
+                    {{ __('2003', 'Hủy bỏ', 'global') }}
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        </form>
+    </div>
+</section>

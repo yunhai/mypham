@@ -1,0 +1,139 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+{% set freeship = freeship|default(false) %}
+
+<section id="cart-checkout"><!--main-page-->
+    <div class="container"><!--container-->
+        <div class="row"><!--row-->
+            {% include 'element/order/step.twg' with {'step' : 2} %}
+            <form action="{{ 'order/deliver'|url }}" method="post">
+            <div class="col-md-8"><!--md 9-->
+                <div class="wraper-login checkout-step2 p-form"><!--wraper-login-->
+                    <h4>
+                        {{'paying-at-home.png'|asset}}
+                        Địa chỉ nhận hàng
+                    </h4>
+                    {% if error is defined %}
+                        <ul class='alert alert-danger'>
+                            {% for e in error %}
+                                <li>{{e}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" name="order[fullname]" placeholder="Họ và tên" value="{{ info.fullname }}" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="text" name="order[phone]" placeholder="Số điện thoại" value="{{ info.phone }}" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="text" name="order[email]" placeholder="Email" value="{{ info.phone }}" />
+                        </div>
+
+                        {% if freeship == false %}
+                        <div class="col-md-4">
+                            <select id="province" name="order[province]">
+                                <option value="0">Vui lòng chọn tỉnh thành</option>
+                                {% for id, item in province %}
+                                    <option value='{{ id }}' {% if info.province == id %}selected{% endif %}>{{ item.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="district" name="order[district]" data-value='{{ info.district }}'></select>
+                        </div>
+                        {% endif %}
+                        <div class="col-md-12">
+                            <input type="text" name="order[address]" placeholder="Địa chỉ nhận hàng {% if freeship %}(Địa chỉ đầy đủ){% endif %}" value="{{ info.address }}" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <textarea name="order[note]" placeholder="Ghi chú đơn hàng">{{ info.note }}</textarea>
+                        </div>
+                        <div class="col-md-12 checkbox">
+                            <label>
+                                <input type='checkbox' name="order[agreement]" value='1' {% if info.agreement %} checked {% endif %} />
+                                Tôi đồng ý các <a href="{{ 'dieu-khoan-su-dung-thong-tin-ca-nhan'|url }}" title="điều khoản sử dụng thông tin cá nhân" class='link-default'>điều khoản sử dụng thông tin cá nhân</a> tại Mỹ phẩm và làm đẹp.
+                            </label>
+                        </div>
+                    </div>
+
+                    <h4>
+                        {{'deliver.png'|asset}}
+                        Phí vận chuyển
+                    </h4>
+                    <div class="row">
+                    {% if freeship == false %}
+                        <div class="col-md-8">
+                            <span id='deliver_price'></span>
+                            <span id='deliver_day'></span>
+                        </div>
+                    {% else %}
+                        <div class="col-md-8">
+                            Với hóa đơn trên {{ 500000|price }}, <a href='/' title='mỹ phẩm và làm đẹp'>mỹ phẩm và làm đẹp<a> giao hàng miễn phí.
+                        </div>
+                    {% endif %}
+                                        </div>
+                </div><!--wraper-login-->
+
+                <div class="wraper-login checkout-step2" style="margin-top: 30px"><!--wraper-login-->
+                    <h4>Hình thức thanh toán</h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class='radio'>
+                                <label>
+                                    <input type="radio" name="order[payment]" value="1" {% if info.payment == 1 %} checked {% endif %} />
+                                    <h5>COD</h5>
+                                    <span>Thanh toán khi nhận hàng</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class='radio'>
+                                <label>
+                                    <input type="radio" name="order[payment]" value="2" {% if info.payment == 2 %} checked {% endif %} />
+                                    <h5>Chuyển khoản</h5>
+                                    <span><a class='link-default' target='_blank' href="{{'thong-tin-chuyen-khoan'|url}}">Ngân hàng, chuyển khoản, internet banking</a></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class='radio'>
+                                <label>
+                                    <input type="radio" name="order[payment]" value="3" {% if info.payment == 3 %} checked {% endif %} />
+                                    <h5>Thanh toán thẻ</h5>
+                                    <span>Thẻ nội địa, thẻ quốc tế, ví điện tử</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='row'><br/><br/>
+                    Bạn vui lòng thanh toán trước khi nhận sản phẩm từ bưu tá.<br/>
+Chúng tôi cam kết hoàn trả 100% hoặc đổi hàng nếu có vấn đề về sản phẩm.<br/>
+Để được hỗ trơ, xin vui lòng liên hệ trung tâm chăm sóc khách hàng <span>{{ config('hotline') }}</span><br/>
+<br/>
+Lưu Ý:<br/>
+Kiểm tra đơn hàng, phí giao hàng, ưu đãi giảm giá trước khi đặt hàng.
+                    </div>
+
+                    <input type="submit" class='btn-submit' value='Đặt hàng' style="width: 25% !important;"/>
+                </div><!--wraper-login-->
+            </div><!--md 9-->
+            <div class="col-md-4"><!--md-4-->
+                {% include 'element/order/cart-info.twg' %}
+            </div><!--md-4-->
+            </form> <!--form-->
+        </div><!--row-->
+    </div><!--container-->
+</section><!--#main page-->
+
+<script>
+    var locations = JSON.parse('{{ location|json_encode() }}');
+</script>
+{% endblock %}
+

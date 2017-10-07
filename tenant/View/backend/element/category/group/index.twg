@@ -1,0 +1,61 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('1001', alias, alias) }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted"><i class="fa fa-caret-down text-active"></i><i class="fa fa-caret-up text"></i></a>
+            </li>
+        </ul>
+    </header>
+
+    {% include 'element/category/group/header.twg' %}
+
+    <div class="table-responsive">
+        <form id='list-form' method='post' class='app-list'>
+            <table class="table table-hover table-striped table-responsive b-t b-light">
+                <thead>
+                    <tr>
+                        <th width='50'>
+                            <label class="checkbox m-n i-checks">
+                                <input type="checkbox"><i></i>
+                            </label>
+                        </th>
+                        <th class='col-sm-1'></th>
+                        <th width='50' title='{{ __('1004', 'Detail') }}'>
+                            <i class='fa fa-folder'></i>
+                        </th>
+                        <th class='col-sm-2'>{{ __('1003', 'Code') }}</th>
+                        <th>{{ __('1002', 'Name') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in data.list %}
+                    <tr>
+                        <td>
+                            <label class="checkbox m-n i-checks">
+                                <input type='checkbox' name='{{ alias }}[{{ attribute(item, alias).id }}]' value='{{ attribute(item, alias).id }}' /><i></i>
+                            </label>
+                        </td>
+                        <td>
+                            {{ attribute(item, alias).status|status(status) }}
+                        </td>
+                        <td>
+                            <a href='{{ load('url', 'helper').module(attribute(item, alias).slug) }}' title='{{ attribute(item, alias).title }}'>
+                                <i class='fa fa-folder-open-o'></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href='{{ load('url', 'helper').module('group/edit:' ~ attribute(item, alias).id) }}' title='{{ attribute(item, alias).title }}'>
+                                {{ attribute(item, alias).title }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ attribute(item, alias).slug }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+</section>

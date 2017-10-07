@@ -1,0 +1,75 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Thông tin cơ bản', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ target.id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="title">
+                        {{ __('2101', 'Tiêu đề', alias) }}
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control seo-permalink' data-model='{{alias}}' data-prefix='{{ mp('config').get('seo.prefix.' ~ alias ~ '.detail') }}' name='{{ alias }}[title]' type='text' id='{{ alias }}-title' value='{{ target.title  }}' placeholder="{{ __('2101', 'Tiêu đề', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'title') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-section">
+                        {{ __('2102', 'Mã trang', alias) }}
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[section]' type='text' id='{{ alias }}-section' value='{{ target.section  }}' placeholder="{{ __('2103', 'Mã trang', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'section') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2104', 'Trạng thái', alias) }}</label>
+                </th>
+                <td>
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == target.status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-content">{{ __('2105', 'Nội dung', alias) }}</label>
+                </th>
+                <td><textarea id='{{ alias }}-content' class="summernote-editor form-control" rows="3" name="{{ alias }}[content]" data-upload='{{ request().branchUrl ~ 'file/upload/target:' ~ alias }}'>{{ target.content }}</textarea></td>
+            </tr>
+        </table>
+    </div>
+</section>

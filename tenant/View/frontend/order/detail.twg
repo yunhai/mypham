@@ -1,0 +1,97 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="cart-info">
+    <h3>Chi tiết đơn hàng</h3>
+    <div class="row order-detail">
+        <div class='col-md-6'>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <th colspan='2'>Thông tin đơn hàng</th>
+                    </tr>
+
+                    <tr>
+                        <td>Mã đơn hàng</td>
+                        <td>{{ target.code }}</td>
+                    </tr>
+                    <tr>
+                        <td>Trạng thái</td>
+                        <td><span class='notice'>{{ attribute(status, target.status) }}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tổng tiền</td>
+                        <td>
+                            {{ target.total|price }}
+                            {% if target.recipient.deliver_type == 2 %}
+                                <span class='notice'>(Phụ thu phí giao hàng)</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ngày đặt</td>
+                        <td>{{ target.created|date('d/m/Y h:i') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày cập nhật</td>
+                        <td>{{ target.status > 1 ? target.modified|date('d/m/Y h:i') : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class='col-md-6'>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <th colspan='2'>Thông tin giao hàng</th>
+                    </tr>
+                    <tr>
+                        <td>Người nhận</td>
+                        <td>{{ target.recipient.fullname }}</td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ</td>
+                        <td>{{ target.recipient.address }}</td>
+                    </tr>
+                    <tr>
+                        <td>Điện tdoại</td>
+                        <td>{{ target.recipient.phone }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ target.recipient.email }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="order-detail">
+        <table class="table table-bordered table-striped table-cart-info">
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th>Sản phẩm</th>
+                    <th>Lựa chọn</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Tổng tiền</th>
+                </tr>
+                {% for item in target.detail %}
+                <tr>
+                    <td style='width: 100px'>
+                        <span class='nailthumb thumb-100-100'>
+                            {{ item.target|media({'class': 'thumb-100-100' }) }}
+                        </span>
+                    </td>
+                    <td class="name">{{ item.target.title }}</td>
+                    <td><span>{{ item.option }}</span></td>
+                    <td><span>{{ item.quantity }}</span></td>
+                    <td><span>{{ item.price|price }}</span></td>
+                    <td><span>{{ item.total|price }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

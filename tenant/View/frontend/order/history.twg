@@ -1,0 +1,52 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="cart-info">
+    <h3>Đặt hàng</h3>
+    <div class="wraper-table-cart-info">
+        {% if login().loggedIn() == false %}
+        <p>
+            Quý khách vui lòng <a href='{{ 'user/login'|url }}' title='Đăng nhập'><b>đăng nhập</b></a> trước khi xem lịch sử đặt hàng.
+        </p>
+        {% elseif data.list %}
+            <table class="table-cart-info">
+                <tbody>
+                    <tr>
+
+                        <th>Mã đơn hàng</th>
+                        <th>Tổng tiền (VND)</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày đặt</th>
+                        <th>Ngày cập nhật</th>
+                    </tr>
+                    {% for id, item in data.list %}
+                    <tr>
+                        <tr>
+                            <td>
+                                {% set url = alias ~ '/detail/' ~ item.id %}
+                                <a href='{{ url|url }}'>{{ item.code }}</a>
+                            </td>
+                            <td>{{ item.total|price}}</td>
+                            <td>{{ attribute(status, item.status) }}</td>
+                            <td>{{ item.created|date('d/m/Y h:i') }}</td>
+                            <td>{{ item.status > 1 ? item.modified|date('d/m/Y h:i') : ' - ' }}
+                            </td>
+                        </tr>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if data.pager %}
+                <div class='cart-history-paginator'>
+                    {% embed 'element/layout/paginator.twg' with {'item': data.pager} %}{% endembed %}
+                    <div class='clear'></div>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>
+                Quý khách chưa có lịch sử đặt hàng.
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

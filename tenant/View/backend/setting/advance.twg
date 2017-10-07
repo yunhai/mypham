@@ -1,0 +1,33 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('1001', alias, alias) }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class='panel-body'>
+        <form id='list-form' method='post' class='app-list' action='{{ 'setting/modify'|url }}'>
+        {% embed 'element/master/index/header.twg' %}
+            {% block button %}
+                {% set url = load('url', 'helper') %}
+                <input type='submit' class='btn btn-s-md btn-primary' value='Cập nhật' />
+                <a href="{{ url.module('add') }}" class="btn btn-s-md btn-success">
+                    Thêm mới
+                </a>
+            {% endblock %}
+        {% endembed %}
+
+        {% set tpl = 'element/setting/index/list-' ~ option.view %}
+        {% embed tpl ~ '.twg' %}{% endembed %}
+        </form>
+    </div>
+</section>
+{% endblock %}

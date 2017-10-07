@@ -1,0 +1,18 @@
+<div class="container top-breadcrumb">
+    <div id="breadcrumb">
+        <ul class="list">
+            <li><a href="{{ ''|url }}" title=''><img src="{{ html.img }}/bread-home.png"></a></li>
+            <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+
+            {% for item in breadcrumb %}
+                {% if item.seo_id %}
+                <li><a href="{{ item|link(item.alias) }}">{{ item.title }}</a></li>
+                {% else %}
+                <li><a href="{{ item.url|url }}/fdsf">{{ item.title }}</a></li>
+                {% endif %}
+                <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+            {% endfor %}
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</div>

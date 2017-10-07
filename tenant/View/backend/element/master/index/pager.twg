@@ -1,0 +1,13 @@
+{% if data.pager|length > 0 %}
+<div class="row">
+    <nav class="col-sm-offset-5 col-sm-4 ">
+        <ul class="pagination m-t-none m-b-none">
+        {% for item in data.pager  %}
+            <li {% if item.target %}class='active'{% endif %}>
+                <a href="{{ load('url', 'helper').get({'page': item.page }) }}">{{ item.display }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </nav>
+</div>
+{% endif %}

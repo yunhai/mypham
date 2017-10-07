@@ -1,0 +1,109 @@
+.js-files {
+	width: 200%;
+}
+.preview-container {
+	width: 100%;
+    max-height: 180px;
+    overflow: auto;
+}
+
+.b-upload__dnd {
+	background-color: rgba(0,0,0,.1);
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 20px;
+	line-height: 70px;
+	margin-bottom: 10px;
+	height: 70px;
+	padding: 0;
+	text-align: center;
+	width: 100%;
+}
+.b-upload__dnd:hover,
+.b-upload__dnd_hover {
+	color: #fff;
+	background-color: #1aae88;
+}
+
+.btn-upload {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+	.btn-upload input {
+		cursor: pointer;
+		filter: alpha(opacity=0);
+		left: 0;
+		height: 70px;
+		position: absolute;
+		opacity: 0;
+		top: 0;
+		width: 100%;
+		z-index: 2;
+	}
+
+	.btn-upload .progress {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: .5;
+		position: absolute;
+	}
+		.progress .bar {
+			width: 0;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			position: absolute;
+			background-color: #f60;
+		}
+
+
+.progress-small {
+	height: 5px;
+	padding: 1px;
+	box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.3);
+	border-radius: 10px;
+	background-color: rgba(0,0,0,.5);
+}
+	.progress-small .bar {
+		width: 0;
+		height: 100%;
+		position: static;
+		border-radius: 10px;
+		background-color: orange;
+	}
+
+
+.b-thumb {
+	float: left;
+	margin: 3px;
+	overflow: hidden;
+	position: relative;
+	box-shadow: 0 0 2px rgba(0,0,0,.4);
+	background-color: #fff;
+}
+
+	.b-thumb__preview {
+		width: 250px;
+		height: 150px;
+		-webkit-transition: -webkit-transform .2s ease-in;
+		-moz-transition: -moz-transform .2s ease-in;
+		transition: transform .2s ease-in;
+	}
+
+	.b-thumb__name {
+		width: 195px;
+		overflow: hidden;
+		font-size: 12px;
+	}
+
+	.b-thumb__progress {
+		top: 130px;
+		left: 10px;
+		right: 10px;
+		position: absolute;
+	}

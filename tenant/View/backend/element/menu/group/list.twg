@@ -1,0 +1,52 @@
+<div class="table-responsive">
+    <form id='list-form' method='post' class='app-list'>
+        <table class="table table-hover table-striped table-responsive b-t b-light">
+            <thead>
+                <tr>
+                    <th width='50'>
+                        <label class="checkbox m-n i-checks">
+                            <input type="checkbox"><i></i>
+                        </label>
+                    </th>
+                    <th class='col-sm-1'></th>
+                    <th width='50'>
+                        <i class='fa fa-folder'></i>
+                    </th>
+                    <th>{{ __('1001', 'Group name') }}</th>
+                    <th>{{ __('1002', 'Group code') }}</th>
+                    <th class='col-sm-2'>{{ __('1003', 'Group channel') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in data.list %}
+                <tr>
+                    <td>
+                        <label class="checkbox m-n i-checks">
+                            <input type='checkbox' name='{{ alias }}[{{ attribute(item, alias).id }}]' value='{{ attribute(item, alias).id }}' /><i></i>
+                        </label>
+                    </td>
+                    <td>
+                        {{ attribute(item, alias).status|status(status) }}
+                    </td>
+                    <td>
+                        <a href='{{ load('url', 'helper').module(attribute(item, alias).slug) }}' title='{{ attribute(item, alias).title }}'>
+                            <i class='fa fa-folder-open-o'></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href='{{ load('url', 'helper').module('group/edit:' ~ attribute(item, alias).id) }}' title='{{ attribute(item, alias).title }}'>
+                            {{ attribute(item, alias).title }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ attribute(item, alias).slug }}
+                    </td>
+                    <td>
+                        {{ attribute(item, alias).channel }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>

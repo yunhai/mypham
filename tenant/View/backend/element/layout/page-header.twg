@@ -1,0 +1,5 @@
+<section class='panel page-info'>
+    <div class="panel-body">
+        {% include 'element/layout/breadcrumb.twg' %}
+    </div>
+</section>

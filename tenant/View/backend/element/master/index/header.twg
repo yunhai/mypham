@@ -1,0 +1,32 @@
+{% set url= load('url', 'helper') %}
+
+<div class="row option-panel">
+    <div class="col-sm-4 hidden-xs">
+        {% block option %}
+        <select class="input-sm form-control input-s-sm inline v-middle" id='bulk-action-list' data-form='list-form'>
+            <option value="">{{ __('1002', 'Tùy chọn', 'global') }}</option>
+            <option value="{{ url.module('delete') }}">
+                {{ __('1003', 'Xóa', 'global') }}
+            </option>
+            {% if status is defined %}
+            {% for value, name in status %}
+                <option value="{{ url.module('update/' ~ value) }}">
+                    {{ name }}
+                </option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <button class="btn btn-sm btn-default" id='bulk-action-button'>
+            {{ __('1004', 'Thực thi', 'global') }}
+        </button>
+        {% endblock %}
+    </div>
+
+    <div class="col-sm-8 hidden-xs text-right">
+        {% block button %}
+        <a href="{{ url.module('add') }}" class="btn btn-s-md btn-success">
+            {{ __('1005', 'Thêm mới', 'global') }}
+        </a>
+        {% endblock %}
+    </div>
+</div>

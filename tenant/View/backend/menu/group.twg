@@ -1,0 +1,6 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    {% include 'element/menu/input/group.twg' %}
+    {% include 'element/menu/group/index.twg' %}
+{% endblock %}

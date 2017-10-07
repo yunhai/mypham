@@ -1,0 +1,8 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="wrapertv">
+    Tài khoản quý khách đã được xác thực.<br/>
+    Quý khách có thể đăng nhập với thông tin mà chúng tôi đã gửi trước đó.
+</div>
+{% endblock %}

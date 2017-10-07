@@ -1,0 +1,71 @@
+<div class="modal fade" id="cart" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <button type="button" class="btn bt-login btn-default" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <div class="modal-body">
+                {% if addon.cart.total.item %}
+                <h3>Bạn có <span id='order-amount'>{{ addon.cart.total.item }}</span> sản phẩm trong giỏ hàng</h3>
+                <form action='{{ 'cart/update'|url }}' method='post' style='margin-bottom: 25px;'>
+                    <table id="table-cart">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Lựa chọn</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Tổng cộng</th>
+                        </tr>
+                        {% for product_id, item in addon.cart.detail %}
+                        <tr id='{{ product_id }}' class='cart-item'>
+                            <td>
+                                <input type='hidden' name='cart[{{ product_id }}][id]' value= '{{ product_id }}' />
+                                <div class='nailthumb thumb-100-100'>
+                                    {{ item|media({'class': 'thumb-100-100' }) }}
+                                </div>
+                            </td>
+                            <td class="name">
+                                <span class="name">{{ item.title }}</span>
+                                <p class="pink-bold status">
+                                    <span class="remove-cart-item remove" data-id="{{ product_id }}">
+                                        <i class="fa fa-times" aria-hidden="true"></i> Xóa
+                                    </span>
+                                </p>
+                            </td>
+                            <td>
+                                {% if item.option %}
+                                {{ attribute(item, 'selected-option') }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <input class='cart-item-amount' type="number" name='cart[{{ product_id }}][amount]' value="{{ item.amount }}" data-id='{{ product_id }}' data-price='{{ item.price }}' />
+                            </td>
+                            <td>{{ item.price|price }}</td>
+                            <td id='cart-item-total-{{ item.id }}' class='cart-item-total' data-value='{{ item.total }}'>{{ item.total|price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                    <p class="sum">
+                        <input class='update-cart-button button pull-left' value='Cập nhật giỏ hàng' type='submit' />
+
+                        <span>Tổng cộng</span>
+                        <span class='order-sub_total'>{{ addon.cart.total.total|price }}</span>
+                    </p>
+                    <p class="money">
+                        <span>Thành tiền</span>
+                        <span class='order-total'>{{ addon.cart.total.total|price }}</span>
+                    </p>
+                    <p>
+                        (Đã bao gồm VAT, <b>Chưa</b> bao gồm vận chuyển)
+                    </p>
+
+                    <a class="but button" href='{{ 'cart/destroy'|url }}'>Hủy bỏ giỏ hàng</a>
+                    <a class="but button" href='{{ 'order/review'|url }}'>Tiến hành đặt hàng <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                </form>
+                {% else %}
+                    Quý khách chưa có sản phẩm trong giỏ hàng.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

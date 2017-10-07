@@ -1,0 +1,67 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('1011', 'Basic', alias) }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered formTable">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="title">{{ __('1002', 'Channel', 'locale') }}</label>
+                    <span class="text-danger pull-right">{{ __('2001', 'Bắt buộc', 'global') }}</span>
+                </th>
+                <td>
+                    <select class="form-control" name='{{ alias }}[channel]'>
+                        <option value="0">{{ __('2001', 'Chose channel', alias) }}</option>
+                        {% for key, value in channel %}
+                        <option value="{{ key }}" {% if key == attribute(target, alias).channel %} selected='selected' {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="title">{{ __('1003', 'Scope', 'locale') }}</label>
+                    <span class="text-danger pull-right">{{ __('2001', 'Bắt buộc', 'global') }}</span>
+                </th>
+                <td>
+                    <select class="form-control" name='{{ alias }}[scope]'>
+                        <option value="0">{{ __('2002', 'Choose scope', alias) }}</option>
+                        {% for key, value in scope %}
+                        <option value="{{ key }}" {% if (key == attribute(target, alias).scope) %} selected='selected' {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="title">{{ __('1004', 'Code', alias) }}</label>
+                    <span class="text-danger pull-right">{{ __('2001', 'Bắt buộc', 'global') }}</span>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[code]' type='text' id='code' value='{{ attribute(target, alias).code }}' />
+                </td>
+            </tr>
+
+            {% for key, locale in available %}
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="{{ 'locale_'~key }}">{{ locale }}</label>
+                </th>
+                <td>
+                    <input class='form-control' name="{{ alias }}[{{ 'locale_'~key }}]" type='text' id='{{ 'locale_'~key }}' value="{{ attribute(attribute(target, alias), 'locale_'~key) }}" />
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    <div>
+</section>

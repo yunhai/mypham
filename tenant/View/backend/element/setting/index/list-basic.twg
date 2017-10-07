@@ -1,0 +1,34 @@
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-responsive b-t b-light">
+        <thead>
+            <tr>
+                <th width='50'>
+                    <label class="checkbox m-n i-checks">
+                        <input type="checkbox"><i></i>
+                    </label>
+                </th>
+                <th class='col-sm-3'>{{ __('1002', 'Key', alias) }}</th>
+                <th>{{ __('1003', 'Value', alias) }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data.list %}
+            <tr>
+                <td>
+                    <label class="checkbox m-n i-checks">
+                      <input type='checkbox' name='{{ alias }}[{{ attribute(item, alias).id }}][id]' value='{{ attribute(item, alias).id }}' /><i></i>
+                    </label>
+                </td>
+                <td>
+                    {{ attribute(item, alias).key }}
+                </td>
+                <td>
+                    <input name='{{ alias }}[{{ attribute(item, alias).id }}][value]' value='{{ attribute(item, alias).value }}' class='row-input' />
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'element/master/index/pager.twg' %}

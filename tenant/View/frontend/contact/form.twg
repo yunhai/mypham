@@ -1,0 +1,26 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="wrapertv">
+    <form id="faq" method='post' data-action='{{ 'contact'|url }}'>
+        <p class="title">
+            <span>Mọi phản hồi của quý khách về sản phẩm xin vui lòng điền thông dưới đây.</span>
+        </p>
+
+        <div class='product-detail-form-info'>
+            <span>Họ tên:</span>
+            <input name="fullname" value='{{ target.fullname }}' />
+            <div class='clear'></div>
+        </div>
+        <div class='product-detail-form-info'>
+            <span>Email:</span>
+            <input name="email" value='{{ target.email }}' />
+            <div class='clear'></div>
+        </div>
+        <span>Nội Dung: </span>
+        <textarea name="content">{{ target.content }}</textarea>
+        <div class='clear'></div>
+        <input type='submit' value='Gửi' class='contact-button'/>
+    </form>
+</div>
+{% endblock %}

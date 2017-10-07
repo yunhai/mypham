@@ -1,0 +1,254 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Thông tin cơ bản', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="title">
+                        {{ __('2101', 'Tên sản phẩm', alias) }}
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control seo-permalink' data-model='{{alias}}' data-prefix='{{ mp('config').get('seo.prefix.' ~ alias ~ '.detail') }}' name='{{ alias }}[title]' type='text' id='{{ alias }}-title' value='{{ attribute(target, alias).title  }}' placeholder="{{ __('2101', 'Tên sản phẩm', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'title') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-category">{{ __('2102', 'Danh mục', alias) }}</label>
+                </th>
+                <td>
+                    <select class="form-control seo-permalink" data-model='{{alias}}' name='{{ alias }}[category_id]' id='{{ alias }}-category'>
+                        {% for key, value in option.category %}
+                        <option value="{{ key }}" {% if key == attribute(target, alias).category_id %} selected='selected' {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2103', 'Trạng thái', alias) }}</label>
+                </th>
+                <td>
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == attribute(target, alias).status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-store_id">{{ __('2104', 'Quảng cáo từ shop', alias) }}</label>
+                </th>
+                <td>
+                    <select id="select-repo" class="repositories" placeholder="{{ __('2104', 'Quảng cáo từ shop', alias) }} ..." name="{{ alias }}[store_id]" data-url="/backend/store/search">
+                    {% if target.store is defined %}
+                    {% for key, item in target.store %}
+                        <option value="{{ key }}" data-data='{{ item.json }}'>{{ item.title }}</option>
+                    {% endfor %}
+                    {% endif %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-manufacturer">{{ __('2112', 'Thương hiệu', alias) }}</label>
+                </th>
+                <td>
+                    <select id="select-manufacturer" class="repositories" placeholder="{{ __('2112', 'Thương hiệu', alias) }} ..." name="{{ alias }}[manufacturer_id]" data-url="/backend/manufacturer/search">
+                    {% if target.manufacturer is defined %}
+                    {% for key, item in target.manufacturer %}
+                        <option value="{{ key }}" data-data='{{ item.json }}'>{{ item.title }}</option>
+                    {% endfor %}
+                    {% endif %}
+                    </select>
+                    {% if error is defined %}
+                        {{ error|error(alias, 'manufacturer_id') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-code">{{ __('2105', 'Mã sản phẩm', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-code' type='text' class="form-control" name='{{ alias }}[code]' value='{{ attribute(target, alias).code }}' placeholder="{{ __('2105', 'Mã sản phẩm', alias) }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-price">{{ __('2106', 'Đơn giá', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-price' type='text' class="form-control" name='{{ alias }}[price]' value='{{ attribute(target, alias).price }}' placeholder="{{ __('2106', 'Đơn giá', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'price') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-point">{{ __('2107', 'Điểm tích lũy', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-point' type='text' class="form-control" name='{{ alias }}[point]' value='{{ attribute(target, alias).point }}' placeholder="{{ __('2107', 'Điểm tích lũy', alias) }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-promote">{{ __('2108', 'Giá khuyến mãi', alias) }}</label>
+                </th>
+                <td>
+                    <div class='input-group'>
+                        <span class='input-group-addon'>VND</span>
+                        <input id='{{ alias }}-promote' type='text' class="form-control" name='{{ alias }}[promote]' value='{{ attribute(target, alias).promote }}' placeholder="{{ __('2108', 'Giá khuyến mãi', alias) }}" />
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-promote_start">{{ __('2109', 'Thời gian khuyến mãi', alias) }}</label>
+                </th>
+                <td>
+                    <div class='row'>
+                        <div class='col-sm-4'>
+                            <input id='{{ alias }}-promote_start' type='text' class="form-control datepicker-input" name='{{ alias }}[promote_start]' value='{{ attribute(target, alias).promote_start }}' placeholder="{{ __('2110', 'Bắt đầu', alias) }}" data-date-format="dd/mm/yyyy" />
+                        </div>
+                        <div class='col-sm-4'>
+                            <input id='{{ alias }}-promote_end' type='text' class="form-control datepicker-input" name='{{ alias }}[promote_end]' value='{{ attribute(target, alias).promote_end }}' placeholder="{{ __('2111', 'Kết thúc', alias) }}" data-date-format="dd/mm/yyyy" />
+                        </div>
+                    </div>
+                    {% if error is defined %}
+                        {{ error|error(alias, 'promote_start') }}
+                        {{ error|error(alias, 'promote_end') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-capacity">{{ __('2116', 'Dung tích ', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-capacity' type='text' class="form-control" name='{{ alias }}[capacity]' value='{{ attribute(target, alias).capacity }}' placeholder="{{ __('2116', 'Dung tích', alias) }}" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-weight">{{ __('2117', 'Trọng lượng', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-weight' type='text' class="form-control" name='{{ alias }}[weight]' value='{{ attribute(target, alias).weight }}' placeholder="{{ __('2117', 'Trọng lượng', alias) }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-option">{{ __('2113', 'Tùy chọn', alias) }}</label><br />
+                    <span style='font-weight: normal'>(màu sắc / kích thước )</span>
+                </th>
+                <td>
+                    {% set option_price = attribute(target, alias).option_price %}
+                    {% set option_promotion = attribute(target, alias).option_promotion %}
+
+                    <table id='option-list' class='table-no_border'>
+                        <tr>
+                            <th>Kích thước / dung tích</th>
+                            <th>Đơn giá</th>
+                            <th>Giá Khuyến mãi</th>
+                            <th>Tùy chọn</th>
+                        </tr>
+
+                        {% for index, value in attribute(target, alias).option %}
+                            <tr id='option-{{ index }}'>
+                                <td><input name='{{ alias }}[option][]' value='{{ value }}' /></td>
+                                <td><input name='{{ alias }}[option_price][]' value='{{ attribute(option_price, index) }}' /></td>
+                                <td><input name='{{ alias }}[option_promotion][]' value='{{ attribute(option_promotion, index) }}' /></td>
+                                <th><a href='javascript:;' class='j-delete-option'>Xóa</a></th>
+                            </tr>
+                        {% endfor %}
+                        <tr id='new-option'>
+                            <td><input class='j-new_option' /></td>
+                            <td><input class='j-new_option_price' /></td>
+                            <td><input class='j-new_option_promotion' /></td>
+                            <td><a href='javascript:;' class='j-add-option'>Thêm</a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>{{ __('2114', 'Hình ảnh', alias) }}</label>
+                </th>
+                <td>
+                    {% set url = 'file/upload/target:' ~ alias %}
+                    <div id='image-uploader' class="b-upload" action='{{ url|url }}'>
+                        <div class="btn-upload b-upload__dnd">Drag and drop, automatic upload<input type="file" name="{{alias}}" /></div>
+
+                        <div class='preview-container'>
+                            <div class="js-files b-upload__files">
+                                <div class="js-file-tpl-image b-thumb" data-wrapper='{{alias}}-uploaded' data-preview='col-md-5'>
+                                    <div class="b-thumb__preview">
+                                        <div class="b-thumb__preview__pic"></div>
+                                    </div>
+                                    <div class="b-thumb__progress progress progress-small"><div class="bar"></div></div>
+                                    <div class="b-thumb__name"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul id='{{alias}}-uploaded' class="div-hover row">
+                        {% if target.file is defined %}
+                            {% for f in target.file %}
+                                <li id='img-container-{{ f }}' class='col-md-5'>
+                                    <input type='hidden' value='{{ f }}' name='{{alias}}[file_id]' />
+                                    <figure class='nailthumb-container'>
+                                        {{ f|media({'target_id': f, 'data-id': f}) }}
+                                        <figcaption>
+                                            <a href="javascript:;" class='remove-file' data-id='{{f}}'>Delete</a>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'><label class='control-label' for="{{ alias }}-content">{{ __('2115', 'Nội dung chi tiết', alias) }}</label></th>
+                <td><textarea id='{{ alias }}-content' class="summernote-editor form-control" rows="3" name="{{ alias }}[content]" data-upload='{{ request().branchUrl ~ 'file/upload/target:' ~ alias }}'>{{ attribute(target, alias).content }}</textarea></td>
+            </tr>
+        </table>
+    </div>
+</section>

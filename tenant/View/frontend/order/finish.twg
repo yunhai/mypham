@@ -1,0 +1,14 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="cart-info">
+    <h3>Đặt hàng</h3>
+    <div class="wraper-table-cart-info">
+        <p>
+            Cám ơn quý khách đã đặt hàng chúng tôi!<br />
+            Chúng tôi sẽ xác nhận đơn hàng với khách hàng trong thời gian sớm nhất.<br />
+            (Chi tiết đơn hàng đã được gửi vào email của khách hàng)
+        </p>
+    </div>
+</div>
+{% endblock %}

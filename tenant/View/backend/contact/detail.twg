@@ -1,0 +1,71 @@
+{% extends "layout/default.twg" %}
+
+{% block top %}
+    {{ html.css(['summernote'], 'package/summernote') }}
+    {{ html.css(['jquery.fileapi'], 'package/jquery.fileapi') }}
+{% endblock %}
+
+{% block bottom %}
+    {{ html.js(['summernote.min'], 'package/summernote') }}
+    {{ html.js(['FileAPI/FileAPI.min', 'FileAPI/FileAPI.exif', 'jquery.fileapi'], 'package/jquery.fileapi') }}
+    {{ html.js(['editor']) }}
+{% endblock %}
+
+{% block content %}
+    <section class="hbox stretch">
+        <aside class="aside-lg bg-light dker b-r order-info" style='background: #fff;'>
+            <div class="wrapper b-b header">
+                {{ __('3001', 'Nội dung liên hệ', alias) }}
+            </div>
+            <div class='detail'>
+                <div class="info-group">
+                    <div>{{ attribute(target, alias).content|nl2br }}</div>
+                </div>
+            </div>
+            <div class="wrapper b-b header">
+                {{ __('3002', 'Thông tin liên hệ', alias) }}
+            </div>
+            <div class='detail'>
+                <div class="info-group order-status">
+                    {{ attribute(target, alias).status|status(status, ['btn-default', 'btn-primary', 'btn-success', 'btn-danger']) }}
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3003', 'Ngày phản hồi', alias) }}</label>
+                    <span>{{ attribute(target, alias).modified }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3004', 'Ngày gửi', alias) }}</label>
+                    <span>{{ attribute(target, alias).created }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3005', 'Họ tên', alias) }}</label>
+                    <span>{{ attribute(target, alias).info.fullname }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3006', 'Email', alias) }}</label>
+                    <span>{{ attribute(target, alias).info.email }}</span>
+                </div>
+            </div>
+        </aside>
+        <aside>
+            <section class="vbox cart-list">
+                <header class="header bg-white b-b clearfix cart-header">
+                    <div class="row m-t-sm">
+                        <div class="col-sm-4 m-b-xs">
+                            <a href='{{ load('url', 'helper').module('rollback/' ~ attribute(target, alias).id) }}' class="btn btn-default" title='{{ __('3007', 'Theo dõi', alias) }}'>{{ __('3007', 'Theo dõi', alias) }}</a>
+                        </div>
+                        <div class="col-sm-8 m-b-xs text-right">
+                            <a href='{{ load('url', 'helper').module('feedback/' ~ attribute(target, alias).id) }}' class="btn btn-primary" title='{{ __('3008', 'Đã phản hồi', alias) }}'>{{ __('3008', 'Đã phản hồi', alias) }}</a>
+                            <a href='{{ load('url', 'helper').module('reject/' ~ attribute(target, alias).id) }}' class="btn btn-danger" title='{{ __('3009', 'Từ chối trả lời', alias) }}'>{{ __('3009', 'Từ chối', alias) }}</a>
+                            <a href='{{ load('url', 'helper').module('finish/' ~ attribute(target, alias).id) }}' class="btn btn-success" title='{{ __('3010', 'Hoàn tất', alias) }}'>{{ __('3010', 'Hoàn tất', alias) }}</a>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="scrollable wrapper w-f scroller">
+                    {% embed 'contact/reply_form.twg' with {'to': attribute(target, alias).info.email, 'target_id': attribute(target, alias).id } %}{% endembed %}
+                </section>
+            </section>
+        </aside>
+    </section>
+{% endblock %}

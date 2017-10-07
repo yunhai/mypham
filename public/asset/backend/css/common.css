@@ -1,0 +1,264 @@
+.btn:active, .btn.active{
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.backdrop-login {
+	background: #0aa89e;
+	height: 180px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+.section-login {
+	margin-top: 190px;
+}
+.btn-fix-width {
+	width: 30%;
+}
+hr.strikethrough {
+	border-top: 1px solid #cbd5dd;
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+hr.strikethrough:after {
+	content: '\002665';
+	display: inline-block;
+	position: relative;
+	top: -15px;
+	padding: 0 10px;
+	background: #f2f4f8;
+	color: #666;
+	font-size: 18px;
+}
+.error-panel ul li {
+	color: #ff5f5f;
+}
+.content-wrapper {
+	padding: 0 15px;
+}
+.form-footer{
+	background: #777;
+	margin-bottom: 20px;
+	padding: 20px 10px;
+}
+.fa-icon {
+	font-size: 1.2em;
+}
+.row-input {
+	width: 100%;
+	padding: 0 5px;
+}
+.hbox > .collapse {
+	display: none;
+}
+.nav-off-screen .hidden-xs {
+	display: block !important;
+}
+.nav-user .user-info {
+	display: block;
+	text-align: center;
+	font-size: 18px;
+	padding-bottom: 10px;
+}
+
+#sidebar {
+	position: fixed;
+	height: 100%;
+	z-index: 100;
+	right: -240px;
+	top: 0;
+	margin-top: 50px;
+	-webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	-o-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
+}
+
+.nav-offcanvas {
+	background: #888;
+	color: #fff;
+	padding: 8px;
+	border-radius: 100%;
+	margin-left: 10px;
+}
+
+.page-info {
+	margin-top: 20px;
+}
+
+.img-container {
+	margin-top: 10px;
+	padding: 5px;
+	border: 1px solid #333;
+}
+
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+	padding-top: 0;
+	margin-bottom: 5px;
+}
+
+.sidebar-offcanvas {
+	position: fixed;
+	top:70px;
+	right: 10px;
+	width: 40px;
+	height: 40px;
+	background: #E40A5D;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	color: #fff;
+}
+.sidebar-offcanvas i,
+.sidebar-offcanvas i:hover {
+	color: #fff;
+	font-size: 14px;
+	padding: 12px 15px;
+}
+#map_canvas {
+	margin-top: 10px;
+	width: 100%;
+	height: 300px;
+}
+.map-template {
+	display: none;
+}
+.cart-list > header ~ section{
+	top: 50px;
+}
+.cart-list .m-b-xs{
+	margin-bottom: 7px;
+}
+
+.order-info .detail {
+	padding: 10px;
+}
+.order-info .info-group {
+	border-bottom: 1px dashed #eae0f1;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+.order-info .info-group:last-of-type {
+	border-bottom: 0;
+}
+.order-info .info-group label {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 0;
+}
+/*34AB78*/
+.order-info .header {
+	background: #436789;
+	color: #fff;
+}
+.order-status span {
+	margin: auto;
+	display: block;
+	width: 50%;
+}
+
+.faq-rating {
+    margin-right: 20px;
+}
+
+.remark {
+	font-weight: bold;
+}
+
+.info {
+	display: block;
+}
+
+.dashed {
+    border-top: 1px dashed #888;
+    margin-top: 15px;
+    padding-top: 10px;
+}
+
+.inline {
+    display: inline-block;
+    font-weight: normal;
+    vertical-align: middle;
+    padding-top: 5px;
+    margin-bottom: 0;
+    height: 30px;
+}
+
+.star-ratings-css {
+    unicode-bidi: bidi-override;
+    color: #c5c5c5;
+    font-size: 25px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    padding: 0;
+    text-shadow: 0px 1px 0 #a2a2a2;
+}
+.star-ratings-css-top {
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.star-ratings-css-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+}
+.error-message {
+    color: #e11;
+    display: block;
+    margin-top: 10px;
+}
+
+.contact-form .info-group{
+    border-bottom: 1px dashed #eae0f1;
+    margin-bottom: 5px;
+    padding-bottom: 15px;
+}
+
+.contact-form .info-group.last {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.sub-navigator {
+    margin-top: 5px;
+    padding: 0 10px;
+    border-bottom:  solid 1px #ddd;
+    height: 30px;
+}
+.sub-navigator a {
+    color: #428bca;
+    padding:10px;
+    font-weight: bold;
+}
+.sub-navigator a:hover {
+    border-bottom: solid 2px #1aae88;
+}
+
+.edit-link {
+    color: #f32142;
+}
+
+.option-panel {
+    padding: 15px 0;
+}
+
+.padding-0 {
+    padding: 0;
+}
+
+.scroller {
+    padding-top: 0;
+    margin-top: 20px;
+}

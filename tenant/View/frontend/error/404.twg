@@ -1,0 +1,7 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    <div class="wrapertv">
+        Không tìm thấy đường dẫn này! Quý khách vui lòng quay về <a href='{{ ''|url }}' title='{{ config.get('app.title') }}'>trang chủ</a>
+    </div>
+{% endblock %}

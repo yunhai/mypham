@@ -1,0 +1,20 @@
+<div class="row wrapper">
+  <div class="col-sm-4 hidden-xs">
+    <select class="input-sm form-control input-s-sm inline v-middle" id='bulk-action-list' data-form='list-form'>
+      <option value="">{{ __('1001', 'Option', 'global') }}</option>
+      <option value="{{ load('url', 'helper').module('delete') }}">
+          {{ __('1002', 'Delete selected', 'global') }}
+      </option>
+      <option value="{{ load('url', 'helper').module('modify') }}">
+          {{ __('1002', 'Update selected', 'global') }}
+      </option>
+    </select>
+    <button class="btn btn-sm btn-default" id='bulk-action-button'>{{ __('1005', 'Thực thi', 'global') }}</button>
+  </div>
+
+  <div class="col-sm-8 hidden-xs text-right">
+    <a href="{{ load('url', 'helper').module('add/') }}" class="btn btn-s-md btn-success">
+        Thêm mới
+    </a>
+  </div>
+</div>

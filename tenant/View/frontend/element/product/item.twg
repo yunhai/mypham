@@ -1,0 +1,29 @@
+<div class="product-item"><!--product item-->
+    <a href="{{ item|link('product') }}" title='{{ item.title }}'><!--a detail-->
+        <div class='nailthumb thumb-175-175'>
+            {{ item|media({'class': 'thumb-175-175' }) }}
+        </div>
+
+        {% if item.new %}
+        {{ 'product/iconnew.png'|asset({'class': 'iconnew'})}}
+        {% endif %}
+
+        {% if item.discount %}
+        <span class="percent">{{item.discount}}%</span>
+        {% endif %}
+        <h4>{{ item.title }}</h4>
+        <div class="price">
+        {% if item.discount %}
+            <span class="sale">{{ item.promote|price }}đ</span>
+            <span class="main">{{ item.price|price }}đ</span>
+        {% else %}
+            <span class="sale">{{ item.price|price }}đ</span>
+        {% endif %}
+        </div>
+    </a><!--end a-->
+    <div class="icon">
+        <a href="{{ ('cart/add/' ~ item.id)|url }}">
+            Đặt hàng
+        </a>
+    </div>
+</div><!--product item-->

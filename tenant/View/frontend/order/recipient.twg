@@ -1,0 +1,64 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+<section id="cart-checkout"><!--main-page-->
+    <div class="container"><!--container-->
+        <div class="row"><!--row-->
+            {% include 'element/order/step.twg' with {'step' : 1} %}
+            <div class="col-md-8"><!--md 9-->
+                <div class="wraper-login"><!--wraper-login-->
+                    <div class="row">
+                        <form action="{{ 'order/recipient'|url }}" method="post">
+                            <div class="col-md-6">
+                                <label>
+                                    <input type="radio" name="type" value="1" {% if target.type is not defined or target.type == 1 %}checked{% endif %} />
+                                    Đặt hàng mà không cần đăng ký
+                                </label>
+                                <!--
+                                {% if target.type == 1 and error is defined %}
+                                <ul class='alert alert-danger'>
+                                    {% for e in error %}
+                                        <li>{{e}}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                <input placeholder="Nhập địa chỉ Email:" type="text" name="free[email]" value='{% if target.email is defined %}{{ target.email }}{% endif %}' />
+                                -->
+                            </div>
+                            <div class="col-md-6">
+                                <label>
+                                    <input type="radio" name="type" value="2" {% if target.type == 2 %}checked{% endif %} />
+                                    Tôi đã có tài khoản
+                                </label>
+                                {% if target.type == 2 and error is defined %}
+                                <ul class='alert alert-danger'>
+                                    {% for e in error %}
+                                        <li>{{e}}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                <input placeholder="Nhập địa chỉ Email:" type="text" name="login[account]" value='{% if target.account is defined %}{{ target.account }}{% endif %}'/>
+                                <input placeholder="Nhập mật khẩu" type="password" name="login[password]" />
+                                <a href="{{ 'user/forget-password'|url}}" target='blank' >Quên mật khẩu?</a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div col-md-12>
+                                <button type="submit">Tiếp tục <i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                            </div>
+                        </form>
+                        <div class="col-md-12">
+                            <div class="wraper-social">
+                                <a href="#"><img src="{{ html.img }}/fa-login.png"></a>
+                                <a href="#"><img src="{{ html.img }}/gg-login.png"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--wraper-login-->
+            </div><!--md 9-->
+            <div class="col-md-4"><!--md-4-->
+                {% include 'element/order/cart-info.twg' %}
+            </div><!--md-4-->
+        </div><!--row-->
+    </div><!--container-->
+</section><!--#main page-->
+{% endblock %}

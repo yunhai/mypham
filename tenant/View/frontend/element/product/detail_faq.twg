@@ -1,0 +1,43 @@
+<div id="menu2" class="tab-pane fade"><!--tab ct-->
+    <div class="wrapertv"><!--wrapertv-->
+        {% set url = 'product/ask/' ~ item.id %}
+        <form id="faq" method='post' data-action='{{ url|url }}'>
+            <input type='hidden' value='{{ item.id }}' name='target' />
+            <p class="title"><span>Mọi thắc mắc về sản phẩm xin đặt câu hỏi tại đây.</span>
+            Quý khách nhận được câu trả lời trong vòng 24h
+            </p>
+            <div class='product-detail-form-info'>
+                <span>Chủ đề:</span>
+                <select name="category">
+                    {% for id, value in category %}
+                    <option value='{{ id }}'>{{ value }}</option>
+                    {% endfor %}
+                </select>
+                <div class="private-message">
+                    <input type="checkbox" name="private" value='1'>
+                    Khóa không cho thành viên khác xem nội dung!
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div class='clear'></div>
+            </div>
+            <div class='product-detail-form-info'>
+                <span>Họ tên:</span>
+                <input name="fullname" />
+                <div class='clear'></div>
+            </div>
+            <div class='product-detail-form-info'>
+                <span>Email:</span>
+                <input name="email" />
+                <div class='clear'></div>
+            </div>
+            <span>Nội Dung: </span>
+            <textarea name="question"></textarea>
+            <button>Đăng</button>
+        </form>
+        <div class="clearfix"></div>
+        <p> <i class="fa fa-lightbulb-o" aria-hidden="true"></i> Những câu hỏi không thuộc về sản phẩm, quí khách có thể đặt câu hỏi tại <a href="#">Trung tâm tư vấn A-Z</a></p>
+    </div>
+    <div id='faq-callback'>Cám ơn quý khách đã nhận xét về sản phẩm.</div>
+    {% set url = 'product/faq/' ~ item.id %}
+    <div id='faq-list' class="list" data-url='{{ url|url }}'></div>
+</div>

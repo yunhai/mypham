@@ -1,0 +1,10 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="wrapertv">
+    Cám ơn quý khách đăng ký tài khoản.<br/>
+    Chúng tôi đã gửi <b>thông tin đăng nhập</b> và <b>cách thức xác thực tài khoản</b> vào email của quý khách.<br/>
+
+    <span class='error'>Lưu ý, quý khách phải xác thực tài khoản mới có thể đăng nhập.</span>
+</div>
+{% endblock %}

@@ -1,0 +1,297 @@
+{% extends "layout/blank.twg" %}
+
+{% set html = load('html', 'helper') %}
+
+{% block top %}
+    {{ html.css(['fotorama']) }}
+    {{ html.css(['lightgallery.min'], 'package/lightgallery/css') }}
+{% endblock %}
+{% block bottom %}
+    {{ html.js(['fotorama', 'product']) }}
+    {{ html.js(['lightgallery'], 'package/lightgallery/js') }}
+
+    <script type="text/javascript">
+        $(".info-fix .item img").hover(function(){
+            $('.info-fix').css('z-index','999');
+            $(this).parent().parent().find('span').fadeIn(500);
+        }, function(){
+            $('.info-fix').css('z-index','0');
+            $(this).parent().parent().find('span').hide();
+        });
+
+        $('.j--button-add-to-cart').click(function() {
+            $('.order-product').trigger('click');
+        })
+
+        $('.order-product').click(function() {
+            $('#order-form').submit();
+        })
+
+        $('#target-option').on('change', function() {
+            var index = $(this).val();
+            $('.j-promotion').hide();
+            $('.j-promotion_' + index).show();
+        });
+
+        $(document).ready(function() {
+            $("#lightgallery").lightGallery({
+                thumbnail:true,
+                selector: '.item'
+            });
+
+            $('#target-option').trigger('change');
+        });
+    </script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e3ba7c637c424ce"></script>
+{% endblock %}
+
+
+{% block content %}
+    <section id="intro"><!--intro-->
+        <div class="info-fix"><!--info-fix-->
+            <div class="item">
+                <span>Tiến hành đặt hàng</span>
+                <a href="{{ 'order/review'|url }}">{{ 'product/icon-checkout.png'|asset }}</a>
+            </div>
+            <div class="item">
+                <span>Giỏ hàng của bạn</span>
+                <a href="#" id='show-cart-info'>{{ 'product/icon-cart.png'|asset }}</a>
+            </div>
+            <div class="item">
+                <span>Tư vấn hỏi đáp</span>
+                <a href="#product-detail-block">{{ 'product/icon-qa.png'|asset }}</a>
+            </div>
+            <div class="item">
+                <span>Đăng ký nhận tin khuyến mãi</span>
+                <a href="#subcribe">{{ 'product/icon-email.png'|asset }}</a>
+            </div>
+        </div><!--info fix-->
+        <div class="row"><!--row-->
+            <div class="col-md-4"><!--md-4-->
+                {% if target.gallery %}
+                <div class="fotorama" data-nav="thumbs">
+                    {% for item in target.gallery %}
+                        <a href="javascript:;">
+                        {{ media(item, {'class': 'thumb-378-378'}) }}
+                        </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <div class='nailthumb thumb-378-378' style='border: 1px solid #e0e3e5'>
+                        {{ target|media({'class': 'thumb-378-378' }) }}
+                    </div>
+                {% endif %}
+            </div><!--md-4-->
+            <div class="col-md-8"><!--md 8-->
+                <div class='row'><!--row-->
+                    <div class="wrapper-intro"><!--wrapper intro-->
+                        {% set url = 'cart/add/' ~ target.id %}
+                        <form action='{{ url|url }}' method='post' id='order-form'>
+                            <div class="col-md-2">Tên sản phẩm:</div>
+                            <div class="col-md-10"><span class='pink-bold'>{{target.title}}</span>&nbsp;</div>
+
+                            <div class="col-md-2">Mã sản phẩm:</div>
+                            <div class="col-md-10">{{target.code}}&nbsp;</div>
+
+                            {% if target.manufacturer_target %}
+                            <div class="col-md-2">Hãng sản xuất:</div>
+                            <div class="col-md-10">
+                                {{ target.manufacturer_target.title }}&nbsp;
+                            </div>
+                            {% endif %}
+
+                            {% if target.capacity %}
+                            <div class="col-md-2">Dung tích:</div>
+                            <div class="col-md-10">{{target.capacity}}&nbsp;</div>
+                            {% endif %}
+
+                            {% if target.weight %}
+                            <div class="col-md-2">Trọng lượng:</div>
+                            <div class="col-md-10">{{target.weight}}&nbsp;</div>
+                            {% endif %}
+
+                            {% if target.option_price %}
+                                {% for index, item in target.option_price %}
+                                <div class="col-md-2">
+                                    Giá loại {{attribute(target.option, index)}}:
+                                </div>
+                                <div class="col-md-10">
+                                    {% if attribute(target.option_discount, index) %}
+                                    <span class='price-deal'>{{ attribute(target.option_promotion, index)|price }} VND</span>
+                                    <span class='price'>{{ item|price }} VND</span> (Giảm {{ attribute(target.option_discount, index) }}%)
+                                    {% else %}
+                                        <span class='price-deal'>{{ item|price }} VND</span>
+                                    {% endif %}&nbsp;
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-md-2">Giá bán:</div>
+                                <div class="col-md-10">
+                                    {% if target.discount %}
+                                        <span class='price-deal'>{{ target.promote|price }}VND</span>
+                                        <span class='price'>{{ target.price|price }} VND</span>
+                                        (Giảm {{ target.discount }}%)
+                                    {% else %}
+                                        <span class='price-deal'>{{ target.price|price }} VND</span>
+                                    {% endif %}&nbsp;
+                                </div>
+                            {% endif %}
+
+                            {% if target.point %}
+                            <div class="col-md-2">Điểm tích lũy:</div>
+                            <div class="col-md-10">{{ target.point }} điểm&nbsp;</div>
+                            {% endif %}
+
+                            <div class="col-md-2">Giao hàng:</div>
+                            <div class="col-md-10 info-product">
+                                {% include 'element/common/product-order-caption.twg' %}&nbsp;
+                            </div>
+
+                            <div class="col-md-2">Số lượng:</div>
+                            <div class="col-md-10"><input type="number" name="amount" required value='1'/>&nbsp;</div>
+
+                            {% if target.option %}
+                            <div class="col-md-2">Tùy chọn:</div>
+                            <div class="col-md-10">
+                                <select name="option" id='target-option'>
+                                    {% for key, option in target.option %}
+                                        <option value='{{ key }}'>{{ option }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
+
+                            <div class="clearfix"></div>
+                            <div class="price-item-detail">
+                                {% if target.option_price %}
+                                    {% for index, item in target.option_price %}
+                                        {% if attribute(target.option_discount, index) %}
+                                        <div class="item-price j-promotion j-promotion_{{index}}">
+                                            <p><span class="number">{{ attribute(target.option_promotion, index)|price }}</span>&nbsp;<span class="pink-bold"> VND</span></p>
+                                            <p><span class="price-old">Giá cũ: <span>{{ item|price }} </span></span></p>
+                                        </div>
+                                        {% else %}
+                                            <div class="item-price j-promotion j-promotion_{{index}}">
+                                                <p><span class="number">{{ attribute(target.option_price, index)|price }}</span>&nbsp;<span class="pink-bold"> VND</span></p>
+                                                <p><span class="price-old">&nbsp;</span></p>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elseif target.discount %}
+                                    <div class="item-price">
+                                        <p><span class="number">{{ target.promote|price }}</span>&nbsp;<span class="pink-bold"> VND</span></p>
+                                        <p><span class="price-old">Giá cũ: <span>{{ target.price|price }} </span></span></p>
+                                    </div>
+                                {% endif %}
+
+
+                                <div class="item-price">
+                                    <a class="but-add j--button-add-to-cart" href="javascript:;" class='order-product'>Đặt hàng</a>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="status">
+                                <span class='order-product'><i class="fa fa-check-circle" aria-hidden="true"></i>Thêm vào giỏ hàng</span>
+                                <span class='j-show-cart'>
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>Kiểm tra giỏ hàng
+                                </span>
+                            </div>
+                        </form>
+                    </div><!--wrapper intro-->
+                </div><!--row-->
+            </div><!--md 8-->
+        </div><!--row-->
+    </section><!--#intro-->
+
+    <section id="content"><!--content-->
+        <div class="container"><!--container-->
+            <div class="row">
+                <div class="col-md-4"><!--col md 4-->
+                    {% if target.files is not empty %}
+                    <div class="wrapper-color">
+                        <div class="title">
+                            <h4>Hình ảnh sản phẩm</h4>
+                            <hr/>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div id='lightgallery'>
+                            {% for item in target.files %}
+                            <div class="item"
+                                 data-responsive="img/1-375.jpg 375, img/1-480.jpg 480, img/1.jpg 800"
+                                 data-src="{{item|mediaPath}}"
+                                 data-sub-html='{{target.title}}'>
+                                  {{ media(item, {'class': 'thumb-70-60 img-responsive'}) }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div><!--md 4-->
+                <div class="col-md-8" id='product-detail-block'><!--md 8-->
+                    <section id="block-camnang" class='relate'><!--block tuvan-->
+                        <ul class="tab">
+                            <li class="active"><a data-toggle="tab" href="#home">Thông tin sản phẩm</a></li>
+                            <li><a data-toggle="tab" href="#menu1">Đánh giá sản phẩm</a></li>
+                            <li><a data-toggle="tab" href="#menu2">Tư vấn sản phẩm</a></li>
+                        </ul>
+
+                        <div class="tab-content"><!--tab-content-->
+                            <div id="home" class="tab-pane fade in active">
+                                {{ target.content }}
+                            </div>
+                            {% embed 'element/product/detail_rating.twg' with {'item': target} %}{% endembed %}
+                            {% embed 'element/product/detail_faq.twg' with {'item': target, 'category': option.category} %}{% endembed %}
+                        </div><!--ed tab content-->
+                    </section><!--end block tuvan-->
+
+                    <div class="addthis_inline_share_toolbox" addthis:url="{{ target|link('product') }}" addthis:title="{{ target.title }}">
+                </div><!--md 8-->
+            </div>
+        </div><!--container-->
+    </section><!--#content-->
+
+    {% if option.others %}
+    <section id="product"><!--Product-->
+        <div class="container"><!--container-->
+            <div class="row"><!--rơ-->
+                <div class="col-md-12"><!--md-12-->
+                    <div class="title-bar"><!--title bar-->
+                        <span>Sản phẩm khác</span>
+                        {% set url = 'product/category/' ~ target.category_id %}
+                        <a href="{{ url|url }}">Xem tất cả <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                    </div><!--end title bar-->
+                </div><!--end md -12 -->
+
+                {% for item in option.others %}
+                    <div class="col-md-2"><!--col-md2-->
+                        {% embed 'element/product/item.twg' with {'item': item} %}{% endembed %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if option.promotion %}
+    <section id="product"><!--Product-->
+        <div class="container"><!--container-->
+            <div class="row"><!--rơ-->
+                <div class="col-md-12"><!--md-12-->
+                    <div class="title-bar"><!--title bar-->
+                        <span>Khuyến mãi hot</span>
+                        <a href="{{ 'product/promote'|url }}">Xem tất cả <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                    </div><!--end title bar-->
+                </div><!--end md -12 -->
+
+                {% for item in option.promotion %}
+                    <div class="col-md-2"><!--col-md2-->
+                        {% embed 'element/product/item.twg' with {'item': item} %}{% endembed %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}

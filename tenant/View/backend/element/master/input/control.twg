@@ -1,0 +1,10 @@
+<div class="text-center form-footer">
+    <button type="submit" class="btn btn-success">
+        {{ __('2002', 'Lưu thay đổi', 'global') }}
+        <i class="fa fa-send"></i>
+    </button>
+    <a href='{{ load('url', 'helper').full(alias) }}' class='btn btn-default'>
+        {{ __('2003', 'Hủy bỏ', 'global') }}
+        <i class="fa fa-times"></i>
+    </a>
+</div>

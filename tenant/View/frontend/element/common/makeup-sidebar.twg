@@ -1,0 +1,39 @@
+<div class="col-md-3"><!--md-3-->
+    <div class="wraper-left-tuvan leftsidebar"><!--wraper tuvan-->
+        {% if topCategory is defined and category %}
+        <div class="block"><!--block1-->
+            <h3>{{ topCategory.title }}</h3>
+            <ul class="ulbl1">
+                {% for item in category %}
+                    <li>
+                        <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                            {{ item.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div><!--end block1-->
+        {% endif %}
+
+        {% if random is not empty %}
+        <div class="block"><!--block1-->
+            <h3>Tiêu điểm</h3>
+            <div class="wrap-block-tuvan">
+                {% for item in random %}
+                <div class='item'>
+                    {{ item|media({'class': 'thumb-60-60'}) }}
+
+                    <a href='{{ item|link(alias) }}' title='{{ item.title }}'>
+                        {{ item.title }}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div><!--end block1-->
+        {% endif %}
+        {# <div class="banner-ad">
+            <a href="#"><img class="img-responsive" src="img/tu-van/bn1.png"></a>
+            <a href="#"><img class="img-responsive" src="img/tu-van/bn2.png"></a>
+        </div> #}
+    </div><!--end wraper tuvan-->
+</div><!--end md-3-->

@@ -1,0 +1,7 @@
+<div class="col-md-12"><!--md-12-->
+    <div class='wraper-step'>
+        <span {% if (step == 1) %} class="active"{% endif %}><span>1</span>Đăng nhập đặt hàng</span>
+        <span {% if (step == 2) %} class="active"{% endif %}><span>2</span>Vận chuyển</span>
+        <span {% if (step == 3) %} class="active"{% endif %}><span>3</span>Thanh toán</span>
+    </div>
+</div><!--md-12-->

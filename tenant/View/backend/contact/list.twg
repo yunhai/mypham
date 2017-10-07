@@ -1,0 +1,45 @@
+<div class="table-responsive">
+    <form id='list-form' method='post' class='app-list'>
+        <table class="table table-hover table-striped table-responsive b-t b-light">
+            <thead>
+                <tr>
+                    <th width='50'>
+                        <label class="checkbox m-n i-checks">
+                            <input type="checkbox"><i></i>
+                        </label>
+                    </th>
+                    <th class='col-sm-1'>&nbsp;</th>
+                    <th class='col-sm-1'>{{ __('1002', 'Mã số', alias) }}</th>
+                    <th class='col-sm-2'>{{ __('1003', 'Ngày liên hệ', alias) }}</th>
+                    <th  class='col-sm-2'>{{ __('1004', 'Ngày phản hồi', alias) }}</th>
+                    <th>{{ __('1005', 'Nội dung', alias) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data.list %}
+                {% set item = attribute(item, alias) %}
+                <tr>
+                    <td>
+                        <label class="checkbox m-n i-checks">
+                            <input type='checkbox' name='{{ alias }}[{{ item.id }}]' value='{{ item.id }}' /><i></i>
+                        </label>
+                    </td>
+                    <td>{{ item.status|status(status, ['btn-xs btn-default', 'btn-xs btn-primary', 'btn-xs btn-success', 'btn-xs btn-danger']) }}</td>
+                    <td>
+                        <a href='{{ load('url', 'helper').module('detail/' ~ item.id) }}' title='{{ __('1006', 'Chi tiết liên hệ', alias) }}' class='edit-link'>
+                            {{ item.code }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ item.created|date('h:i d/m/y') }}
+                    </td>
+                    <td>
+                        {{ item.modified|date('h:i d/m/y') }}
+                    </td>
+                    <td>{{ item.content|truncate(80) }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>

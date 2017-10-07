@@ -1,0 +1,14 @@
+{% if data.pager|length > 0 %}
+    <nav class="nav-pagi paging col-md-12">
+        {% set prev = data.page.current > 1 ? data.page.current - 1 : 1 %}
+        {% set next = data.page.current == data.page.total ? data.page.current : data.page.current + 1 %}
+
+        <a href="{{ load('url', 'helper').get({'page': prev}) }}"><img src="{{ html.img }}/chinhanh/pg-prev.png"></a>
+
+        {% for item in data.pager %}
+            <a href="{{ load('url', 'helper').get({'page': item.page}) }}" {% if item.target %}class='active'{% endif %}>{{ item.display }}</a>
+        {% endfor %}
+
+        <a href="{{ load('url', 'helper').get({'page': next}) }}"><img src="{{ html.img }}/chinhanh/pg-next.png"></a>
+    </nav>
+{% endif %}

@@ -1,0 +1,54 @@
+<div class="table-responsive">
+    <form id='list-form' method='post' class='app-list'>
+        <table class="table table-hover table-striped table-responsive b-t b-light">
+            <thead>
+                <tr>
+                    <th width='50'>
+                        <label class="checkbox m-n i-checks">
+                            <input type="checkbox"><i></i>
+                        </label>
+                    </th>
+                    <th class='col-sm-1'>&nbsp;</th>
+                    <th class='col-sm-1'>{{ __('1104', 'Mã đơn', alias) }}</td>
+                    <th class='col-sm-2'>{{ __('1105', 'Thành tiền', alias) }}</td>
+                    <th class='col-sm-2'>{{ __('1106', 'Ngày đặt hàng', alias) }}</td>
+                    <th class='col-sm-2'>{{ __('1107', 'Ngày cập nhật', alias) }}</td>
+                    <th>{{ __('1108', 'Địa chỉ giao hàng', alias) }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data.list %}
+                    {% set target = attribute(item, alias) %}
+                <tr>
+                    <td>
+                        <label class="checkbox m-n i-checks">
+                            <input type='checkbox' name='{{ alias }}[{{ target.id }}]' value='{{ target.id }}' /><i></i>
+                        </label>
+                    </td>
+                    <td>{{ target.status|status(status, ['btn-xs btn-default', 'btn-xs btn-primary', 'btn-xs btn-success', 'btn-xs btn-danger']) }}</td>
+                    <td>
+                        <a href='{{ load('url', 'helper').module('detail/' ~ target.id) }}' title='{{ __('1109', 'Chi tiết đơn hàng', alias) }}' class='edit-link'>
+                            {{ target.code }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ target.total|number }}
+                    </td>
+                    <td>
+                        {{ target.created|date('h:i d/m/Y') }}
+                    </td>
+                    <td>
+                        {{ target.modified|date('h:i d/m/Y') }}
+                    </td>
+                    <td>
+                        {{ target.recipient.address }}
+                    </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+{% embed 'element/master/index/pager_params.twg' with {'option': option.filter} %}
+{% endembed %}

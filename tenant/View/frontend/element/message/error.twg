@@ -1,0 +1,5 @@
+<ul class='alert alert-danger'>
+    {% for e in error %}
+        <li>{{e}}</li>
+    {% endfor %}
+</ul>

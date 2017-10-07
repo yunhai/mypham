@@ -1,0 +1,26 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    {% block filter %}
+        {% embed 'element/user/index/filter.twg' with {'option': option.filter} %}
+        {% endembed %}
+    {% endblock %}
+
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold">
+            {{ __('1001', alias, alias) }}
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <a href="#" class="panel-toggle text-muted">
+                        <i class="fa fa-caret-down text-active"></i>
+                        <i class="fa fa-caret-up text"></i>
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div class='panel-body'>
+            {% include 'element/master/index/header.twg' %}
+            {% include 'element/user/index/search.twg' %}
+        </div>
+    </section>
+{% endblock %}

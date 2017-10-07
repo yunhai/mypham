@@ -1,0 +1,39 @@
+<div id='header-category' class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                {% for id, item in addon.product_category %}
+                <li class='dropdown menu-large {% if current_product_category is defined and id == current_product_category %}class="active"{% endif %}'>
+                    <a href="{{ item|link('product', 'category') }}" title='{{item.title}}'>
+                        {{item.title}}
+                    </a>
+                    {% if item.children %}
+                        <ul class="dropdown-menu megamenu">
+                            {% for level2 in item.children %}
+                            <li class="col-sm-3">
+                                <ul>
+                                    <li class="dropdown-header">
+
+                                        <span><a href="{{ level2|link('product', 'category') }}" title='{{level2.title}}'>{{ level2.title }}</a></span>
+                                    </li>
+                                    {% for level3 in level2.children %}
+                                        <li><a href="{{ level3|link('product', 'category') }}" title='{{level3.title}}'>{{ level3.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+      </div>
+    </div>

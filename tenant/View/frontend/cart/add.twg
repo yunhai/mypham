@@ -1,0 +1,7 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+    <div class='message-panel'>
+        Cám ơn quý khách đã đặt hàng ở chúng tôi!<br />
+    </div>
+{% endblock %}

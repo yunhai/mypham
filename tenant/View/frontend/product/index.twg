@@ -1,0 +1,48 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+    <div class="col-md-25">
+        {% embed 'element/layout/product-left-sidebar.twg' %}{% endembed %}
+    </div>
+    <div class="col-md-95"><!--md 9-->
+        <div class="wraper-product-home"><!--wraper-product-home-->
+            <div class="title"><!--title-->
+                <h2>{{ option.page_name }}</h2>
+
+                <span class="total-result">{% if option.search_result is defined %}{{ option.search_result }} kết quả{% endif %}&nbsp;
+                </span>
+
+                <span class="span-sort">Sắp xếp theo</span>
+                <select id='sort-product' data-url='{{ load('url', 'helper').get() }}'>
+                    <option value='lastest' {% if data.order == 'lastest' %}selected="true"{% endif %}>Mới nhất</option>
+                    <option value='price-asc' {% if data.order == 'price-asc' %}selected="true"{% endif %}>Giá tăng dần</option>
+                    <option value='price-desc' {% if data.order == 'price-desc' %}selected="true"{% endif %}>Giá giảm dần</option>
+                </select>
+            </div><!--title-->
+
+            <div class="wraper-item-product"><!--wrapper item product-->
+                <div class='row'><!--row-->
+                    <div class='list-product'>
+                        {% embed 'product/item.twg' with {'items': data.list} %}{% endembed %}
+                    </div>
+                    <div class="clearfix"></div>
+
+                    {% if page.current < page.total %}
+                        <a href='javascript:;' class='load-more btn btn-default col-md-3 col-md-offset-4' data-url='{{ current_url }}' data-page='1' data-target='.list-product'>
+                            Xem thêm sản phẩm khác
+                        </a>
+                    {% endif %}
+                </div><!--row-->
+            </div><!--end wraper item product-->
+        </div><!--wraper-product-home-->
+    </div><!--end md-9-->
+{% endblock %}
+
+{% block bottom %}
+    {{ parent() }}
+    <script>
+    $('#sort-product').change(function() {
+        window.location.href = $(this).data('url') + 'order:' + $(this).val();
+    })
+    </script>
+{% endblock %}

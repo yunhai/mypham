@@ -1,0 +1,28 @@
+<div class="wraper-left-tuvan wraper-left-product"><!--wraper tuvan-->
+{#
+    <div class="block"><!--block1-->
+        <h3>Danh mục sản phẩm</h3>
+        <ul class="ulbl1 ul-product">
+            {% for id, item in option.categories %}
+            <li {% if current_product_category is defined and id == current_product_category %}class="active"{% endif %}>
+                <a href="{{ item|link('product', 'category') }}" title='{{item.title}}'>
+                    {{item.title}}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div><!--end block1-->
+#}
+
+    {% for id, group in attribute(banner, 'san-pham') %}
+        {% if id in category_id_list %}
+            {% for item in group %}
+            <a href="{{ item.url|url }}" title='{{ item.title }}' rel='no-follow'>
+                <div class='nailthumb banner-right'>
+                    {{ item|media({'class': 'banner-right img-responsive' }) }}
+                </div>
+            </a>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</div>

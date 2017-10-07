@@ -1,0 +1,8 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<form id='basic-form' class='app-form form-horizontal' method='post'>
+    {% embed 'element/locale/input/basic.twg' %}{% endembed %}
+    {% embed 'element/master/input/control.twg' %}{% endembed %}
+</form>
+{% endblock %}

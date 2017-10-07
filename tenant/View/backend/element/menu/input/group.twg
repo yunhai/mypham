@@ -1,0 +1,33 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('1011', 'Group form') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <form class="form-inline" role="form" method='post'>
+            <input type='hidden' name='{{ alias }}[id]' value='{{ target is defined ? attribute(target, alias).id }}' />
+            <div class="form-group">
+              <label class="sr-only" for="title">{{ __('1012', 'Group name') }}</label>
+              <input type="text" class="form-control" id="title" placeholder="{{ __('1012', 'Group name') }}" name='{{ alias }}[title]' value='{{ target is defined ? attribute(target, alias).title }}'>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="slug">{{ __('1013', 'Group code') }}</label>
+                <input class='form-control' id='slug' name='{{ alias }}[slug]' placeholder="{{ __('1013', 'Group code') }}" value='{{ target is defined ? attribute(target, alias).slug }}' />
+            </div>
+            <div class="checkbox m-l m-r-xs">
+                <label class="i-checks">
+                    <input type="checkbox" name='{{ alias }}[status]' {% if attribute(target, alias).status %} checked='checked' {% endif %} value='1' />
+                    <i></i> Enable
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success">{{ __('2002', 'Lưu thay đổi', 'global') }}</button>
+        </form>
+    </div>
+</section>

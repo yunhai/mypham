@@ -1,0 +1,68 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+    <div class="col-md-25">
+        {% embed 'element/layout/product-left-sidebar.twg' %}{% endembed %}
+    </div>
+    <div class="col-md-95"><!--md 9-->
+        <div class="wraper-product-home"><!--wraper-product-home-->
+            <div class="title"><!--title-->
+                <h2>{{ option.page_name }}</h2>
+            </div><!--title-->
+
+            <div class="wraper-item-product"><!--wrapper item product-->
+                <form method="post" action='{{ 'product/search'|url }}' class='grey-bk product-search-form'>
+                    <select name="category" class='select'>
+                        <option value='0'>Chọn danh mục...</option>
+                        {% for item in addon.product_category %}
+                            {% set id = item.id %}
+                            <option value='{{ id }}' {% if id == option.search.category %}selected{% endif %}>{{ item.title }}</option>
+                            {% if item.children %}
+                                {% for item2 in item.children %}
+                                    {% set id2 = item2.id %}
+                                    <option value='{{ id2 }}' {% if id2 == option.search.category %}selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;{{ item2.title }}</option>
+                                    {% if item2.children %}
+                                    {% for id3, item3 in item2.children %}
+                                        {% set id3 = item3.id %}
+                                        <option value='{{ id3 }}' {% if id3 == option.search.category %}selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item3.title }}</option>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="keyword" class='input' value='{{ option.search.keyword }}' ></input>
+                    <button type="submit" class='submit'>Tìm kiếm</button>
+                </form>
+
+                {% if data.list is empty %}
+                    <span>Hiện thời chưa có sản phẩm nào thỏa điều kiện tìm kiếm.</span><br/>
+                    <span>Quý khách vui lòng tìm kiếm với từ khóa khác</span>
+                {% else %}
+                    <div class='row'><!--row-->
+                        <div class='list-product'>
+                            {% embed 'product/item.twg' with {'items': data.list} %}{% endembed %}
+                        </div>
+                        <div class="clearfix"></div>
+
+                        {% if page.current < page.total %}
+                            <a href='javascript:;' class='load-more btn btn-default col-md-3 col-md-offset-4' data-url='{{ current_url }}/token:{{option.token}}' data-page='1' data-target='.list-product'>
+                                Xem thêm sản phẩm khác
+                            </a>
+                        {% endif %}
+                    </div><!--row-->
+                {% endif %}
+            </div><!--end wraper item product-->
+        </div><!--wraper-product-home-->
+    </div><!--end md-9-->
+{% endblock %}
+
+{% block bottom %}
+    {{ parent() }}
+    <script>
+    $('#sort-product').change(function() {
+        window.location.href = $(this).data('url') + 'order:' + $(this).val();
+    })
+    </script>
+{% endblock %}

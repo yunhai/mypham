@@ -1,0 +1,42 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+<section id="cart-checkout"><!--main-page-->
+    <div class="container"><!--container-->
+        <div class="row"><!--row-->
+            {% include 'element/order/step.twg' with {'step' : 3} %}
+            <div class="col-md-8"><!--md 9-->
+                <div class="wraper-login checkout-step2 checkout-step3"><!--wraper-login-->
+                    <div class="row">
+                        <h4>Phương thức thanh toán</h4>
+                        <form action='{{ 'order/go'|url }}' method='post'><!--form-->
+                            <div class="col-md-12">
+                                {% if (order.deliver.payment == 1) %}
+                                    <p style='margin-top: 10px; font-weight: bold;'>Bạn sẽ thanh toán bằng tiền mặt khi nhận hàng tại nhà</p>
+                                {% elseif (order.deliver.payment == 2) %}
+                                    <p style='margin-top: 10px; font-weight: bold;'>Bạn sẽ thanh toán bằng cách chuyển khoản (<a href="{{ 'thong-tin-chuyen-khoan'|url }}" title="Thông tin chuyển khoản" class='inline-link' target="_blank">Thông tin chuyển khoản</a>)</p>
+                                {% endif %}
+                                <br/>
+
+                                <u>Lưu ý:</u> Vui lòng kiểm tra thông tin đơn hàng bên cột phải<br/>
+                                - Phí thực hiện đơn hàng<br/>
+                                - Phí giao hàng (nếu có)
+
+                                <button type="submit">Đặt hàng</button>
+                                <br/>
+                                <p>Bạn sẽ nhận được thông báo về tình trạng đơn hàng qua email và tin nhắn</p>
+                                <div class='checkbox'>
+                                <label><input type="checkbox" name="subcribe" value='1' />Đăng ký nhận thông tin để biết các chương trình khuyến mãi hấp dẫn </label>
+                                </div>
+                            </div>
+                        </form> <!--form-->
+                    </div>
+                </div><!--wraper-login-->
+            </div><!--md 9-->
+            <div class="col-md-4"><!--md-4-->
+                {% include 'element/order/cart-info.twg' %}
+            </div><!--md-4-->
+        </div><!--row-->
+    </div><!--container-->
+</section><!--#main page-->
+{% endblock %}

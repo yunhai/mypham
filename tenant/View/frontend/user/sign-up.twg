@@ -1,0 +1,137 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+    <div class='row'>
+        <div class="col-md-4 boder-right-dot col-md-offset-2">
+            <h3 class='login-label'>Đăng ký tài khoản</h3>
+
+            <form action="{{ 'user/sign-up'|url }}" method='post' class='login-form-standalone'>
+                <div class="form-group">
+                    <label for="fullname">Họ tên</label>
+                    <input type="text" class="form-control" id="fullname" name='fullname' placeholder="Họ tên" required value='{{ data.fullname }}' />
+                    {% if error is defined %}
+                        {% for e in error.fullname %}
+                        <span class='error'>{{e}}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name='email' placeholder="Email" required value='{{ data.email }}' />
+                    {% if error is defined %}
+                        <div class='error-message'>
+                        {% for e in error.email %}
+                        <span>{{e}}</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" name='password' placeholder="Mật khẩu" required />
+                    {% if error is defined %}
+                        <div class='error-message'>
+                        {% for e in error.password %}
+                        <span>{{e}}</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Nhập lại mật khẩu</label>
+                    <input type="password" class="form-control" id="confirm-password" name='confirm-password' placeholder="Nhập lại mật khẩu" required />
+                    {% if error is defined %}
+                        <div class='error-message'>
+                        {% for e in attribute(error, 'confirm-password') %}
+                        <span>{{e}}</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" class="form-control" id="address" name='address' placeholder="Địa chỉ" value='{{ data.address }}' />
+                    {% if error is defined %}
+                        <div class='error-message'>
+                        {% for e in error.address %}
+                        <span>{{e}}</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p class="form-note">Không bắt buộc nhập</p>
+                    <p class="form-note">Thông tin địa chỉ giao hàng</p>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Điện thoại</label>
+                    <input type="text" class="form-control" id="phone" name='phone' placeholder="Điện thoại" value='{{ data.phone }}' />
+                    {% if error is defined %}
+                        <div class='error-message'>
+                        {% for e in error.phone %}
+                        <span>{{e}}</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p class="form-note">Không bắt buộc nhập</p>
+                    <p class="form-note">Thông tin điện thoại giao hàng</p>
+                </div>
+                <div class="form-group">
+                    <label for="email">Ngày sinh</label>
+                    <div style='margin-bottom: 3px;'>
+                        <select name="birthday[day]" class='birthday'>
+                            <option value='0'>-- Ngày --</option>
+                            {% for i in 1..31 %}
+                            <option value='{{ i }}' {% if data.birthday.day == i %}selected{% endif %}>{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="birthday[month]" class='birthday' >
+                            <option value='0'>-- Tháng --</option>
+                            {% for i in 1..12 %}
+                            <option value='{{ i }}' {% if data.birthday.month == i %}selected{% endif %}>{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="birthday[year]" class='birthday' style='margin-right: 0px;'>
+                            <option value='0'>-- Năm --</option>
+                            {% for i in ("now"|date("Y")-18).."now"|date("Y")-70 %}
+                                <option value='{{ i }}' {% if data.birthday.year == i %}selected{% endif %}>{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% if error is defined %}
+                        <div class='error-message'>
+                        {% for e in error.birthday %}
+                        <span>{{e}}</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p class='form-note'>Không bắt buộc nhập</p>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Giới tính</label>
+                    <div class="sex">
+                        <label for="male">
+                            <input type="radio" name="gender" value="1" id="male" {% if data.gender == 1 %}checked{% endif %} /> Nam
+                        </label>
+                        <label for="female">
+                            <input type="radio" name="gender" value="0" id="female" {% if data.gender == 0 %}checked{% endif %} > Nữ
+                        </label>
+                    </div>
+                    <p class="form-note">Không bắt buộc nhập</p>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class='btn btn-custom'>Đăng ký</button>
+                </div>
+                <div class="form-group">
+                    <label class="none"><input type="checkbox" name="subcribe" value="1" {% if data.subcribe %}checked{% endif %}>Nhận thông tin khuyến mãi qua email</label>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <h3 class='login-label'>Login with</h3>
+            <div class="login-social login-social-standalone">
+                <a href="{{ 'user/login/facebook'|url }}"><img src="{{ html.img }}/login-face.png"></a>
+                <!-- <a href="{{ 'user/login/google'|url }}"><img src="{{ html.img }}/login-gg.png"></a> -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

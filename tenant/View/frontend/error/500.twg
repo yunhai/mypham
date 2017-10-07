@@ -1,0 +1,7 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    <div class="wrapertv">
+        Hệ thống đang xảy ra lỗi!
+    </div>
+{% endblock %}

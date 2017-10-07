@@ -1,0 +1,46 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2301', 'Gallery', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        {% set url = 'file/upload/target:' ~ alias ~ '-gallery' %}
+        <div id='gallery-uploader' class="b-upload" action='{{ url|url }}'>
+            <div class="btn-upload b-upload__dnd">Drag and drop, automatic upload<input type="file" name="{{alias}}-gallery" /></div>
+
+            <div class='preview-container'>
+                <div class="js-files b-upload__files">
+                    <div class="js-file-tpl-gallery b-thumb" data-wrapper='{{alias}}-gallery-uploaded' data-preview='col-md-4'>
+                        <div class="b-thumb__preview">
+                            <div class="b-thumb__preview__pic"></div>
+                        </div>
+                        <div class="b-thumb__progress progress progress-small"><div class="bar"></div></div>
+                        <div class="b-thumb__name"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul id='{{alias}}-gallery-uploaded' class="div-hover row gallery-container">
+            {% if target.gallery is defined %}
+                {% for f in target.gallery %}
+                    <li id='img-container-{{ f }}' class='col-md-4 gallery-item'>
+                        <input type='hidden' value='{{ f }}' name='{{alias}}-gallery[{{ f }}][id]' />
+                        <figure class='nailthumb-container'>
+                            {{ f|media({'target_id': f, 'data-id': f}) }}
+                            <figcaption>
+                                <a href="javascript:;" class='remove-file' data-id='{{ f }}'>Delete</a>
+                            </figcaption>
+                        </figure>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+</section>

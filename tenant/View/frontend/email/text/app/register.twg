@@ -1,0 +1,11 @@
+Chào {{ admin }}.
+
+Thông tin website:
+address: {{ app }}/
+
+Thông tin administrator:
+address: {{ backend }}/
+tài khoản: {{ admin }}
+password: {{ password }}
+
+----------------------

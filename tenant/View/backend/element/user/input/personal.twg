@@ -1,0 +1,68 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2201', 'Thông tin cá nhân', alias) }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="address">{{ __('2202', 'Địa chỉ', alias) }}</label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[address]' type='text' id='address' value='{{ attribute(target, alias).address }}' placeholder="{{ __('2202', 'Địa chỉ', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'address') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 col-md-2'><label for="phone">{{ __('2203', 'Điện thoại', alias) }}</label></th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[phone]' type='text' id='phone' value='{{ attribute(target, alias).phone }}' placeholder="{{ __('2203', 'Điện thoại', alias) }}"/>
+                    {% if error is defined %}
+                        {{ error|error(alias, 'phone') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 col-md-2'>
+                    <label for='birthday'>{{ __('2204', 'Ngày sinh (yyyy-mm-dd)', alias) }}</label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[birthday]' type='text' id='birthday' value='{{ attribute(target, alias).birthday }}' placeholder='{{ __('2204', 'Ngày sinh (yyyy-mm-dd)', alias) }}' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'phone') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="gender">{{ __('2205', 'Giới tính', alias) }}</label>
+                </th>
+                <td>
+                    {% for value, name in option.gender %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[gender]' {% if value == attribute(target, alias).gender %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>

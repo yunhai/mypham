@@ -1,0 +1,20 @@
+{% extends "layout/default.twg" %}
+{% set sidebar = true %}
+
+{% block top %}
+    {{ html.css(['summernote'], 'package/summernote') }}
+{% endblock %}
+
+{% block bottom %}
+    {{ html.js(['summernote.min'], 'package/summernote') }}
+
+    {{ html.js(['faq']) }}
+{% endblock %}
+
+{% block content %}
+    <form id='basic-form' class='app-form form-horizontal' method='post' enctype='multipart/form-data'>
+        {% embed 'element/product/faq/input/control.twg' %}{% endembed %}
+        {% embed 'element/product/faq/input/basic.twg' %}{% endembed %}
+        {% embed 'element/product/faq/input/control.twg' %}{% endembed %}
+    </form>
+{% endblock %}

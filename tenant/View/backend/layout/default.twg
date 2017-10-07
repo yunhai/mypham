@@ -1,0 +1,72 @@
+{% set html = load('html', 'helper') %}
+
+<!DOCTYPE html>
+<html lang="en" class="app">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{ meta.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    {{ html.css(['bootstrap', 'animate', 'font-awesome.min', 'icon', 'font', 'app', 'common']) }}
+    {{ html.css(['toastr.min'], 'package/toastr') }}
+    {% block top %}{% endblock %}
+    <!--[if lt IE 9]>
+        {{ html.js(['html5shiv.min', 'respond.min', 'excanvas'], 'js/ie') }}
+    <![endif]-->
+</head>
+
+<body>
+    <section class="vbox">
+        {% include 'element/layout/header.twg' %}
+        <section id='wrapper'>
+            <section class="hbox stretch">
+                {% include 'element/layout/navbar.twg' %}
+
+                <section id="content">
+                    <section class="vbox">
+                        <section class="scrollable content-wrapper">
+                            {% include 'element/layout/page-header.twg' %}
+                            {% block content %}{% endblock %}
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    {{ html.js(['jquery.min', 'bootstrap', 'app']) }}
+    {{ html.js(['jquery.slimscroll.min'], 'js/slimscroll') }}
+    {{ html.js(['app.plugin', 'basic', 'common']) }}
+    {{ html.js(['toastr.min'], 'package/toastr') }}
+    {% block bottom %}{% endblock %}
+
+    {% set flash = login().flash() %}
+    {% if flash is not empty %}
+      <script>
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
+
+          {% for type, messages in flash %}
+          {% for message in messages %}
+            toastr.{{type}}('{{message}}');
+          {% endfor %}
+          {% endfor %}
+    </script>
+  {% endif %}
+</body>
+</html>

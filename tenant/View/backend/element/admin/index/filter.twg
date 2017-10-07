@@ -1,0 +1,62 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2002', 'Tìm kiếm', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body {% if collapse %}collapse{% endif %}">
+        {% set url = option.alias ~ '/filter' %}
+        {% set criteria = option.filter %}
+        <form class="form-horizontal" action='{{ url|url }}' method='post'>
+            {% block group %}
+            <div class="form-group">
+                <label for="filter-group" class="col-sm-2 control-label">{{ __('2003', 'Nhóm') }}</label>
+                <div class="col-sm-10">
+                  <select class="form-control" name='filter[group]' id='filter-group'>
+                    <option value="0">{{ __('2003', 'Tất cả') }}</option>
+                    {% for key, value in option.group %}
+                    <option value="{{ key }}" {% if key == criteria.group %} selected='selected' {% endif %}>{{ value }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% endblock %}
+
+            {% block account %}
+            <div class="form-group">
+                <label for="filter-account" class="col-sm-2 control-label">{{ __('2003', 'Email / Tài khoản') }}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="filter-account" name='filter[account]' {{ __('2003', 'Email / Tài khoản') }} value='{{ criteria.account }}'/ >
+                </div>
+            </div>
+            {% endblock %}
+
+            {% block status %}
+            <div class="form-group">
+                <label for="filter[status]" class="col-sm-2 control-label">{{ __('2003', 'Trạng thái') }}</label>
+                <div class="col-sm-10 padding-0">
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="checkbox" value="{{ value }}" name='filter[status][]' {% if criteria.status is defined and value in criteria.status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endblock %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-s-md btn-success">{{ __('2002', 'Tìm kiếm', 'global') }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

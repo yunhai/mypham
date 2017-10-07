@@ -1,0 +1,72 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<section class="panel panel-default">
+    <header class="panel-heading">
+        {{ __('1001', alias, alias) }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class='panel-body'>
+        {% include 'element/locale/index/header.twg' %}
+        <div class="table-responsive">
+            <form id='list-form' method='post' class='app-list'>
+                <table class="table table-hover table-striped table-responsive b-t b-light">
+                    <thead>
+                        <tr>
+                            <th class='i-column-small'>
+                                <label class="checkbox m-n i-checks">
+                                    <input type="checkbox"><i></i>
+                                </label>
+                            </th>
+                            <th class='col-sm-1'>{{ __('1002', 'Chanel', alias) }}</th>
+                            <th class='col-sm-1'>{{ __('1003', 'Scope', alias) }}</th>
+                            <th class='col-sm-1'>{{ __('1004', 'Code', alias) }}</th>
+                            {% for item in available %}
+                                <th>{{ item }}</th>
+                            {% endfor %}
+                            <th class='col-sm-2'>{{ __('1005', 'Last modified', alias) }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in data.list %}
+                        <tr>
+                            <td>
+                                <label class="checkbox m-n i-checks">
+                                <input type='checkbox' name='{{ alias }}[{{ attribute(item, alias).id }}][id]' value='{{ attribute(item, alias).id }}' /><i></i>
+                              </label>
+                            </td>
+                            <td>
+                                {{ attribute(channel, attribute(item, alias).channel) }}
+                            </td>
+                            <td>
+                                {{ attribute(scope, attribute(item, alias).scope) }}
+                            </td>
+                            <td>
+                                <a href='{{ load('url', 'helper').module('edit/' ~ attribute(item, alias).id) }}' title='{{ attribute(item, alias).code }}'>
+                                    {{ attribute(item, alias).code }}
+                                </a>
+                            </td>
+                            {% for key, locale in available %}
+                            <td>
+                                <input name='{{ alias }}[{{ attribute(item, alias).id }}][locale_{{ key }}]' value='{{ attribute(attribute(item, alias), 'locale_' ~ key) }}' class='row-input' />
+                            </td>
+                            {% endfor %}
+                            <td>
+                                {{ attribute(item, alias).modified }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

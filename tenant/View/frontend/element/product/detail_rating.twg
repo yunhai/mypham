@@ -1,0 +1,51 @@
+<div id="menu1" class="tab-pane fade"><!--tab ct-->
+    <div class="wraper-vote"><!--wraper vote-->
+        <p class="ques">Bạn đã sử dụng sản phẩm này chưa?</p>
+        <p>Nếu bạn đã từng sử dụng sản phẩm này, bạn có thể gởi lời nhận xét sản phẩm.</p>
+        <p>Nếu bạn cần tư vấn về sản phẩm vui lòng gửi thông tin theo bên dưới.</p>
+        <br/>
+        {% set url = 'product/vote/' ~ item.id %}
+        <form id="vote" method='post' data-action='{{ url|url }}'>
+            <input type='hidden' name='target' value='{{ item.id }}' />
+            Đánh giá:
+            <label>Giá
+                <select name="price">
+                    {% for i in 5..1%}
+                    <option value="{{ i }}">{{ i }} sao</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>Chất lượng
+                <select name="quantity">
+                    {% for i in 5..1%}
+                    <option value="{{ i }}">{{ i }} sao</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>Chuyển hàng
+                <select name="shipping">
+                    {% for i in 5..1%}
+                    <option value="{{ i }}">{{ i }} sao</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <div class='clear'></div><br />
+            <div class='product-detail-form-info'>
+                <span>Họ tên:</span>
+                <input name="fullname" />
+                <div class='clear'></div>
+            </div>
+            <div class='product-detail-form-info'>
+                <span>Email:</span>
+                <input name="email" />
+                <div class='clear'></div>
+            </div>
+            <span>Nội dung:</span>
+            <textarea name="content"></textarea>
+            <button id='submit-votting-form'>Đăng</button>
+        </form>
+    </div><!--end wrapervote-->
+    <div id='vote-callback'>Cám ơn quý khách đã nhận xét về sản phẩm.</div>
+    {% set url = 'product/rating/' ~ item.id %}
+    <div id='vote-list' class="list" data-url='{{ url|url }}'></div>
+</div>

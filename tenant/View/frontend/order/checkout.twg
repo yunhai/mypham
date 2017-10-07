@@ -1,0 +1,40 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="cart-info"><!--cart-info-->
+    <h3>Thông tin đơn hàng</h3>
+    <div class="wraper-table-cart-info">
+        <p>Bạn có <span id='order-amount'>{{ addon.cart.total.item }}</span> sản phẩm trong giỏ hàng</p>
+
+        <table class="table-cart-info">
+            <tbody>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>SL</th>
+                    <th>Giá (VND)</th>
+                </tr>
+                {% for product_id, item in addon.cart.detail %}
+                <tr>
+                    <td class="name">
+                        {{ item.title }}
+                    </td>
+                    <td><span>{{ item.amount }}</span></td>
+                    <td><span>{{ item.price|price }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="sum-cart-info">
+            <span>Tổng cộng:</span>
+            <span>{{ addon.cart.total.total|price }}</span>
+        </p>
+        <p class="sum-cart-info last">
+            <span>Thành tiền:</span>
+            <span>{{ addon.cart.total.total|price }}</span>
+        </p>
+        <p class="vat">(Đã bao gồm VAT)</p>
+    </div>
+    <a href="{{ 'don-hang/thanh-toan'|url }}" class='button-center'>Thanh toán &nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+</div>
+{% endblock %}

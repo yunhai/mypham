@@ -1,0 +1,131 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Thông tin cơ bản', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="account">{{ __('2101', 'Tài khoản', alias) }}</label>
+                    <span class="text-danger pull-right">
+                        {{ __('2001', 'Required', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[account]' type='text' id='account' value='{{ attribute(target, alias).account }}' placeholder="{{ __('2101', 'Tài khoản', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'account') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% if attribute(target, alias).id > 0 %}
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="password">{{ __('2102', 'Mật khẩu', alias) }}</label>
+                </th>
+                <td>
+                    <a id='password' href='{{ load('url', 'helper').module("password/" ~ attribute(target, alias).id) }}' title='{{ attribute(target, alias).account }}' class='btn btn-link btn-primary'>
+                        {{ __('2103', 'Cập nhật mật khẩu', alias) }}
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="password">{{ __('2102', 'Mật khẩu', alias) }}</label>
+                    <span class="text-danger pull-right">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[password]' type='password' id='password' id='password' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'password') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="confirm-password">{{ __('2104', 'Nhập lại mật khẩu', alias) }}</label>
+                    <span class="text-danger pull-right">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[confirm_password]' type='password' id='confirm_password' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'confirm_password') }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="email">{{ __('2105', 'Email', alias) }}</label>
+                    <span class="text-danger pull-right">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[email]' type='text' id='email' value='{{ attribute(target, alias).email }}' type='email' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'email') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 col-md-2'><label for="fullname">{{ __('2106', 'Họ tên', alias) }}</label></th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[fullname]' type='text' id='fullname' value='{{ attribute(target, alias).fullname }}' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'fullname') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="{{ alias }}[group_id]">{{ __('2107', 'Nhóm', alias) }}</label>
+                </th>
+                <td>
+                    <select class="form-control" name='{{ alias }}[group_id]'>
+                        <option value="0">{{ __('2108', 'Chọn nhóm', alias) }}</option>
+                        {% for key, value in option.groups %}
+                        <option value="{{ key }}" {% if key == attribute(target, alias).group_id %} selected='selected' {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="{{ alias }}[status]">{{ __('2109', 'Status', alias) }}</label>
+                </th>
+                <td>
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == attribute(target, alias).status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,76 @@
+<div class="cart-info"><!--cart-info-->
+    <h3>Thông tin đơn hàng</h3>
+    <div class="wraper-table-cart-info">
+        <p>Bạn có <span id='order-amount'>{{ addon.cart.total.item }}</span> sản phẩm trong giỏ hàng</p>
+
+
+        <table class="table-cart-info">
+            <tbody>
+                <tr>
+                    <!-- <th></th> -->
+                    <th>Sản phẩm</th>
+                    {% if option %}<th>Lựa chọn</th>{% endif %}
+                    <th>SL</th>
+                    <th>Giá (VND)</th>
+                </tr>
+                {% for product_id, item in addon.cart.detail %}
+                <tr>
+                    <!-- <td style='width: 60px'>
+                        <span class='nailthumb thumb-60-60'>
+                            {{ item|media({'class': 'thumb-60-60' }) }}
+                        </span>
+                    </td> -->
+                    <td class="name">{{ item.title }}</td>
+                    {% if option %}<td><span>{{ attribute(item, 'selected-option') }}</span></td>{% endif %}
+                    <td><span>{{ item.amount }}</span></td>
+                    <td><span>{{ item.price|price }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="sum-cart-info">
+            <span>Tổng cộng:</span>
+            <span>{{ addon.cart.total.sub_total|price }}</span>
+        </p>
+
+        {% if addon.cart.total.shipping %}
+        <p class="sum-cart-info">
+            <span>Phí vận chuyển:</span>
+            <span>{{ addon.cart.total.shipping|price }}</span>
+        </p>
+        {% endif %}
+
+        <p class="sum-cart-info last">
+            <span>Thành tiền:</span>
+            <span>{{ addon.cart.total.total|price }}</span>
+        </p>
+        <p class="vat">(Đã bao gồm VAT)</p>
+    </div>
+</div><!--.cart-info-->
+{% if addon.order.deliver is defined %}
+<div class="cart-info"><!--cart-info-->
+    <h3>Thông tin giao hàng</h3>
+    <div class="wraper-table-cart-info">
+        <table class="table-cart-info info-shipping">
+            <tr>
+                <td>
+                    <strong>{{ addon.order.deliver.fullname }}</strong><br/>
+                    Địa Chỉ: {{ addon.order.deliver.address }}<br/>
+                    Điện thoại: {{ addon.order.deliver.phone }}<br/>
+                    Email: {{ addon.order.deliver.email }}<br/>
+                    {% if addon.order.deliver.deliver_type == 2 %}
+                    <span style='color: red;'>Phụ thu phí giao hàng</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    - Dùng làm địa chỉ giao hàng, và liên hệ giao hàng<br/>
+                    - Giao hàng trong vòng 2 - 5 ngày làm việc kể từ ngày đặt hàng (Giao hàng miễn phí).
+                </td>
+            </tr>
+        </table>
+    </div>
+</div><!--.cart-info-->
+{% endif %}

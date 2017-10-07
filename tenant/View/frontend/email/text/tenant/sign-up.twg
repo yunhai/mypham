@@ -1,0 +1,11 @@
+Chào {{ email }}.
+
+Thông tin login:
+
+username: {{ email }}
+password: {{ password }}
+
+login page: {{ 'login'|url }}
+change profile: {{ 'profile'|url }}
+change password: {{ 'password'|url }}
+----------------------

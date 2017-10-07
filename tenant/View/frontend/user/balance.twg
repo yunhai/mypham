@@ -1,0 +1,8 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="wrapertv">
+    {% set balance = data.balance ? data.balance : 0 %}
+    Quý khách đã tích lũy được <span class='btn btn-success'>{{ balance|price }} điểm thưởng</span>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "layout/default.twg" %}
+
+{% block top %}
+    {{ html.css(['summernote'], 'package/summernote') }}
+    {{ html.css(['hover'], 'package/hover') }}
+    {{ html.css(['jquery.nailthumb.1.1.min'], 'package/nailthumb') }}
+    {{ html.css(['jquery.fileapi'], 'package/jquery.fileapi') }}
+{% endblock %}
+
+{% block bottom %}
+    {{ html.js(['summernote.min'], 'package/summernote') }}
+    {{ html.js(['modernizr.custom', 'toucheffects'], 'package/hover') }}
+    {{ html.js(['jquery.nailthumb.1.1.min'], 'package/nailthumb') }}
+    {{ html.js(['FileAPI/FileAPI.min', 'FileAPI/FileAPI.exif', 'jquery.fileapi'], 'package/jquery.fileapi') }}
+    {{ html.js(['input', 'seo']) }}
+{% endblock %}
+
+{% block content %}
+    <form id='basic-form' class='app-form form-horizontal' method='post' enctype='multipart/form-data'>
+        {% embed 'element/master/input/control.twg' %}{% endembed %}
+        {% block basic %}
+            {% embed 'element/master/input/basic.twg' %}{% endembed %}
+        {% endblock %}
+
+        {% block custom %}{% endblock %}
+
+        {% block seo %}
+            {% embed 'element/master/input/seo.twg' %}{% endembed %}
+        {% endblock %}
+        {% embed 'element/master/input/control.twg' %}{% endembed %}
+    </form>
+{% endblock %}
+
+{# http://www.garralab.com/nailthumb.php #}
+{# http://tympanus.net/ #}

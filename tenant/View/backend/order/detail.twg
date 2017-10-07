@@ -1,0 +1,121 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    <section class="hbox stretch">
+        <aside class="aside-lg bg-light dker b-r order-info" style='background: #fff;'>
+            <div class="wrapper b-b header">
+                {{ __('3001', 'Thông tin đơn hàng', alias) }}
+            </div>
+            <div class='detail'>
+                <div class="info-group order-status">
+                    {{ attribute(target, alias).status|status(status, ['btn-default', 'btn-primary', 'btn-success', 'btn-danger']) }}
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3003', 'Ngày đặt', alias) }}</label>
+                    <span>{{ attribute(target, alias).created|date_modify("+7 hour")|date('h:i d/m/Y') }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3004', 'Tổng cộng', alias) }}</label>
+                    <span>{{ attribute(target, alias).sub_total|number }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3004', 'Phí vận chuyển', alias) }}</label>
+                    <span>{{ attribute(target, alias).shipping|number }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3004', 'Thành tiền', alias) }}</label>
+                    <span>{{ attribute(target, alias).total|number }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3004', 'Phương thức thanh toán', alias) }}</label>
+                    <span>
+                        {% if attribute(target, alias).recipient.payment == 1 %}
+                            Thanh toán khi nhận hàng
+                        {% elseif attribute(target, alias).recipient.payment == 2%}
+                            Chuyển khoản ngân hàng
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3004', 'Ghi chú', alias) }}</label>
+                    <span>
+                        {{ attribute(target, alias).note|nl2br }}
+                    </span>
+                </div>
+            </div>
+            <div class="wrapper b-b header">
+                {{ __('3002', 'Thông tin giao hàng', alias) }}
+            </div>
+            <div class='detail'>
+                <div class="info-group">
+                    <label>{{ __('3006', 'Mã đơn hàng', alias) }}</label>
+                    <span>{{ attribute(target, alias).code }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3007', 'Người nhận', alias) }}</label>
+                    <span>{{ attribute(target, alias).recipient.fullname }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3008', 'Địa chỉ', alias) }}</label>
+                    <span>{{ attribute(target, alias).recipient.address }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3009', 'Điện thoại', alias) }}</label>
+                    <span>{{ attribute(target, alias).recipient.phone }}</span>
+                </div>
+                <div class="info-group">
+                    <label>{{ __('3010', 'Email', alias) }}</label>
+                    <span>{{ attribute(target, alias).recipient.email }}</span>
+                </div>
+            </div>
+        </aside>
+        <aside>
+            <section class="vbox cart-list">
+                <header class="header bg-white b-b clearfix cart-header">
+                    <div class="row m-t-sm">
+                        <div class="col-sm-4 m-b-xs">
+                            <a href='{{ load('url', 'helper').module('rollback/' ~ attribute(target, alias).id) }}' class="btn btn-default" title='{{ __('3011', 'Xem xét đơn hàng', alias) }}'>{{ __('3012', 'Xem xét', alias) }}</a>
+                        </div>
+                        <div class="col-sm-8 m-b-xs text-right">
+                            <a href='{{ load('url', 'helper').module('reject/' ~ attribute(target, alias).id) }}' class="btn btn-danger" title='{{ __('3013', 'Từ chối đơn hàng', alias) }}'>{{ __('3014', 'Từ chối', alias) }}</a>
+                            <a href='{{ load('url', 'helper').module('execute/' ~ attribute(target, alias).id) }}' class="btn btn-primary" title='{{ __('3015', 'Xử lý đơn hàng', alias) }}'>{{ __('3016', 'Xử lý', alias) }}</a>
+                            <a href='{{ load('url', 'helper').module('finish/' ~ attribute(target, alias).id) }}' class="btn btn-success" title='{{ __('3017', 'Hoàn tất đơn hàng', alias) }}'>{{ __('3018', 'Hoàn tất', alias) }}</a>
+                        </div>
+                    </div>
+                </header>
+                <section class="scrollable wrapper w-f">
+                    <section class="panel panel-default">
+                        <div class="table-responsive">
+                            <table class="table table-striped m-b-none">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('3019', 'Mặt hàng', alias) }}</th>
+                                        <th class='col-sm-2'>{{ __('3020', 'Lựa chọn', alias) }}</th>
+                                        <th class='col-sm-2'>{{ __('3021', 'Số lượng', alias) }}</th>
+                                        <th class='col-sm-2'>{{ __('3022', 'Đơn giá', alias) }}</th>
+                                        <th class='col-sm-2'>{{ __('3023', 'Thành tiền', alias) }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in target.detail %}
+                                    <tr>
+                                        <td>{{ item.target.title }}</td>
+                                        <td>{{ item.option }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.price|number }}</td>
+                                        <td>{{ item.total|number }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td colspan='4' class='text-right'><strong>{{ __('3004', 'Tổng tiền', alias) }}</strong></td>
+                                        <td><strong>{{ attribute(target, alias).total|number }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </aside>
+    </section>
+{% endblock %}

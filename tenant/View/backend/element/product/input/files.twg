@@ -1,0 +1,46 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Hình ảnh sản phẩm', alias) }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        {% set url = 'file/upload/target:' ~ alias ~ '-files' %}
+        <div id='files-uploader' class="b-upload" action='{{ url|url }}'>
+            <div class="btn-upload b-upload__dnd">Drag and drop, automatic upload<input type="file" name="{{alias}}-files" /></div>
+
+            <div class='preview-container'>
+                <div class="js-files b-upload__files">
+                    <div class="js-file-tpl-files b-thumb" data-wrapper='{{alias}}-files-uploaded' data-preview='col-md-4'>
+                        <div class="b-thumb__preview">
+                            <div class="b-thumb__preview__pic"></div>
+                        </div>
+                        <div class="b-thumb__progress progress progress-small"><div class="bar"></div></div>
+                        <div class="b-thumb__name"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul id='{{alias}}-files-uploaded' class="div-hover row files-container">
+            {% if target.files is defined %}
+                {% for f in target.files %}
+                    <li id='img-container-{{ f }}' class='col-md-4 files-item'>
+                        <input type='hidden' value='{{ f }}' name='{{alias}}-files[{{ f }}][id]' />
+                        <figure class='nailthumb-container'>
+                            {{ f|media({'target_id': f, 'data-id': f}) }}
+                            <figcaption>
+                                <a href="javascript:;" class='remove-file' data-id='{{f}}'>Delete</a>
+                            </figcaption>
+                        </figure>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+</section>

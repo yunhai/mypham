@@ -1,0 +1,10 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="cart-info">
+    <h3>{{ target.title }}</h3>
+    <div class="wraper-table-cart-info">
+        {{ target.content }}
+    </div>
+</div>
+{% endblock %}

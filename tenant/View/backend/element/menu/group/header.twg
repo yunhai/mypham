@@ -1,0 +1,21 @@
+{% set url = load('url', 'helper') %}
+
+<div class="row wrapper">
+    <div class="col-sm-4 hidden-xs">
+        <select class="input-sm form-control input-s-sm inline v-middle" id='bulk-action-list' data-form='list-form'>
+            <option value="">{{ __('1001', 'Option', 'global') }}</option>
+            <option value="{{ url.module('delete') }}">
+                {{ __('1002', 'Xóa') }}
+            </option>
+
+            {% if status is defined %}
+            {% for value, name in status %}
+                <option value="{{ url.module('update/' ~ value) }}">
+                    {{ name }}
+                </option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <button class="btn btn-sm btn-default" id='bulk-action-button'>{{ __('1005', 'Thực thi', 'global') }}</button>
+    </div>
+</div>

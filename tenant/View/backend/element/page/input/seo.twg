@@ -1,0 +1,65 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2002', 'SEO', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='seo[id]' value='{{ target.seo.id }}' />
+        <table class="table table-bordered formTable">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="seo-permalink">{{ __('2001', 'Permalink', 'seo') }}</label>
+                </th>
+                <td>
+                    <input class='form-control seo-autofill' name='seo[alias]' type='text' id='seo-permalink' value='{{ target.seo.alias }}' placeholder="{{ __('2001', 'Permalink', 'seo') }}" />
+                    {% if error is defined %}
+                        {{ error|error('seo', 'alias') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="seo-canonical">{{ __('2002', 'Canonical', 'seo') }}</label>
+                </th>
+                <td>
+                    <input class='form-control seo-autofill' name='seo[canonical]' type='text' id='seo-canonical' value='{{ target.seo.canonical }}' placeholder="{{ __('2002', 'Canonical', 'seo') }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="seo-title">{{ __('2003', 'Title', 'seo') }}</label>
+                </th>
+                <td>
+                    <input class='form-control seo-autofill' name='seo[title]' type='text' id='seo-title' value='{{ target.seo.title }}' placeholder="{{ __('2003', 'Title', 'seo') }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="seo-keyword">{{ __('2004', 'Keyword', 'seo') }}</label>
+                </th>
+                <td>
+                    <input class='form-control seo-autofill' name='seo[keyword]' type='text' id='seo-keyword' value='{{ target.seo.keyword }}' placeholder="{{ __('2004', 'Keyword', 'seo') }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="seo-desc">{{ __('2005', 'Description', 'seo') }}</label>
+                </th>
+                <td>
+                    <textarea id='seo-desc' class="form-control seo-autofill" rows="3" name="seo[desc]" placeholder="{{ __('2005', 'Desc', 'seo') }}">{{ target.seo.desc }}</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>

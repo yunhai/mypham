@@ -1,0 +1,9 @@
+<div>
+    <div style='border-top: 1px dashed #666; margin-top: 10px; padding-top: 10px;'></div>
+
+    {% set url = 'product/faq/' ~ target.id %}
+    <a class='faq-rating {% if attribute(association, 'product-faq').pending %}remark{% endif %}' href='{{ url|url }}' title='Danh sách tư vấn'>Tư vấn: {{ attribute(association, 'product-faq').pending }}/{{ attribute(association, 'product-faq').all }}</a>
+
+    {% set url = 'product/rating/' ~ target.id %}
+    <a class='faq-rating {% if attribute(association, 'product-rating').pending %}remark{% endif %}' href='{{ url|url }}' title='Danh sách đánh giá'>Đánh giá: {{ attribute(association, 'product-rating').pending }}/{{ attribute(association, 'product-rating').all }}</a>
+</div>

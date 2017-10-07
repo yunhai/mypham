@@ -1,0 +1,157 @@
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <button type="button" class="btn bt-login btn-default" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 boder-right-dot"><!--md8-->
+                      <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li id="li-home" role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Login</a></li>
+                            <li id="li-profile" role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Sign up</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content content-popup">
+                            <div role="tabpanel" class="tab-pane active" id="home"><!--tab1-->
+                                <form action="{{ 'user/login/local'|url }}" method='post'>
+                                    <div class="row">
+                                        <div class="col-md-4 left">
+                                            Email *
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="email" name="email" required />
+                                        </div>
+                                        <div class="col-md-4 left">
+                                            Mật khẩu *
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="password" name="password" required />
+                                        </div>
+                                        <div class="col-md-4 left">
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <a href="{{ 'user/forget-password'|url }}">Quên mật khẩu?</a>
+                                        </div>
+                                        <div class="col-md-4 left">
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <button type="submit">Đăng nhập</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!--tab -->
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <form action="{{ 'user/sign-up'|url }}" method='post'>
+                                    <div class="row">
+                                        <div class="col-md-4 left">
+                                            Họ tên
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="name" name="fullname" required />
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                            Email
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="email" name="email" required />
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                            Mật khẩu
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="password" name="password" required />
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                            Nhập lại mật khẩu
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="password" name="confirm-password" required />
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                            Địa chỉ
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="text" name="address" />
+                                            <p class='form-note'>Không bắt buộc nhập</p>
+                                            <p class='form-note'>Thông tin địa chỉ giao hàng</p>
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                            Số điện thoại
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <input type="text" name="phone" />
+                                            <p class='form-note'>Không bắt buộc nhập</p>
+                                            <p class='form-note'>Thông tin điện thoại giao hàng</p>
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                            Ngày sinh
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <select name="birthday[day]">
+                                                <option value='0'>-- Ngày --</option>
+                                                {% for i in 1..31 %}
+                                                <option value='{{ i }}'>{{ i }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select name="birthday[month]">
+                                                <option value='0'>-- Tháng --</option>
+                                                {% for i in 1..12 %}
+                                                <option value='{{ i }}'>{{ i }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select name="birthday[year]">
+                                                <option value='0'>-- Năm --</option>
+                                                {% for i in ("now"|date("Y")-18).."now"|date("Y")-70 %}
+                                                    <option>{{ i }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <p class='form-note'>Không bắt buộc nhập</p>
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                            Giới tính
+                                        </div>
+                                        <div class="col-md-8 right sex">
+                                            <input type="radio" name="gender" value="1" id="male"> <label for="male"> Nam</label>
+                                            <input type="radio" name="gender" value="0" id="female"> <label for="female"> Nữ</label>
+                                            <p class='form-note'>Không bắt buộc nhập</p>
+                                        </div>
+
+                                        <div class="col-md-4 left">
+                                        </div>
+                                        <div class="col-md-8 right">
+                                            <button type="submit">Gửi</button>
+                                            <label class="none"><input type="checkbox" name="subcribe" value="1">Nhận thông tin khuyến mãi qua email</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!--end tab-->
+                    </div><!--.md8-->
+                    <span class="or">OR</span>
+                    <div class="col-md-4">
+                        <div class="wrapper-popup-right">
+                            <h3>Login with</h3>
+                            <div class="login-social">
+                                <a href="{{ 'user/login/facebook'|url }}">
+                                    {{ 'login-face.png'|asset }}
+                                </a>
+                                <a href="{{ 'user/login/google'|url }}">
+                                    {{ 'login-gg.png'|asset }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

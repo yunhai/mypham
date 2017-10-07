@@ -1,0 +1,106 @@
+<header id="header"><!--header-->
+    <section id="h-header"><!--h-header-->
+        <div class="container"> <!--container-->
+            <div class="row"><!--row-->
+                <div class="col-md-6">
+                    <ul class='left-top-menu'>
+                        <li>
+                            <a href="{{ 'user/balance'|url }}" title="Điểm tích lũy" rel="nofollow">Điểm tích lũy</a>
+                        </li>
+                        <li class="line">|</li>
+                        <li>
+                            <a href="{{ 'huong-dan-dat-hang'|url }}" title="Hướng dẫn đặt hàng">Hướng dẫn đặt hàng</a>
+                        </li>
+                        <li class="line">|</li>
+                        <li>
+                            <a href="{{ 'contact'|url }}" title="Liên hệ" rel="nofollow">Liên hệ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="h-ul-right">
+                        <li>
+                            <a id="cart-icon" href="javascript:;" class='j-show-cart'>{{ 'icon-cart.png'|asset }} Giỏ hàng <span id="num-cart">({{ addon.cart.total.item ? addon.cart.total.item : 0 }})</span></a>
+                        </li>
+                        <li class="line">|</li>
+                        <li>
+                            <a href="{{ 'order/history'|url }}" title="Kiểm tra đơn hàng" rel="nofollow">Kiểm tra đơn hàng</a>
+                        </li>
+                        <li class="line">|</li>
+                        {% if login().loggedin() %}
+                            <li>
+                                <a class="profile dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{ login().auth('user.fullname') }}
+                                <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="{{ 'user/me'|url }}" rel="nofollow">Profile</a></li>
+                                    <li><a href="{{ 'user/update-password'|url }}" rel="nofollow">Đổi mật khẩu</a></li>
+                                    <li><a href="{{ 'user/logout'|url }}" rel="nofollow">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="login" href="#" title="Đăng nhập">Đăng nhập</a>
+                            </li>
+                            <li class="line">|</li>
+                            <li>
+                                <a class="sign-up" href="#" title="Đăng ký">Đăng ký</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div><!-- end row -->
+        </div><!--end container-->
+    </section><!--end h-header-->
+    <section id="logo"><!--logo-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="logo">
+                        <a href="{{ request().home }}">{{ 'logo.png'|asset }}</a>
+                    </div>
+                    <div class="search">
+                        <div class="form-search"><!--search-->
+                        <form method="post" action='{{ 'product/search'|url }}'>
+                            <select name="category" class='select'>
+                                <option value='0'>Chọn danh mục...</option>
+                                {% for item in addon.product_category %}
+                                    {% set id = item.id %}
+                                    <option value='{{ id }}'>{{ item.title }}</option>
+                                    {% if item.children %}
+                                        {% for item2 in item.children %}
+                                            {% set id2 = item2.id %}
+                                            <option value='{{ id2 }}'>&nbsp;&nbsp;&nbsp;&nbsp;{{ item2.title }}</option>
+                                            {% if item2.children %}
+                                            {% for id3, item3 in item2.children %}
+                                                {% set id3 = item3.id %}
+                                                <option value='{{ id3 }}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item3.title }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input type="text" name="keyword"></input>
+                            <button type="submit">Tìm kiếm</button>
+                        </form>
+                        </div><!--end search-->
+                        <div class="menu-main"><!--menu main-->
+                            <ul>
+                            {% for item in addon.main_menu %}
+                                <li><a href="{{ item.url|url }}" title='{{ item.title }}'>{{ item.title }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        </div><!--end menu main-->
+                    </div>
+                    <div class="number-support">
+                        <span id="number-phone">{{ config('hotline') }}</span>
+                        {{ 'code.png'|asset }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--logo-->
+    {% include 'element/layout/top-menu-bar.twg' %}
+</header><!-- #header -->

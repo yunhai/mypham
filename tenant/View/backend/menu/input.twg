@@ -1,0 +1,12 @@
+{% extends "layout/default.twg" %}
+
+
+{% block content %}
+<div class="col-sm-12 m-l-n-sm">
+    <form id='basic-form' class='app-form form-horizontal' method='post' enctype="multipart/form-data">
+        {% embed 'element/category/input/control.twg' %}{% endembed %}
+        {% embed 'element/menu/input/basic.twg' %}{% endembed %}
+        {% embed 'element/category/input/control.twg' %}{% endembed %}
+    </form>
+</div>
+{% endblock %}

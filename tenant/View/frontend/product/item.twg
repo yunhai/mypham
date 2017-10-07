@@ -1,0 +1,5 @@
+{% for item in items %}
+    <div class="col-md-5x">
+        {% embed 'element/product/item.twg' with {'item': item} %}{% endembed %}
+    </div>
+{% endfor %}

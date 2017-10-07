@@ -1,0 +1,54 @@
+<div class="table-responsive">
+    <form id='list-form' method='post' class='app-list'>
+        <table class="table table-hover table-striped table-responsive b-t b-light">
+            <thead>
+                <tr>
+                    <th width='50'>
+                        <label class="checkbox m-n i-checks">
+                            <input type="checkbox"><i></i>
+                        </label>
+                    </th>
+                    <th class='col-sm-1'></th>
+                    <th>{{ __('1002', 'Tên', alias) }}</th>
+                    <th class='col-sm-2'>{{ __('1003', 'Hãng sản xuất', alias) }}</th>
+                    <th class='col-sm-2'>{{ __('1004', 'Danh mục', alias) }}</th>
+                    <th class='col-sm-1'>{{ __('1005', 'Đơn Giá', alias) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data.list %}
+                <tr>
+                    <td>
+                        <label class="checkbox m-n i-checks">
+                            <input type='checkbox' name='{{ alias }}[{{ attribute(item, alias).id }}]' value='{{ attribute(item, alias).id }}' /><i></i>
+                        </label>
+                    </td>
+                    <td>{{ attribute(item, alias).status|status(status) }}</td>
+                    <td>
+                        <a href='{{ load('url', 'helper').module('edit/' ~ attribute(item, alias).id) }}' title='{{ attribute(item, alias).title }}' class='edit-link'>
+                            {{ attribute(item, alias).title }}
+                        </a>
+
+                        {% set association = attribute(data.association, attribute(item, alias).id) %}
+
+                        {% if association %}
+                            {% embed 'element/product/index/association.twg' with {'association': association, 'target': attribute(item, alias)} %}{% endembed %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ attribute(item, alias).manufacturer }}
+                    </td>
+                    <td>
+                        {{ attribute(data.category, attribute(item, alias).category_id) }}
+                    </td>
+                    <td class='text-center'>
+                        {{ attribute(item, alias).price|number }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+{% embed 'element/master/index/pager.twg' %}{% endembed %}

@@ -1,0 +1,4 @@
+<ul class="breadcrumb">
+    <li><a href="{{ ''|url }}"><i class="fa fa-home"></i> {{ __('1001', 'Home', 'global') }}</a></li>
+    <li class="active">{{ __('1001', alias, alias) }}</li>
+</ul>

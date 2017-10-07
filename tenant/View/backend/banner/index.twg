@@ -1,0 +1,5 @@
+{% embed "post/index.twg" %}
+    {% block data %}
+        {% embed 'banner/index/list.twg' %}{% endembed %}
+    {% endblock %}
+{% endembed %}

@@ -1,0 +1,51 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Thông tin cơ bản', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="title">
+                        {{ __('2001', 'Title') }}
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[title]' type='text' id='title' value='{{ attribute(target, alias).title  }}' placeholder="{{ __('2001', 'Title') }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'title') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="index">{{ __('2003', 'Status') }}</label>
+                </th>
+                <td>
+                    {% for value, status in ['draft', 'publish'] %}
+                    <div class='radio-inline i-checks'>
+                    <label class='control-label'>
+                        <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == attribute(target, alias).status %} checked='checked' {% endif %}/>
+                        <i></i>{{ status }}
+                    </label>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>

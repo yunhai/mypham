@@ -1,0 +1,13 @@
+<div class='rating-list row'>
+{% for item in list %}
+
+<div class="item-list"><!--item-->
+    <div class="col-md-12">
+        <span class='question'>{{ item.question|nl2br }}</span>
+        <span class='date'>{{ item.created|date('h:i d/m/Y') }}</span>
+        {{ item.answer }}
+    </div>
+</div><!--item-->
+
+{% endfor %}
+</div>

@@ -1,0 +1,12 @@
+<ul class="dropdown-menu animated fadeInRight">
+    {# <li>
+        <a href="{{ ('user/edit/' ~ login().userId)|url }}">
+            Profile
+        </a>
+    </li>
+<li class="divider"></li>
+    #}
+     <li>
+        <a href="{{ 'user/logout'|url }}" data-toggle="ajaxModal">Logout</a>
+    </li>
+</ul>

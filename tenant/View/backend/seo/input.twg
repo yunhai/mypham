@@ -1,0 +1,90 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    <form id='basic-form' class='app-form form-horizontal' method='post'>
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">
+                {{ __('1011', 'Basic') }}
+                <ul class="nav nav-pills pull-right">
+                    <li>
+                        <a href="#" class="panel-toggle text-muted">
+                            <i class="fa fa-caret-down text-active"></i>
+                            <i class="fa fa-caret-up text"></i>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+            <div class="panel-body">
+                <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+                <table class="table table-bordered formTable">
+                    <tr>
+                        <th class='col-sm-3 table-label'>
+                            <label for="title">{{ __('1002', 'Url', alias) }}</label>
+                            <span class="text-danger pull-right">{{ __('2001', 'Bắt buộc', 'global') }}</span>
+                        </th>
+                        <td>
+                            <input class='form-control' name='{{ alias }}[url]' type='text' id='url' value='{{ attribute(target, alias).url }}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='col-sm-3 table-label'>
+                            <label for="title">{{ __('1003', 'Alias', alias) }}</label>
+                        </th>
+                        <td>
+                            <input class='form-control' name='{{ alias }}[alias]' type='text' id='alias' value='{{ attribute(target, alias).alias }}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='col-sm-3 table-label'>
+                            <label for="title">{{ __('1003', 'Canotical', alias) }}</label>
+                        </th>
+                        <td>
+                            <input class='form-control' name='{{ alias }}[canonical]' type='text' id='canonical' value='{{ attribute(target, alias).canonical }}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='col-sm-3 table-label'>
+                            <label for="title">{{ __('1003', 'Title', alias) }}</label>
+                        </th>
+                        <td>
+                            <input class='form-control' name='{{ alias }}[title]' type='text' id='title' value='{{ attribute(target, alias).title }}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='col-sm-3 table-label'>
+                            <label for="title">{{ __('1003', 'Keyword', alias) }}</label>
+                        </th>
+                        <td>
+                            <input class='form-control' name='{{ alias }}[keyword]' type='text' id='keyword' value='{{ attribute(target, alias).keyword }}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='col-sm-3 table-label'>
+                            <label for="title">{{ __('1003', 'Desc', alias) }}</label>
+                        </th>
+                        <td>
+                            <textarea id='desc' class="form-control" rows="3" name="{{ alias }}[description]" placeholder="{{ __('2005', 'Desc') }}">{{ attribute(target, alias).description }}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='col-sm-3 table-label'>
+                            <label class='control-label' for="index">{{ __('1004', 'Status', alias) }}</label>
+                        </th>
+                        <td>
+                            {% for value, name in status %}
+                            <div class='radio-inline i-checks'>
+                                <label class='control-label'>
+                                    <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == attribute(target, alias).status %} checked='checked' {% endif %}/>
+                                    <i></i>{{ name }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table>
+            <div>
+        </section>
+        {% embed 'element/master/input/control.twg' %}{% endembed %}
+    </form>
+{% endblock %}

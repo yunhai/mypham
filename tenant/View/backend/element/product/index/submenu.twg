@@ -1,0 +1,7 @@
+<div class='sub-navigator'>
+    {% for item in attribute(submenu, alias) %}
+        <a href='{{ item.url|url }}' title='{{ item.caption }}' target='_blank'>
+            {{ item.title }}
+        </a>
+    {% endfor %}
+</div>

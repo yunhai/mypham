@@ -1,0 +1,80 @@
+<footer id="footer"><!--footer-->
+    <div class="container">
+        <div class="row"><!--row-->
+            <div class="col-md-3 info"><!--info-->
+                <h3 class="title">Chăm sóc khách hàng</h3>
+                <ul>
+                    <li><a href="{{ 'trung-tam-ho-tro'|url }}" title="Trung tâm hỗ trợ">Trung tâm hỗ trợ</a></li>
+                    <li><a href="{{ 'thanh-toan'|url }}" title="Thanh toán">Thanh toán</a></li>
+                    <li><a href="{{ 'huong-dan-dat-hang'|url }}" title="Hướng dẫn đặt hàng" ref="nofollow">Hướng dẫn đặt hàng</a></li>
+                    <li><a href="{{ 'giao-nhan-hang'|url }}" title="Nhận hàng & Giao hàng">Nhận hàng & Giao hàng</a></li>
+                    <li><a href="{{ 'huong-dan-doi-tra-hang'|url }}" title="Hướng dẫn đổi trả hàng">Hướng dẫn đổi trả hàng</a></li>
+                </ul>
+                -----------------------------------------------------------
+                <ul>
+                    <li>HCM (08) 66.808.220</li>
+                    <li>HN (04) 66.808.220</li>
+                    <li>Thứ 2 - thứ 6: 7h - 20h</li>
+                    <li>Thứ 7: 7h - 18h </li>
+                    <li>CN & ngày lễ: 8h - 17h </li>
+                    <li>Hoặc gửi yêu cầu tại đây</li>
+                    <li>Thông báo hàng giả (08) 66.808.220</li>
+                </ul>
+            </div><!--end info-->
+            <div class="col-md-4" id='subcribe'><!--register md-4-->
+                <h3 class="title">Đăng ký nhận tin</h3>
+                <p>Đăng ký nhận tin từ Mỹ Phẩm</p>
+                <form id="subcribe-form" action='{{ 'subcribe'|url }}' method='post'>
+                    <input type="text" name="email" placeholder='Xin vui lòng nhập email' id='subcribe-email' />
+                </form>
+                Thông tin của bạn sẽ được giữ kín tuyệt đối, và bạn có thể hủy đăng ký bất cứ lúc nào. Mỗi khách hàng chỉ tham gia chương trình 1 lần. Chương trình chỉ dành cho khách hàng mới. <br/>
+                Bằng việc đăng ký nhận tin từ BOL, bạn xác nhận rằng bạn đã đọc và hiểu chính sách bảo mật của chúng tôi.
+            </div><!--end register-->
+            <div class="col-md-5"><!--method md-5-->
+                <h3 class="title">Cách thức mua hàng - thanh toán</h3>
+                <div class="method"><!--method-->
+                    <a href="{{ 'tu-van'|url }}" title="Tư vấn" ref="nofollow">
+                        <div class="item">
+                            {{ 'qa.png'|asset }}
+                            <p>Q & A</p>
+                        </div>
+                    </a>
+                    <a href="{{ 'huong-dan-dat-hang'|url }}" title="Mua hàng" ref="nofollow">
+                        <div class="item">
+                            {{ 'cart-foo.png'|asset }}
+                            <p>Mua hàng</p>
+                        </div>
+                    </a>
+                     <a href="{{ 'user/balance'|url }}" title="Điểm tích lũy" ref="nofollow">
+                        <div class="item">
+                            {{ 'point.png'|asset }}
+                            <p>Điểm tích lũy</p>
+                        </div>
+                    </a>
+                </div><!--end method-->
+                <div class="info-bank"><!--info bank-->
+                    <img src="{{ html.img }}/bank.png">
+                    <ul>
+                        <li>Chủ tài khoản: <span class="account">{{ config('payment_account_name') }}</span></li>
+                        {% for item in config('payment_account_bank') %}
+                        <li>{{ item.name }}: <span>{{ item.account }}</span></li>
+                        {% endfor %}
+                    </ul>
+                </div><!--end info bank-->
+                <div class="clearfix"></div>
+                <div class="hotline-foo">
+                    {{ 'hotline-foo.png'|asset }}
+                    <p>{{ config('hotline') }}</p>
+                </div>
+            </div><!--end md5-->
+        </div><!--end row-->
+    </div>
+    <div id="foot">
+        Bản quyền Website thuộc về myphamvalamdep.net @2016
+    </div>
+</footer><!-- end footer -->
+{% include 'element/layout/cart.twg' %}
+
+{% if login().loggedIn() == false %}
+    {% include 'element/layout/login.twg' %}
+{% endif %}

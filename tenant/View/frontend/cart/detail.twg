@@ -1,0 +1,62 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+    <div class="">
+        <h3>Bạn có <span>{{ addon.cart.total.item }}</span> sản phẩm trong giỏ hàng</h3>
+        <form action='{{ 'gio-hang/cap-nhat'|url }}' method='post'>
+            <table id="table-cart">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng cộng</th>
+                </tr>
+                {% for product_id, item in addon.cart.detail %}
+                <tr id='{{ product_id }}'>
+                    <td>
+                        <input type='hidden' name='cart[{{ product_id }}][id]' value= '{{ product_id }}' />
+                        <input type='hidden' class='cart-item-sub_total' value='{{ item.sub_total }}' />
+                        <div class='nailthumb thumb-100-100'>
+                            {% if item.file is defined %}
+                                {{ media(item.file, {'class': 'thumb-100-100'}) }}
+                            {% else %}
+                                <img src='{{ html.img }}/no-image.png' class='thumb-100-100' />
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td class="name">
+                        <span class="name">{{ item.title }}</span>
+                        <span class="brand">{{ item.manufacturer }}</span>
+                        <p class="pink-bold status">
+                            <span class="remove-cart-item" data-id="{{ product_id }}">
+                                <i class="fa fa-times" aria-hidden="true"></i> Xóa
+                            </span>
+                        </p>
+                    </td>
+                    <td>{{ item.price|price }}</td>
+                    <td>
+                        <input class='cart-item-amount' type="number" name='cart[{{ product_id }}][amount]' value="{{ item.amount }}" data-id='{{ product_id }}' data-price='{{ item.price }}' />
+                    </td>
+                    <td>
+                        {{ item.sub_total|price }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <p class="sum">
+                <button class="but button pull-left" href='{{ request().home }}'>Cập nhật giỏ hàng</button>
+                <span>Tổng cộng</span>
+                <span class='order-sub_total'>{{ addon.cart.total.total|price }}</span>
+            </p>
+            <p class="money">
+                <span>Thành tiền</span>
+                <span class='order-total'>{{ addon.cart.total.total|price }}</span>
+            </p>
+            <p>Đã bao gồm VAT</p>
+            <a class="but button" href='{{ 'gio-hang/huy'|url }}'>Hủy giỏ hàng</a>
+            <a class="but button" href='{{ 'dat-hang'|url }}'>Tiến hành đặt hàng <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+        </form>
+    </div>
+{% endblock %}

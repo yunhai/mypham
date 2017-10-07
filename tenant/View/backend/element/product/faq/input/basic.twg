@@ -1,0 +1,104 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Thông tin cơ bản', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ target.id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2101', 'Người đăng', 'faq') }}</label>
+                </th>
+                <td>
+                    <div class='inline'>{{ target.fullname }}</div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2102', 'Ngày đăng', 'faq') }}</label>
+                </th>
+                <td>
+                    <div class='inline'>{{ target.create|date('h:i d/m/Y') }}</div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="email">{{ __('2103', 'Email', 'faq') }}</label>
+                </th>
+                <td>
+                    <div class='inline'>{{ target.email }}</div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="private">{{ __('2104', 'Hiển thị trên web', 'faq') }}</label>
+                </th>
+                <td>
+                    <div class='inline'>{{ option.private ? 'Công khai' : 'Cá nhân' }}</div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-category">{{ __('2105', 'Danh mục', 'faq') }}</label>
+                </th>
+                <td>
+                    <select class="form-control" name='{{ alias }}[category]' id='{{ alias }}-category'>
+                        {% for key, value in option.category %}
+                        <option value="{{ key }}" {% if key == target.category %} selected='selected' {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2106', 'Trạng thái', 'faq') }}</label>
+                </th>
+                <td>
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == target.status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="question">
+                        {{ __('2107', 'Câu hỏi', 'faq') }}
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <textarea class='form-control' name='{{ alias }}[question]' id='question' rows='5'>{{ target.question }}</textarea>
+                    {% if error is defined %}
+                        {{ error|error(alias, 'question') }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'><label class='control-label' for="{{ alias }}-answer">{{ __('2108', 'Trả lời', 'faq') }}</label></th>
+                <td><textarea id='{{ alias }}-answer' class="summernote-editor form-control" rows="3" name="{{ alias }}[answer]">{{ target.answer }}</textarea></td>
+            </tr>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,72 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('1011', 'Basic') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="title">{{ __('2001', 'Title', alias) }}</label>
+                    <span class="text-danger pull-right">{{ __('2001', 'Bắt buộc', 'global') }}</span>
+                </th>
+                <td><input class='form-control' name='{{ alias }}[title]' type='text' id='title' value='{{ attribute(target, alias).title }}' placeholder='{{ __('2001', 'Title', alias) }}' /></td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="slug">{{ __('2002', 'URL', alias) }}</label>
+                </th>
+                <td><input class='form-control' name='{{ alias }}[url]' type='text' id='url' value='{{ attribute(target, alias).url }}' placeholder='{{ __('2002', 'URL', alias) }}' /></td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'><label for="caption">{{ __('2003', 'Caption', alias) }}</label></th>
+                <td>
+                    <input id='caption' type='text' class="form-control" name='{{ alias }}[caption]' value='{{ attribute(target, alias).caption }}' placeholder='{{ __('2003', 'Caption', alias) }}' />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'><label for="idx">{{ __('2003', 'Index', alias) }}</label></th>
+                <td>
+                    <input id='idx' type='text' class="form-control" name='{{ alias }}[idx]' value='{{ attribute(target, alias).idx }}' placeholder='{{ __('2003', 'Index', alias) }}' />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'><label for="{{ alias }}[status]">{{ __('2005', 'Status', alias) }}</label></th>
+                <td>
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == attribute(target, alias).status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'><label for="category">{{ __('2006', 'Parent', alias) }}</label></th>
+                <td>
+                    <select class="form-control" name='{{ alias }}[parent_id]'>
+                        {% for key, value in option.category %}
+                        <option value="{{ key }}" {% if key == attribute(target, alias).parent_id %} selected='selected' {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    <div>
+</section>

@@ -1,0 +1,36 @@
+{% extends "layout/default.twg" %}
+
+{% block top %}
+    {{ html.css(['product']) }}
+    {{ html.css(['summernote'], 'package/summernote') }}
+    {{ html.css(['hover'], 'package/hover') }}
+    {{ html.css(['jquery.nailthumb.1.1.min'], 'package/nailthumb') }}
+    {{ html.css(['jquery.fileapi'], 'package/jquery.fileapi') }}
+    {{ html.css(['datepicker'], 'package/datepicker') }}
+    {{ html.css(['jquery.tag-editor'], 'package/jquery.tageditor') }}
+    {{ html.css(['selectize.default', 'selectize'], 'package/selectize') }}
+{% endblock %}
+
+{% block bottom %}
+    {{ html.js(['summernote.min'], 'package/summernote') }}
+    {{ html.js(['modernizr.custom', 'toucheffects'], 'package/hover') }}
+    {{ html.js(['jquery.nailthumb.1.1.min'], 'package/nailthumb') }}
+    {{ html.js(['FileAPI/FileAPI.min', 'FileAPI/FileAPI.exif', 'jquery.fileapi'], 'package/jquery.fileapi') }}
+    {{ html.js(['html.sortable'], 'package/html.sortable') }}
+    {{ html.js(['bootstrap-datepicker'], 'package/datepicker') }}
+    {{ html.js(['jquery.caret.min',  'jquery.tag-editor'], 'package/jquery.tageditor') }}
+    {{ html.js(['selectize'], 'package/selectize') }}
+
+    {{ html.js(['input', 'seo', 'gallery', 'product', 'files']) }}
+{% endblock %}
+
+{% block content %}
+    <form id='basic-form' class='app-form form-horizontal' method='post' enctype='multipart/form-data'>
+        {% embed 'element/master/input/control.twg' %}{% endembed %}
+        {% embed 'element/product/input/basic.twg' %}{% endembed %}
+        {% embed 'element/master/input/gallery.twg' %}{% endembed %}
+        {% embed 'element/product/input/files.twg' %}{% endembed %}
+        {% embed 'element/master/input/seo.twg' %}{% endembed %}
+        {% embed 'element/master/input/control.twg' %}{% endembed %}
+    </form>
+{% endblock %}

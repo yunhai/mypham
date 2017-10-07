@@ -1,0 +1,7 @@
+{% for item in attribute(banner, 'ben-phai') %}
+    <a href="{{ item.url|url }}" title='{{ item.title }}' rel='no-follow' target='_blank'>
+        <div class='nailthumb banner-right'>
+            {{ item|media({'class': 'banner-right' }) }}
+        </div>
+    </a>
+{% endfor %}
