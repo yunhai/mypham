@@ -1,0 +1,12 @@
+{% embed "post/search.twg" %}
+    {% block filter %}
+        {% embed 'element/master/index/filter.twg' with {'option': option.filter} %}
+            {% block keyword %}{% endblock %}
+            {% block category %}{% endblock %}
+        {% endembed %}
+    {% endblock %}
+
+    {% block data %}
+        {% embed 'store/index/search.twg' %}{% endembed %}
+    {% endblock %}
+{% endembed %}

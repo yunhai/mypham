@@ -29,16 +29,14 @@ class Twig
         $config = App::mp('config');
         $request = App::mp('request');
 
-
-
+        $base = $config->appLocation();
         $folder = $config->get('app.view.' . $request->channel);
         if ($option['cache']) {
-            $option['cache'] = ROOT . "storage/cache/view/{$folder}";
+            $option['cache'] = $base . "Tmp/cache/view/{$folder}";
         }
 
         Twig_Autoloader::register();
 
-        $base = $config->appLocation();
         $loader = new Twig_Loader_Filesystem($base . 'View' . DS . $folder . DS);
         $template = new Twig_Environment($loader, $option);
 
@@ -52,6 +50,7 @@ class Twig
         $this->filterLink($template);
         $this->filterAsset($template);
 
+
         $this->functionFile($template);
         $this->functionLocale($template);
         $this->functionLoad($template);
@@ -62,6 +61,26 @@ class Twig
 
         // $template->addExtension(new Twig_Extension_Debug());
         $this->functionMedia($template); // sap bo
+        $this->functionDebug($template); // sap bo
+
+        return $template;
+    }
+
+    protected function functionDebug($template)
+    {
+        $function = new Twig_SimpleFunction('dump', function (... $args) {
+            ob_start();
+
+            foreach ($args as $arg) {
+                print_r('<pre>');
+                print_r($arg);
+                print_r('</pre>');
+            }
+
+            return ob_get_clean();
+        }, ['is_safe' => ['html']]);
+
+        $template->addFunction($function);
 
         return $template;
     }

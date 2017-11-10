@@ -1,0 +1,53 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="row"><!--row-->
+    <div class="col-md-12 "><!--md-9-->
+        <h1 class="title-news">{{ target.title }}</h1>
+        <div class='basic-info'>
+            <span><label>Nhãn hàng chính:</label>{{ target.product_category }}</span>
+            <span><label>Sản phẩm chủ yếu:</label>{{ target.summary }}</span>
+        </div>
+        <div class='basic-info'>
+            <span><label>Địa chỉ:</label>{{ target.address }}</span>
+            <span><label>Điện thoại:</label>{{ target.phone }} <label>Email:</label>{{ target.email }}</span>
+        </div>
+        <div id="map_canvas" data-geo='{{ target.location }}'></div>
+        <div id='map-template' class='map-template' style='display:none;'>
+            <h4 class='map-title'>{{ target.title }}</h4>
+            <div class='basic-info'>
+                <span><label>Địa chỉ:</label>{{ target.address }}</span>
+                <span><label>Điện thoại:</label>{{ target.phone }} <label>Email:</label></label>{{ target.email }}</span>
+            </div>
+        </div>
+
+        <div class="editor"><!--editor-->
+            <div class="fck_detail width_common">
+                {{ target.content }}
+            </div>
+        </div><!--editor-->
+    </div><!--end md-12-->
+
+    <div class="col-md-12" style='margin-top: 50px;'><!--wraper-product-home-->
+        <div class='wraper-product-home'>
+            <div class="title"><!--title-->
+                <h2>Hệ thống chi nhánh khác</h2>
+            </div><!--title-->
+        </div>
+        <div class='row'>
+            <div class='list-shop'>
+                {% for item in others %}
+                    {% embed 'element/store/item.twg' with {'item': item} %}{% endembed %}
+                {% endfor %}
+                <div class='clear'></div>
+            </div>
+        </div>
+    </div><!--wraper-product-home-->
+</div><!--end row-->
+{% endblock %}
+
+
+{% block bottom %}
+<script src="http://maps.google.com/maps/api/js?key={{ config('api.google-map') }}"></script>
+{{ html.js(['store']) }}
+{% endblock %}

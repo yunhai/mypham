@@ -5,13 +5,9 @@ use Mp\App;
 
 class Common
 {
-    public function sendEmail($mailId, $variable = [], $mailInfo = [], $delay = 0, $config = 'default')
+    public function sendEmail($mailId, $variable = [], $mailInfo = [], $config = 'smtp')
     {
         $mailer = new \Mp\Lib\Helper\Mailer();
-
-        if ($delay) {
-            return $mailer->delay($mailId, $variable, $mailInfo, $delay);
-        }
 
         $deliver = $mailer->config($config);
 
@@ -26,6 +22,7 @@ class Common
         ];
 
         $service = new \Mp\Service\MailRecipient();
+
         return $service->subcribe($data);
     }
 }

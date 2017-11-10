@@ -1,0 +1,23 @@
+<div class="row"><!--row-->
+    {% include 'element/common/makeup-sidebar.twg' %}
+    <div class="col-md-9 boder-left-dot"><!--md-9-->
+        {% for item in data.list %}
+        <div class='item makeup-item'>
+            <div class='nailthumb thumb-75-75'>
+                <a href='{{ item|link(alias) }}' title='{{ item.title }}'>
+                    {{ item|media({'class': 'thumb-75-75' }) }}
+                </a>
+            </div>
+            <div class="content">
+                <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                    <h4>{{ item.title }}</h4>
+                </a>
+                <p>{{ item.content|truncate(200) }}</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {% endfor %}
+
+        {% include 'element/layout/paginator.twg' %}
+    </div><!--end md-9-->
+</div><!--end row-->

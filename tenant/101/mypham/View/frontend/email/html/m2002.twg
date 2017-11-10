@@ -1,0 +1,52 @@
+Xin chào {{ order.deliver.buyer_fullname|default('quý khách hàng') }}<br />
+Cám ơn quý khách đã đặt hàng ở <a href='{{ app.domain }}' title='{{ app.name }}'>{{ app.name }}</a>.<br />
+Chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất.<br />
+<br />
+<br />
+<b>Thông tin nhận hàng:</b><br />
+Người nhận: {{ order.deliver.fullname }}<br />
+Điện thoại: {{ order.deliver.phone }}<br />
+Địa chỉ nhận hàng: {{ order.deliver.address }}<br />
+Email: {{ order.deliver.email }}<br />
+<br />
+<br />
+<b>Thông tin đơn hàng:</b><br />
+Mã đơn hàng: {{ code }}<br />
+Ghi chú đơn hàng: {{ order.deliver.note }}<br />
+<br />
+<br />
+<b>Giá trị đơn hàng:</b><br />
+Thành tiền: {{ cart.total.sub_total|price }}<br />
+{% if cart.total.shipping %}Phí vận chuyển: {{ cart.total.shipping|price }}<br />{% endif %}
+Tổng cộng: {{ cart.total.total|price }}<br />
+Phương thức thanh toán: {{ payment_text }}<br />
+<br />
+<br />
+<b>Chi tiết đơn hàng:</b><br />
+<table width='100%' cellspacing='1' style='background:#888;'>
+    <tr>
+        <th style='padding: 10px;'>Sản phẩm</th>
+        <th style='padding: 10px;'>Đơn giá</th>
+        <th style='padding: 10px;'>Số lượng</th>
+        <th style='padding: 10px;'>Thành tiền</th>
+    </tr>
+    {% for item in cart.detail %}
+    <tr style='background: #fff;'>
+        <td align='left' style='padding: 10px;'>
+            {{ item.title }}
+            {% if item.property_text %}
+                <br/>
+                {{ item.property_text }} {% if item.property_detail_text %} / {{ item.property_detail_text }} {% endif %}
+            {% endif %}
+        </td>
+        <td align='center' style='padding: 10px;'>{{ item.price|price }}</td>
+        <td align='center' style='padding: 10px;'>{{ item.amount|number_format }}</td>
+        <td align='center' style='padding: 10px;'>{{ item.total|price }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br />
+<br />
+<br />
+<br />
+<br />

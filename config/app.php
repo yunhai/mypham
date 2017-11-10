@@ -26,9 +26,9 @@ return [
             'backend' => 'backend'
         ],
         'url' => [
-            'domain' => 'http://www.toolmark.me',
-            'asset' => 'http://www.toolmark.me/asset/',
-            'media' => 'http://www.toolmark.me/media/'
+            'domain' => '',
+            'asset' => '/asset/',
+            'media' => '/media/'
         ],
         'upload' => [
             'location' => 'media'
@@ -55,6 +55,9 @@ return [
         ]
     ],
     'api' => [
-        'google-map' => 'AIzaSyA1jrQR6EsZO9tk5Z_rNb7NFjWEiKoj_DE'
+        'google-map' => ''
+    ],
+    'root' => [
+        'email' => ''
     ]
 ];

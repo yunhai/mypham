@@ -1,7 +1,7 @@
 <?php
-// ini_set('display_startup_errors',1);
-// ini_set('display_errors',1);
-// error_reporting(-1);
+ini_set('display_startup_errors', 0);
+ini_set('display_errors', 0);
+error_reporting(0);
 
 session_start();
 
@@ -20,7 +20,6 @@ try {
     if (Auth::authenticate() === false) {
         if (empty(App::mp('login')->appId())) {
             $login = App::mp('config')->get('authorize.login.' . App::mp('request')->channel);
-            
             if (strpos($login, '@') !== false) {
                 list($action, $module) = explode('@', $login);
                 $login = $module . '/' . $action;

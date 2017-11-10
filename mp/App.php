@@ -59,7 +59,6 @@ class App
     public static function finish()
     {
         self::db()->disconnect();
-        // exit;
     }
 
     public static function db()
@@ -67,8 +66,7 @@ class App
         if (self::checkChain('db')) {
             return self::chain('db');
         }
-
-        $config = self::mp('config')->get('db');
+        $config = self::mp('config')->get('database');
 
         $db = "\Mp\Core\Model\Db\Instance\\" . ucfirst($config['driver']);
         $db = new $db($config);
@@ -211,7 +209,7 @@ class App
     {
         $target = App::mp('login')->target('app');
 
-        $path = ROOT . 'storage' . DS . 'log' . DS;
+        $path = TENANT_PATH . $target['tenant_id'] . DS . $target['code'] . DS . 'Tmp' . DS . 'log' . DS;
 
         $file = fopen($path . $file . '.txt', 'a');
 

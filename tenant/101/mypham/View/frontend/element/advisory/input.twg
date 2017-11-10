@@ -1,0 +1,19 @@
+<div class="wraper-form"><!--wraper-form-->
+    <h3>Góc tư vấn</h3>
+    <p>
+        Bạn cần tư vấn làm đẹp? Bạn đang phân vân không biết da mình hợp với sản phẩm nào? không biết mình hợp với thời trang như thế nào? vui lòng gửi thư đến chúng tôi, chúng tôi sẽ tư vấn cho bạn.
+        <br/>Hãy để chúng tôi giúp bạn tự tin hơn trong cuộc sống.
+    </p>
+    <form action='{{ 'advisory/ask' | url}}' method='post'>
+        <input type="text" placeholder="Tên" name="name" />
+        <input type="text" placeholder="Email" name="email" />
+        <select name='category_id'>
+            {% for key, value in category %}
+                <option value='{{ key }}'>{{ value }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" placeholder="Tiêu đề" name="title" />
+        <textarea name="content" required placeholder="Nội dung"></textarea>
+        <button type="submit">GỬI</button>
+    </form>
+</div><!--end wrapper form-->

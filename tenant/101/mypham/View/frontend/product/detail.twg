@@ -1,0 +1,226 @@
+{% extends "layout/default.twg" %}
+
+
+{% block content %}
+    <div class="row"><!--row-->
+        <div class="col-md-4"><!--md-4-->
+            {% if target.gallery %}
+                {% embed 'element/product/detail_slider.twg' with {'items': target.gallery} %}{% endembed %}
+            {% else %}
+                <div class='' style='border: 1px solid #e0e3e5'>
+                    {{ target|media({'class': '' }) }}
+                </div>
+            {% endif %}
+        </div><!--md-4-->
+        <div class="col-md-8"><!--md 8-->
+            <div class='row'>
+                <form action='{{ ('cart/add/' ~ target.id)|url }}' method='post' id='order-form' class='product-form variant-style'>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tên sản phẩm</label>
+                        <div class="col-sm-10">
+                            <span class='product-info'>{{ target.title }}&nbsp;</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Mã sản phẩm</label>
+                        <div class="col-sm-10">
+                            <span class='product-info'>{{ target.code }}&nbsp;</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    {% if target.manufacturer_target %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hãng sản xuất</label>
+                        <div class="col-sm-10">
+                            <span class='product-info'>{{ target.manufacturer_target.title }}&nbsp;</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    {% endif %}
+
+                    {% if target.property %}
+                        {% for item in target.property %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá loại {{ item.title }}</label>
+                            <div class="col-sm-10">
+                                <span class='product-info'>
+                                    {% if target.is_promotion %}
+                                        <span class='price'>{{ (item.final_price)|price }}</span>
+                                        <span class='price-old'>{{ (item.price)|price }}</span>
+                                    {% else %}
+                                        <span class='price'>{{ (item.price)|price }}</span>
+                                    {% endif %}&nbsp;
+                                </span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Giá bán</label>
+                            <div class="col-sm-10">
+                                <span class='product-info'>
+                                {% if target.is_promotion %}
+                                    <span class='price'>{{ target.final_price|price }}</span>
+                                    <span class='price-old'>{{ target.price|price }}</span>
+                                {% else %}
+                                    <span class='price'>{{ target.price|price }}</span>
+                                {% endif %}&nbsp;
+                                </span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    {% endif %}
+
+                    <hr />
+
+                    {% if target.property %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{ target.property_name.level1 }}</label>
+                        <div class="col-sm-10">
+                            {% set first = target.property|first %}
+                            {% set property_detail = (first.detail is not empty) %}
+
+                            {% for level1_id, level1 in target.property %}
+                                <div class='property-item j-property' data-id='{{ level1_id }}'>
+                                    <input id='j-propertyInput{{ level1_id }}'  type='hidden' value='{{ level1_id }}' name='property' class='j-propertyInput' />
+                                    {{ level1.title }}
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    {% if property_detail %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ target.property_name.level2 }}</label>
+                            <div class="col-sm-10">
+                                {% for level1_id, level1 in target.property %}
+                                    <div id='property-detail-{{ level1_id }}' class='j-propertyDetailContainer'>
+                                        {% set first = level1.detail|first %}
+                                        {% set is_text = first.file_id is empty %}
+                                        {% for level2_id, level2 in level1.detail %}
+                                        <div class='property-item_detail j-propertyDetail' data-id='{{ level2_id }}'>
+                                            <input id='j-propertyDetailInput{{ level2_id }}' type='hidden' value='{{ level2_id }}' name='property_detail' class='j-propertyDetailInput' />
+                                            {% if is_text %}
+                                                {{ level2.title }}
+                                            {% else %}
+                                                {{ level2|media({'class': 'thumb-32x32', 'alt': level2.title}) }}
+                                            {% endif %}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class='clearfix'></div>
+                        </div>
+                    {% endif %}
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Số lượng</label>
+                        <div class="col-sm-10 col-md-4 product-info">
+                            <input type="number" name="amount" required value='1' class='form-control'/>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 col-md-4">
+                            <button class="btn-style-buynow addnow">Mua ngay</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+                <hr />
+                <div class="addthis_inline_share_toolbox" addthis:url="{{ target|link('product') }}" addthis:title="{{ target.title }}"></div>
+            </div>
+        </div><!--md 8-->
+    </div><!--row-->
+
+    <section id="content" ><!--content-->
+        <div class=""><!--container-->
+            <div class="row">
+                <div class="col-md-12" id='product-detail-block'><!--md 8-->
+                    <div>
+                      <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#product-detail" aria-controls="product-detail" role="tab" data-toggle="tab">Thông tin sản phẩm</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#product-rating" aria-controls="product-rating" role="tab" data-toggle="tab">Đánh giá sản phẩm</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#product-faq" aria-controls="product-faq" role="tab" data-toggle="tab">Tư vấn sản phẩm</a>
+                        </li>
+                      </ul>
+
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="product-detail">
+                            {{ target.content }}
+                        </div>
+                        {% embed 'element/product/detail_rating.twg' with {'item': target} %}{% endembed %}
+                        {% embed 'element/product/detail_faq.twg' with {'item': target} %}{% endembed %}
+                      </div>
+                    </div>
+
+                </div><!--md 8-->
+            </div>
+        </div><!--container-->
+    </section><!--#content-->
+
+    {% if option.others and  0 %}
+    <section id="product"><!--Product-->
+        <div class="container"><!--container-->
+            <div class="row"><!--rơ-->
+                <div class="col-md-12"><!--md-12-->
+                    <div class="title-bar"><!--title bar-->
+                        <span>Sản phẩm khác</span>
+                        {% set url = 'product/category/' ~ target.category_id %}
+                        <a href="{{ url|url }}">Xem tất cả <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                    </div><!--end title bar-->
+                </div><!--end md -12 -->
+
+                {% for item in option.others %}
+                    <div class="col-md-2"><!--col-md2-->
+                        {% embed 'element/product/item.twg' with {'item': item} %}{% endembed %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if option.promotion  and  0 %}
+    <section id="product"><!--Product-->
+        <div class="container"><!--container-->
+            <div class="row"><!--rơ-->
+                <div class="col-md-12"><!--md-12-->
+                    <div class="title-bar"><!--title bar-->
+                        <span>Khuyến mãi hot</span>
+                        <a href="{{ 'product/promote'|url }}">Xem tất cả <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                    </div><!--end title bar-->
+                </div><!--end md -12 -->
+
+                {% for item in option.promotion %}
+                    <div class="col-md-2"><!--col-md2-->
+                        {% embed 'element/product/item.twg' with {'item': item} %}{% endembed %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}
+
+{% set html = load('html', 'helper') %}
+
+{% block bottom %}
+    {{ html.js(['product']) }}
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e3ba7c637c424ce"></script>
+{% endblock %}

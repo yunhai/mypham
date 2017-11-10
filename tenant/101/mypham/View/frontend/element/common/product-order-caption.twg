@@ -1,0 +1,7 @@
+<div class="information-more">
+    <ul>
+        <li><i class="fa fa-check"></i> Miễn phí giao hàng với đơn hàng trên {{ 300000|price }}.</li>
+        <li><i class="fa fa-check"></i> Giao hàng trong vòng 1-3 ngày tại HCM, 2-4 ngày cho tỉnh lẻ.</li>
+        <li><i class="fa fa-check"></i> Ngoại trừ hư hỏng hoặc khác màu yêu cầu, những trường hợp còn lại Quý khách không được đổi-trả hàng.</li>
+    </ul>
+</div>

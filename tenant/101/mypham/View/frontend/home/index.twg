@@ -1,0 +1,82 @@
+{% extends "layout/home.twg" %}
+
+{% block content %}
+
+    <div class='row home--top_panel'>
+        <div class='col-md-9' style='padding-right: 0'>
+            {% embed 'element/home/slider.twg' with {item_list: top_banner} %}{% endembed %}
+        </div>
+        <div class='col-md-3' style='padding-left: 0'>
+            {% for i, item in promote_product %}
+                <a class="item--top_panel--right" href='{{ item|link('product') }}' title='{{ item.title }}'>
+                    <span>{{ item.title }}</span>
+                    <span class='curr-price'>{{ item.promote|price }}</span>
+                    <span class='old-price'>{{ item.price|price }}</span>
+                </a>
+            {% endfor %}
+            <a class="item--top_panel--right_bottom" href='{{ 'product/promote'|url }}' title='Tất cả sản phẩm khuyến mãi'>
+                Sản phẩm khuyến mãi
+                <i class='fa fa-chevron-right pull-right'></i>
+            </a>
+        </div>
+    </div>
+    <div class='row clearfix' style='margin-top: 20px'>
+        <div class='col-md-9'>
+            {% for category_id, item_list in home_product %}
+            {% set category = attribute(addon.product_category, category_id) %}
+            {% set index = loop.id %}
+            <div class="section_{{ index + 1}} clearfix block-cate-home">
+                <div>
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4>
+                                <a class="category-title" href="{{ category|link('product', 'category') }}" title="{{ item.title }}">
+                                    {{ category.title }}
+                                    <i class='fa fa-chevron-right pull-right'></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            {% for target in item_list %}
+                                {% set class = '' %}
+                                {% if loop.index is divisible by(4) %}
+                                    {% set class = 'no-border-right' %}
+                                {% endif %}
+                                {% if loop.index > 4 %}
+                                    {% set class = 'no-border-bottom' %}
+                                {% endif %}
+
+                                {% embed 'element/home/product_item.twg' with {target: target, class: class} %}{% endembed %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class='col-md-3'>
+            <div class="box-product">
+			<div class="title title-home-product">
+				<span>
+					Sản phẩm bán chạy
+				</span>
+			</div>
+			<ul>
+				{% for i, item in best_selling_product %}
+				<li>
+					<a class="product-home-right" href="{{ item|link('product') }}" title="{{ item.title }}">
+						<div class="box-img">
+                            {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
+                            <p class="price price-box">
+                                <span class='curr-price'>{{ item.promote|price }}</span>
+                                <span class='old-price'>{{ item.price|price }}</span>
+							</p>
+						</div>
+						<span class="prod-name">{{ item.title }}</span>
+					</a>
+				</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

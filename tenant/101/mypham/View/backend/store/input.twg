@@ -1,0 +1,77 @@
+{% extends "layout/default.twg" %}
+{% set sidebar = true %}
+
+{% block top %}
+    {{ html.css(['summernote'], 'package/summernote') }}
+    {{ html.css(['hover'], 'package/hover') }}
+    {{ html.css(['jquery.nailthumb.1.1.min'], 'package/nailthumb') }}
+    {{ html.css(['jquery.fileapi'], 'package/jquery.fileapi') }}
+{% endblock %}
+
+{% block bottom %}
+    {{ html.js(['summernote.min'], 'package/summernote') }}
+    {{ html.js(['modernizr.custom', 'toucheffects'], 'package/hover') }}
+    {{ html.js(['jquery.nailthumb.1.1.min'], 'package/nailthumb') }}
+    {{ html.js(['FileAPI/FileAPI.min', 'FileAPI/FileAPI.exif', 'jquery.fileapi'], 'package/jquery.fileapi') }}
+    {{ html.js(['input', 'seo']) }}
+    <script type='text/javascript'>
+    //
+    //AIzaSyCMPtg8Y-F6DwaUVA__Wh37hYS1ATRElUk
+        $('#logo-uploader').fileapi({
+            multiple: true,
+            autoUpload: true,
+            duplicate: true,
+            maxFiles: 1,
+            onFileComplete: function (evt, uiEvt) {
+                var result = uiEvt.result;
+                var target = uiEvt.file.$el;
+                var wrapper = target.data('wrapper');
+                var preview = target.data('preview');
+
+                var parent = $('#' + wrapper);
+                var html = "<li id='logo-container-" + result.id + "' class='" + preview + "'>" +
+                    "<input type='hidden' value='" + result.id + "' name='"  + result.container + "[logo]' />" +
+                    "<figure class='nailthumb-container'>" +
+                        "<img src='"  + result.target + "' class='img-responsive'>" +
+                        "<figcaption>" +
+                            "<a href='javascript:;' class='remove-file' data-id='" + result.id + "'>Delete</a>" +
+                        "</figcaption>" +
+                    "</figure>" +
+                "</li>";
+
+                target.hide("slow");
+                parent.html(html).show();
+            },
+            elements: {
+                list: '.js-files',
+                file: {
+                    tpl: '.js-file-tpl-logo',
+                    preview: {
+                        el: '.b-thumb__preview',
+                        width: 250,
+                        height: 150
+                    },
+                    upload: { show: '.progress' },
+                    complete: { show: '.progress' },
+                    progress: '.progress .bar'
+                },
+                dnd: {
+                    el: '.b-upload__dnd',
+                    hover: 'b-upload__dnd_hover',
+                    fallback: '.b-upload__dnd-not-supported'
+                }
+            }
+        });
+    </script>
+    <script src="http://maps.google.com/maps/api/js?key={{ config('api.google-map') }}"></script>
+    {{ html.js(['store']) }}
+{% endblock %}
+
+{% block content %}
+    <form id='basic-form' class='app-form form-horizontal' method='post' enctype='multipart/form-data'>
+        {% embed 'element/master/input/control.twg' %}{% endembed %}
+        {% embed 'store/input/basic.twg' %}{% endembed %}
+        {% embed 'element/master/input/seo.twg' %}{% endembed %}
+        {% embed 'element/master/input/control.twg' %}{% endembed %}
+    </form>
+{% endblock %}

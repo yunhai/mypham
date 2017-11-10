@@ -1,0 +1,6 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    {% include 'element/makeup/lastest.twg' %}
+    {% include 'collection/index-overview.twg' %}
+{% endblock %}

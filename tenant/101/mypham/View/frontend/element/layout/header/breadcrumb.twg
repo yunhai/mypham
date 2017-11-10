@@ -1,0 +1,20 @@
+<div class="header-navigate">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<ol class="breadcrumb breadcrumb-arrow">
+					<li><a href="{{ ''|url }}" title=''>Trang chủ</a></li>
+		            <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+		            {% for item in breadcrumb %}
+						{% if loop.last %}
+							<li class='active'>{{ item.title }}</li>
+						{% else %}
+			                <li><a href="{{ item|link(item.alias) }}" title='{{ item.title }}'>{{ item.title }}</a></li>
+			                <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+						{% endif %}
+		            {% endfor %}
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>

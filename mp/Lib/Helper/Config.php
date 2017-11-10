@@ -15,8 +15,9 @@ class Config
         $path = ROOT . 'config/';
         $files = [
             $path . 'db',
-            $path . 'app',
+            $path . 'app'
         ];
+
         $this->app = self::load($files, false);
     }
 
@@ -48,8 +49,7 @@ class Config
 
     public function option($tenant = '', $app = [], $locale = '')
     {
-        $code = $app['code'];
-        $path = ROOT . 'config' . DS;
+        $path = ROOT . 'config/';
 
         $files = [
             $path . $locale,
@@ -70,7 +70,7 @@ class Config
             return '';
         }
 
-        return TENANT_PATH;
+        return TENANT_PATH . $request->tenant . DS . $request->app . DS;
     }
 
     public function load($list = [])

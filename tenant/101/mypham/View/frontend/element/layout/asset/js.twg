@@ -1,0 +1,27 @@
+{% set js = [
+    'jquery.min.1.11.0',
+    'bootstrap.min',
+    'owl.carousel',
+    'nouislider',
+    'jquery.mThumbnailScroller',
+    'modernizr.custom',
+    'jquery.mmenu.all.min',
+    'jquery.elevatezoom',
+    'jquery.flexslider',
+    'jquery.vticker.min',
+    'jquery.mixitup',
+    'velocity',
+    'jquery.countdown',
+    'bootstrap-tabdrop',
+    'jquery.royalslider.min',
+    'jquery.menu-aim',
+    'jquery.mb-comingsoon.min',
+    'jquery.cookie',
+    'jquery.easing.1.3',
+    'jquery.hoverIntent',
+]
+%}
+
+{{ html.js(js, 'js/library') }}
+{{ html.js(['category', 'app']) }}
+{{ html.js(['product', 'order']) }}

@@ -1,0 +1,135 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+
+<div class='row'>
+    <div class="{% if login().loggedin() %}col-md-12{% else %}col-md-9{% endif %}"><!--md 9-->
+        <form class='card' action="{{ 'order/deliver'|url }}" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Thông tin đặt hàng</h4>
+                    <hr />
+                    <div class="form-group">
+                       <label for="buyer_fullname">Họ tên</label>
+                       <input id='buyer_fullname' class="form-control" name="order[buyer_fullname]" placeholder="Họ tên" value="{{ info.buyer_fullname }}" />
+                       {% if error.fullname %}<span class="help-block text-danger">{{ error.buyer_fullname }}</span>{% endif %}
+                    </div>
+                    <div class="form-group">
+                       <label for="buyer_phone">Điện thoại</label>
+                       <input id='buyer_phone' class="form-control" name="order[buyer_phone]" placeholder="Điện thoại" value="{{ info.buyer_phone }}" />
+                       {% if error.buyer_phone %}<span class="help-block text-danger">{{ error.buyer_phone }}</span>{% endif %}
+                    </div>
+                    <div class="form-group">
+                       <label for="buyer_email">Email</label>
+                       <input id='buyer_email' class="form-control" name="order[buyer_email]" placeholder="Email" value="{{ info.buyer_email }}" />
+                       {% if error.buyer_email %}<span class="help-block text-danger">{{ error.buyer_email }}</span>{% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>Thông tin giao hàng</h4>
+                    <hr />
+                    <div class="form-group">
+                       <label for="fullname">Họ tên</label>
+                       <input id='fullname' class="form-control" name="order[fullname]" placeholder="Họ tên" value="{{ info.fullname }}" />
+                       {% if error.fullname %}<span class="help-block text-danger">{{ error.fullname }}</span>{% endif %}
+                    </div>
+                    <div class="form-group">
+                       <label for="phone">Điện thoại</label>
+                       <input id='phone' class="form-control" name="order[phone]" placeholder="Điện thoại" value="{{ info.phone }}" />
+                       {% if error.phone %}<span class="help-block text-danger">{{ error.phone }}</span>{% endif %}
+                    </div>
+                    <div class="form-group">
+                       <label for="email">Email</label>
+                       <input id='email' class="form-control" name="order[email]" placeholder="Email" value="{{ info.email }}" />
+                       {% if error.email %}<span class="help-block text-danger">{{ error.email }}</span>{% endif %}
+                    </div>
+                    {% if freeship == false %}
+                    <div class="form-group">
+                        <label for="province">Tỉnh thành</label>
+                        <div class='form-inline'>
+                            <select id="province" name="order[province]" class="form-control">
+                                <option value="0">Vui lòng chọn tỉnh thành</option>
+                                {% for id, item in province %}
+                                    <option value='{{ id }}' {% if info.province == id %}selected{% endif %}>{{ item.title }}</option>
+                                {% endfor %}
+                            </select>
+                            <select id="district" class="form-control" name="order[district]" data-value='{{ info.district }}'></select>
+                        </div>
+                        {% if error.district %}<span class="help-block text-danger">{{ error.district }}</span>{% endif %}
+                    </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                       <label for="address">Địa chỉ</label>
+                       <input id='address' class="form-control" name="order[address]" placeholder="Địa chỉ" value="{{ info.address }}" />
+                       {% if error.address %}<span class="help-block text-danger">{{ error.address }}</span>{% endif %}
+                    </div>
+                    <div class="form-group">
+                       <label for="note">Ghi chú</label>
+                       <textarea id='note' class="form-control" rows='5' name="order[note]" placeholder="Ghi chú đơn hàng">{{ info.note }}</textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h4>Hình thức thanh toán</h4>
+                    <hr />
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="order[payment]" value="1" {% if info.payment == 1 %} checked {% endif %} />
+                        Thanh toán khi nhận hàng
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="order[payment]" value="2" {% if info.payment == 2 %} checked {% endif %} />
+                        Chuyển khoản
+                      </label>
+                      (<a class='link-default' target='_blank' href="{{'thong-tin-chuyen-khoan'|url}}">Ngân hàng, chuyển khoản, internet banking</a>)
+                    </div>
+                    {% if error.payment %}<span class="help-block text-danger">{{ error.payment }}</span>{% endif %}
+                    <hr />
+                    <h4>{{ 'deliver.png'|asset({'height': '28px'}) }} Phí vận chuyện</h4>
+                    {% if freeship == false %}
+                        <span id='deliver_price' class='deliver_note'></span>
+                        <span id='deliver_day' class='deliver_note'></span>
+                    {% endif %}
+
+                    Với hóa đơn trên {{ config('freeship')|price }},
+                    <a href='/' title='mỹ phẩm và làm đẹp' class='secondary-link'>mỹ phẩm và làm đẹp</a> giao hàng miễn phí.
+                </div>
+            </div>
+            <input type="submit" class='btn-submit' value='Đặt hàng' />
+        </form>
+    </div>
+    {% if login().loggedin() == false %}
+    <div class="col-md-3">
+        <div class='card'>
+            <h4>Thành viên hệ thống</h4>
+            <hr />
+                <a href='{{ 'user/sign-up'|url }}' title='Đăng ký thành viên' class='secondary-link'>Đăng ký thành viên</a> |
+                <a href='{{ 'user/forget-password'|url }}' title='Quên mật khẩu' class='secondary-link'>Quên mật khẩu</a>
+            <hr />
+            <form action="{{ 'user/login'|url }}" method="post">
+                <div class="form-group">
+                   <label for="email">Email</label>
+                   <input id='email' class="form-control" name="email" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                   <label for="password">Mật khẩu</label>
+                   <input id='password' class="form-control" name="password" placeholder="Mật khẩu" type='password' />
+                </div>
+                <div class="form-group">
+                      <button type="submit" class="btn-submit">Đăng nhập</button>
+                </div>
+            </form>
+            <hr />
+            <a href="{{ 'user/login/facebook'|url }}" class='social-login' title='Login bằng facebook'>{{ 'fa-login.png'|asset }}</a>
+            <a href="{{ 'user/login/google'|url }}" class='social-login' title='Login bằng google'>{{ 'gg-login.png'|asset }}</a>
+        </div>
+    </div><!--md-4-->
+    {% endif %}
+</div>
+<script>
+    var locations = {{ location|json_encode() }};
+</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+<div class="table-responsive">
+    <form id='list-form' method='post' class='app-list'>
+        <table class="table table-hover table-striped table-responsive b-t b-light">
+            <thead>
+                <tr>
+                    <th width='50'>
+                        <label class="checkbox m-n i-checks">
+                            <input type="checkbox"><i></i>
+                        </label>
+                    </th>
+                    <th class='col-sm-1'></th>
+                    <th>{{ __('1002', 'Tiêu đề', alias) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data.list %}
+                {% set item = attribute(item, alias) %}
+                <tr>
+                    <td>
+                        <label class="checkbox m-n i-checks">
+                            <input type='checkbox' name='{{ alias }}[{{ item.id }}]' value='{{ item.id }}' /><i></i>
+                        </label>
+                    </td>
+                    <td>{{ item.status|status(status) }}</td>
+                    <td>
+                        <a href='{{ load('url', 'helper').module('edit/' ~ item.id) }}' title='{{ item.title }}' class='edit-link'>
+                            {{ item.title }}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+{% embed 'element/master/index/pager.twg' %}{% endembed %}

@@ -1,0 +1,17 @@
+{% embed "post/input.twg" %}
+    {% block basic %}
+        {% embed 'element/master/input/basic.twg' %}
+            {% block index %}
+                <tr>
+                    <th class='col-sm-3 table-label'>
+                        <label class='control-label' for="{{ alias }}-origin">{{ __('2012', 'Nước sản xuất', alias) }}</label>
+                    </th>
+                    <td>
+                        <input id='{{ alias }}-index' type='text' class="form-control" name='{{ alias }}[origin]' value='{{ attribute(target, alias).origin }}' placeholder="{{ __('2012', 'Nước sản xuất', alias) }}" />
+                    </td>
+                </tr>
+            {% endblock %}
+            {% block category %}{% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endembed %}

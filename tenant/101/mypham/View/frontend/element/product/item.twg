@@ -1,0 +1,34 @@
+<div class="col-md-3 col-sm-4 col-xs-6 product-item">
+    <div class="product-wrapper">
+        <div class="product-information">
+            <div class="product-detail">
+                <div class="product-image">
+                    <a href="{{ item|link('product') }}" title="{{ item.title }}">
+                        {{ item|media() }}
+                    </a>
+                    <a class='add-to-cart' href='{{ ('cart/add/' ~ item.id)|url }}'>
+                        Đặt mua
+                    </a>
+                    {% if item.discount %}
+                    <div class="field-sale">
+                        <span>-{{ item.discount }}%</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="product-info">
+                    <div class="price-info clearfix">
+                        {% if item.discount %}
+                        <span class="curr-price">{{ item.promote|price }}</span>
+                        <span class="old-price hidden-xs">{{ item.price|price }}</span>
+                        {% else %}
+                        <span class="curr-price">{{ item.price|price }}</span>
+                        {% endif %}
+                    </div>
+                    <a href="{{ item|link('product') }}" title="{{ item.title }}">
+                        {{ item.title }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

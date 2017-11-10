@@ -1,0 +1,52 @@
+<script>
+    $(document).ready(function() {
+        {% for i, unique in collection %}
+            $('#product-property-detail-{{ unique }}-image-uploader').fileapi({
+                multiple: true,
+                autoUpload: true,
+                duplicate: true,
+                // maxFiles: 1,
+                onFileComplete: function (evt, uiEvt) {
+                    var result = uiEvt.result;
+                    var target = uiEvt.file.$el;
+                    var wrapper = target.data('wrapper');
+                    var container = $('#' + wrapper + '-uploaded');
+                    var hidden_name = target.data('hidden_name');
+
+                    var html = "<div id='img-container-" + result.id + "' class=''>" +
+                        "<input type='hidden' value='" + result.id + "' name='"  + hidden_name + "' />" +
+                        "<figure class='nailthumb-container'>" +
+                            "<img src='"  + result.target + "' class='img-responsive'>" +
+                            "<figcaption>" +
+                                "<a href='javascript:;' class='j-removePropertyDetailFile' data-id='" + result.id + "' data-button='" + wrapper + "-button'>Xóa</a>" +
+                            "</figcaption>" +
+                        "</figure>" +
+                    "</div>";
+
+                    target.hide("slow");
+                    container.removeClass('hide').show().html(html);
+                    $('#' + wrapper + '-button').addClass('b-upload-hide');
+                },
+                elements: {
+                    list: '.js-files',
+                    file: {
+                        tpl: '.js-file-tpl-product-property-detail-{{ unique }}-image',
+                        preview: {
+                            el: '.b-thumb__preview',
+                            width: 250,
+                            height: 150
+                        },
+                        upload: { show: '.progress' },
+                        complete: { show: '.progress' },
+                        progress: '.progress .bar'
+                    },
+                    dnd: {
+                        el: '.b-upload__dnd',
+                        hover: 'b-upload__dnd_hover',
+                        fallback: '.b-upload__dnd-not-supported'
+                    }
+                }
+            });
+        {% endfor %}
+    })
+</script>

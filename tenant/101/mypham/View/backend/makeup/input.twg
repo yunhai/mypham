@@ -1,0 +1,7 @@
+{% embed "post/input.twg" %}
+    {% block basic %}
+        {% embed 'element/master/input/basic.twg' %}
+            {% block index %}{% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endembed %}

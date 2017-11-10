@@ -1,0 +1,60 @@
+#slider {
+	margin-bottom: 10px;
+}
+
+
+/***************** Slider thumb article *********************/
+#slider .slider-thumb {
+	position: absolute;
+	right: 15px;
+	top: 0px;
+	background : #fff;
+	min-width: 235px;
+	border: 1px solid #e7e7e7;
+	z-index: 999;
+	padding: 0px;
+}
+#slider .slider-thumb li {
+	border-bottom: 1px solid #e7e7e7;
+	position: relative;
+	padding: 7px 10px;
+}
+#slider .slider-thumb li:last-child {
+	border: none;
+}
+#slider .slider-thumb li.active {
+	background-color:#fafafa;
+}
+#slider .slider-thumb li:hover {
+	background-color: #fafafa;
+}
+#slider .slider-thumb li.active:before,
+#slider .slider-thumb li:hover:before {
+	content: "";
+	border-left: 8px solid transparent;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	border-right: 10px solid #fafafa;
+	position: absolute;
+	left: -18px;
+	top: 15px;
+}
+#slider .slider-image-thumb {
+	display: inline-block;
+	float:left;
+	margin-right: 10px;
+	cursor: pointer;
+}
+#slider .slider-detail {
+	display: inline-block;
+}
+#slider .slider-detail .title-image {
+	font-size: 11px;
+	font-weight: bold;
+	display:block;
+	color: #666666;
+}
+#slider .slider-detail .description-image {
+	font-size: 11px;
+	color: #666666;
+}

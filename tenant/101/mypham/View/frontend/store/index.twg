@@ -1,0 +1,24 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12"><!--wraper-product-home-->
+            <div class='wraper-product-home'>
+                <div class="title"><!--title-->
+                    <h2>Hệ thống chi nhánh</h2>
+                </div><!--title-->
+            </div>
+            <div class='row'>
+                <div class='list-shop'>
+                    {% embed 'store/item.twg' with {'items': data.list} %}{% endembed %}
+                </div>
+                <div class='clear'></div>
+                {% if page.current < page.total %}
+                    <a href='javascript:;' class='load-more btn btn-default col-md-3 col-md-offset-5' data-url='{{ current_url }}' data-page='1' data-target='.list-shop'>
+                        Xem thêm hệ thống chi nhánh khác
+                    </a>
+                {% endif %}
+            </div>
+        </div><!--wraper-product-home-->
+    </div>
+{% endblock %}

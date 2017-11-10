@@ -1,0 +1,31 @@
+{% set css = [
+    'bootstrap.min',
+    'jquery.fancybox',
+    'jquery.mmenu.all',
+    'roboto',
+    'tinos',
+    'animate',
+    'owl.carousel',
+    'menu_mobile',
+    'header',
+    'footer',
+    'page',
+    'menu',
+    'pagination-default',
+    'modal-cart',
+    'slide',
+    'collection',
+    'nouislider',
+    'flexslider',
+    'jquery.mThumbnailScroller',
+    'product',
+    'cart',
+    'article',
+    'royalslider',
+    'style',
+    'media',
+]
+%}
+
+{{ html.css(css, 'css/library') }}
+{{ html.css(['font-awesome.min', 'app']) }}

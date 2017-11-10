@@ -93,7 +93,7 @@ class Request
         $app = $target['app']['code'];
         $domain = $target['app']['domain'];
 
-        // $config->basic($tenant, $app);
+        //$config->basic($tenant, $app);
         $prefixes = $config->get('app.prefix');
 
         $locales = $config->get('locale.available');

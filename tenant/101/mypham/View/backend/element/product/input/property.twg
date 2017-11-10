@@ -1,0 +1,59 @@
+{% set property = 10 %}
+{% set property_detail = 50 %}
+{% set collection = [] %}
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        Quy cách
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Tên quy cách
+                    </label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[property_name][level1]' type='text' value='{{ target.product.property_name.level1 }}' placeholder="Tên quy cách" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Tên chi tiết quy cách
+                    </label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[property_name][level2]' type='text' value='{{ target.product.property_name.level2 }}' placeholder="Tên chi tiết quy cách" />
+                </td>
+            </tr>
+        </table>
+        <div class='text-right'>
+            <a href='javascript:;' class='j-addProperty btn btn-primary'>Thêm</a>
+            <hr/>
+        </div>
+        <div id='property-list'>
+            {% for property in target.product.property %}
+                {% set class = 'j-product' %}
+                {% include 'element/product/input/property_item.twg' with {
+                    'index': 'item' ~ loop.index,
+                    'class': class,
+                    'propery': property
+                    } %}
+            {% endfor %}
+
+            {% for index in 1 .. property %}
+                {% set class = 'j-product init--property' %}
+                {% include 'element/product/input/property_item.twg' with {'index': index, 'class': class} %}
+            {% endfor %}
+        </div>
+    </div>
+</section>

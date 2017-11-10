@@ -1,5 +1,0 @@
-{% extends "layout/home.twg" %}
-
-{% block content %}
-Hello world
-{% endblock %}

@@ -1,0 +1,30 @@
+{% set html = load('html', 'helper') %}
+<!--  http://miamart.myharavan.com -->
+<html lang="en" style="" class="js csstransforms3d">
+<head>
+	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0" name="viewport">
+    <title>{{ meta.title }}</title>
+    <meta name='title' content='{{ meta.title }}' />
+    <meta name='description' content='{{ meta.description }}' />
+    <meta name='keywords' content='{{ meta.keyword }}' />
+    <meta name='canonical' content='{{ meta.canonical }}' />
+	{% embed 'element/layout/asset/css.twg' %}{% endembed %}
+</head>
+<body>
+		{% embed 'element/layout/header/sp.twg' %}{% endembed %}
+		<div>
+			{% embed 'element/layout/header/header.twg' %}{% endembed %}
+			<div class="container-wrap">
+				<div id="content">
+					<main class='container'>
+						{% block content %}{% endblock %}
+					</main>
+				</div>
+			</div>
+			{% include 'element/layout/footer/footer.twg' %}
+		</div>
+		{% embed 'element/layout/asset/js.twg' %}{% endembed %}
+</body>
+</html>

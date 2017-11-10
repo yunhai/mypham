@@ -1,0 +1,34 @@
+.pagination-default {
+	margin: 15px 0px;
+	padding: 0px 15px;
+	text-align: center;
+}
+.pagination-default > div {
+	display: inline-block;
+}
+.pagination-default a {
+	border: 1px solid #E5E5E5;
+	border-left: none;
+	float: left;
+	font-style: normal;
+	font-weight: normal;
+	padding: 0px 12px;
+	height: 33px;
+	line-height: 33px;
+	color: #000;
+}
+.pagination-default a:first-child {
+	border-left: 1px solid #E5E5E5;
+}
+.pagination-default a.prev, .pagination-default a.next,
+.pagination-default a.prev-first, .pagination-default a.next-last {
+	color: #000;
+	font-size: 18px;
+}
+.pagination-default .current {
+	background: #EFEFEF;
+	color: #999;
+}
+.pagination-default a:hover {
+    background: #EFEFEF;
+}

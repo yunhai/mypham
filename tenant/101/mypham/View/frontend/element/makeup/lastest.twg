@@ -1,0 +1,47 @@
+<div class="row"><!--row-->
+    <div class="col-md-6 boder-right"><!--md6-->
+        <div class='thumb-429-300 nailthumb'>
+            <a href='{{ posts.main|link(alias) }}' title='{{ posts.main.title }}'>
+                {{ posts.main|media({'class': 'img-responsive thumb-429-300' }) }}
+            </a>
+        </div>
+        <div class="intro-tuvan">
+            <a href="{{ posts.main|link(alias) }}" title='{{ posts.main.title }}'>
+                <h3>{{ posts.main.title }}</h3>
+            </a>
+            <p>{{ posts.main.content|truncate(300) }}</p>
+        </div>
+    </div><!--end md6-->
+    <div class="col-md-6"><!--md6-->
+        <div class="wrapper-tuvan-right"><!--wrapper-->
+            {% for post in posts.list %}
+            <div class="item">
+                <div class='nailthumb thumb-75-75'>
+                    <a href='{{ post|link(alias) }}' title='{{ post.title }}'>
+                        {{ post|media({'class': 'thumb-75-75' }) }}
+                    </a>
+                </div>
+                <div class="content">
+                    <a href="{{ post|link(alias) }}" title='{{ post.title }}'>
+                        <h4>{{ post.title }}</h4>
+                    </a>
+                    <p>{{ post.content|truncate(200) }}</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            {% endfor %}
+
+            {% if posts.sub %}
+            <div class="wraper-ul"><!--wraper ul-->
+                <ul>
+                    {% for post in posts.sub %}
+                        <li><a href="{{ post|link(alias) }}" title='{{ post.title }}'>{{ post.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div><!--end wraper ul-->
+            {% endif %}
+        </div><!--end wraper-->
+    </div><!--end md6-->
+</div><!--end row-->
+
+<div class="clearfix"></div>

@@ -1,0 +1,62 @@
+<section id="block-tuvan"><!--block tuvan-->
+    <div class="row"><!--row-->
+        <div class="col-md-4"><!--col 4-->
+            {% if first is defined %}
+            <div class="first-box"><!--first-box-->
+                <div class="first-item">
+                    <div class='nailthumb thumb-100-100'>
+                        <a href="{{ item|link(alias) }}" title='{{ first.title }}'>
+                            {{ first|media({'class': 'thumb-100-100' }) }}
+                        </a>
+                    </div>
+                    <div class="content">
+                        <a href="{{ item|link(alias) }}" title='{{ first.title }}'>
+                            {{ first.title }}
+                        </a>
+                        <p>{{ first.content|truncate(80) }}</p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div><!--end first box-->
+            {% endif %}
+
+            {% if more is defined %}
+            <div class="second-box"><!--second-->
+                {% for item in more %}
+                    <div class="item">
+                        <div class='nailthumb thumb-100-100'>
+                            <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                                {{ item|media({'class': 'thumb-100-100' }) }}
+                            </a>
+                        </div>
+                        <div class="content">
+                            <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                                {{ item.title }}
+                            </a>
+                            <p>{{ item.content|truncate(80) }}</p>
+                            <a class="more" href="{{ format.link(item)|url }}" title='{{ item.title }}'>>> Xem tiếp</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div><!--end second-->
+            {% endif %}
+        </div><!--end col 4-->
+        <div class="col-md-4"><!--col 5-->
+            <div class="wraper-ul-2"><!--wrapper-->
+                <ul class="news">
+                    {% for item in others %}
+                    <li>
+                        <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                            {{item.title}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class='clearfix'></div>
+            </div><!--end wrapper-->
+        </div><!--end col 5-->
+        <div class="col-md-4"><!--col 3-->
+            {% include 'element/advisory/input.twg' %}
+        </div><!--end col 3-->
+    </div><!--end row block-->
+</section><!--end block tuvan-->

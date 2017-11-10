@@ -1,0 +1,13 @@
+{% extends "layout/default.twg" %}
+
+{% block bottom %}
+    {{ html.js(['seo']) }}
+{% endblock %}
+
+{% block content %}
+<form id='basic-form' class='app-form form-horizontal' method='post'>
+    {% embed 'element/location/input/control.twg' %}{% endembed %}
+    {% embed 'element/location/input/basic.twg' %}{% endembed %}
+    {% embed 'element/location/input/control.twg' %}{% endembed %}
+</form>
+{% endblock %}

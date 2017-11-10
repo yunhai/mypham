@@ -1,0 +1,101 @@
+<div class="footer-center">
+    <div class="container">
+        <div class="footer-center-wrap">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12 border-right wow animated fadeInUp" data-wow-delay="100ms">
+                    <div class="footer-block toggle-mb" id="block_links_footer_1">
+                        <h4 class="title_block toggle-mb-title" aria-expanded="false">Thông tin hỗ trợ <i class="fa fa-angle-down hidden-lg hidden-md hidden-sm "></i></h4>
+                        <div class="block_content toggle-mb-content">
+                            <ul class="toggle-footer list-group bullet">
+                                <li class="item">
+                                    <a href="/" title="Trang chủ">Trang chủ</a>
+                                </li>
+                                <li class="item">
+                                    <a href="/collections/all" title="Sản phẩm">Sản phẩm</a>
+                                </li>
+                                <li class="item">
+                                    <a href="/blogs/news" title="Blog">Blog</a>
+                                </li>
+                                <li class="item">
+                                    <a href="/pages/about-us" title="Giới thiệu">Giới thiệu</a>
+                                </li>
+                                <li class="item">
+                                    <a href="/pages/lien-he" title="Liên hệ">Liên hệ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 border-right wow animated fadeInUp" data-wow-delay="100ms">
+                    <div class="footer-block toggle-mb" id="block_links_footer_2">
+                        <h4 class="title_block toggle-mb-title" aria-expanded="false">Dịch vụ khách hàng<i class="fa fa-angle-down hidden-lg hidden-md hidden-sm "></i></h4>
+                        <div class="block_content toggle-mb-content">
+                            <ul class="toggle-footer list-group bullet">
+                                <li class="item">
+                                    <a href="/" title="Trang chủ">Trang chủ</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/collections/all" title="Sản phẩm">Sản phẩm</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/blogs/news" title="Blog">Blog</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/pages/about-us" title="Giới thiệu">Giới thiệu</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/pages/lien-he" title="Liên hệ">Liên hệ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 border-right wow animated fadeInUp" data-wow-delay="100ms">
+                    <div class="footer-block toggle-mb" id="block_links_footer_3">
+                        <h4 class="title_block toggle-mb-title" aria-expanded="false">Dịch vụ &amp; hỗ trợ<i class="fa fa-angle-down hidden-lg hidden-md hidden-sm "></i></h4>
+                        <div class="block_content toggle-mb-content">
+                            <ul class="toggle-footer list-group bullet">
+                                <li class="item">
+                                    <a href="/" title="Trang chủ">Trang chủ</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/collections/all" title="Sản phẩm">Sản phẩm</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/blogs/news" title="Blog">Blog</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/pages/about-us" title="Giới thiệu">Giới thiệu</a>
+                                </li>
+
+                                <li class="item">
+                                    <a href="/pages/lien-he" title="Liên hệ">Liên hệ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 wow animated fadeInUp">
+                    <div id="newsletter_block" class="footer-block toggle-mb">
+                        <h4 class="title_block toggle-mb-title" aria-expanded="false">
+                            Kết nối với chúng tôi<i class="fa fa-angle-down hidden-lg hidden-md hidden-sm "></i>
+                        </h4>
+                        <div class="block_content toggle-mb-content">
+                            Facebook page
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

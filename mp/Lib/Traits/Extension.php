@@ -140,7 +140,6 @@ trait Extension
             }
         }
 
-
         return $data;
     }
 
@@ -149,17 +148,18 @@ trait Extension
         foreach ($this->virtualField as $f => $virtual) {
             $id = $target['id'];
 
-            $result = isset($extension[$id]) ? $extension[$id][$f] : '';
             if (is_array($virtual)) {
+                $result = isset($extension[$id]) ? $extension[$id][$f] : [];
                 if ($result) {
                     $result = json_decode($result, true);
                 } else {
                     foreach ($virtual as $vf) {
-                        $result[$vf] = '';
+                        $result[$vf] = isset($result[$vf]) ? $result[$vf] : '';
                     }
                 }
                 $target = array_merge($target, $result);
             } else {
+                $result = isset($extension[$id]) ? $extension[$id][$f] : '';
                 $target[$virtual] = $result;
             }
 
@@ -194,7 +194,6 @@ trait Extension
         if (empty($data['id'])) {
             $this->lastInsertId = $data['id'] = parent::lastInsertId();
         }
-
 
         return $this->saveExtension($data);
     }
@@ -286,7 +285,7 @@ trait Extension
     public function revertExtension($data = [], $default = true)
     {
         $info = [
-            'target_id' => $data['id'],
+            'target_id' => $data['id'] ?? 0,
             'target_model' => $this->alias(),
         ];
 
@@ -298,7 +297,7 @@ trait Extension
     public function afterFind(&$data = [])
     {
         parent::afterFind($data);
-        
+
         if ($this->extension) {
             return $this->extractExtension($data);
         }

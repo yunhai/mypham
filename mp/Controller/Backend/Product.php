@@ -137,21 +137,6 @@ class Product extends Backend
         return $this->render('input', compact('target', 'option'));
     }
 
-    public function formatData($data = [])
-    {
-        if (isset($data['option'])) {
-            foreach ($data['option'] as $index => $value) {
-                if (!($value) || empty($data['option_price'][$index])) {
-                    unset($data['option'][$index], $data['option_price'][$index]);
-                }
-            }
-
-            $data['option_promotion'] = array_intersect_key($data['option_promotion'], $data['option']);
-        }
-
-        return $data;
-    }
-
     public function delete()
     {
         $request = App::mp('request');

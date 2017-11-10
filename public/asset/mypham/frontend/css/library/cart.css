@@ -1,0 +1,162 @@
+#content {
+	margin-bottom: 20px;
+}
+h2.cart-title{
+	text-align: left;
+	font-size: 21px;
+	color: #161616;
+}
+h2.cart-title:before{
+	content: "";
+	width: 0px;
+	margin: 0px;
+}
+
+/************************** Table cart *****************/
+#cartform .overflow-cart {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+#table-cart{
+	width: 100%;
+	max-width: 100%;
+	float: left;
+}
+#table-cart th{
+	white-space: pre-wrap;
+	text-align: center;
+	padding: 10px 0px;
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+	font-size: 14px;
+}
+#table-cart td{
+	border: 1px solid #ccc;
+	padding: 20px;
+	text-align: center;
+}
+#table-cart a,
+#table-cart{
+	color: #333;
+}
+#table-cart td strong{
+	float: left;
+	width: 100%;
+	color: #333333;
+}
+#table-cart td strong:hover {
+	color: ;
+}
+#table-cart td span{
+	width: 100%;
+	float: left;
+}
+#table-cart td.remove a{
+	background: #fff;
+	float: left;
+	border: 1px solid #ccc;
+	width: 20px;
+}
+#table-cart td.remove a img{
+	margin: 6px 5px;
+	float: left;
+}
+#table-cart td input[type=number]{
+	width: 100%;
+	text-indent: 6px;
+}
+#table-cart td:nth-child(1){
+	padding: 10px;
+	text-align: center;
+}
+
+/******************** Form button checkout ****************/
+.right-cart{
+	border: 1px solid #ccc;
+	padding: 25px;
+	float: left;
+	width: 100%;
+}
+.right-cart h2{
+	font-size: 18px;
+	width: 100%;
+	float: left;
+	margin: 0px;
+}
+.right-cart h2 label:nth-child(1){
+	float: left;
+}
+.right-cart h2 label:nth-child(2){
+	float: right;
+	color: #e60f1e;
+}
+.right-cart a.checkout{
+	width: calc(100% + 0px);
+	border: 0px;
+	background: #e60f1e;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	fotn-size: 14px;
+	text-transform: uppercase;
+	padding: 15px;
+	position: relative;
+	float: left;
+	text-decoration: none;
+	margin-top: 10px;
+}
+.right-cart a.checkout:after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 3px;
+	left: 3px;
+	border: 1px solid #e60f1e;
+}
+
+/******************** Form information more ***************/
+.selling-point-cart{
+	background:;
+	width: 100%;
+	float: left;
+	margin: 25px 0px;
+	padding: 15px 25px;
+	color: #fff;
+	font-size: 12px;
+}
+.selling-point-cart li{
+	list-style-type: none;
+	padding: 3px 0px;
+	width: 100%;
+	float: left;
+}
+.selling-point-cart li span.fa{
+	color: #fff;
+	margin: 0px 5px;
+}
+
+/******************* Button update and buy more ***************/
+a.continue-shopping,
+button.update-cart{
+	border: 0px;
+	background: #000000;
+	color: #ffffff;
+	fotn-size: 14px;
+	text-transform: uppercase;
+	padding: 8px 25px;
+	position: relative;
+	float: left;
+	margin: 20px 0px 0px 15px;
+	text-decoration: none;
+}
+a.continue-shopping:after,
+button.update-cart:after{
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 2px;
+	left: 2px;
+	border: 1px solid #000000
+}

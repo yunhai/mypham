@@ -1,0 +1,188 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('2101', 'Thông tin cơ bản', 'global') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="title">
+                        {{ __('2101', 'Tên chi nhánh', alias) }}
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control seo-permalink' data-model='{{alias}}' data-prefix='{{ mp('config').get('seo.prefix.' ~ alias ~ '.detail') }}' name='{{ alias }}[title]' type='text' id='{{ alias }}-title' value='{{ attribute(target, alias).title }}' placeholder="{{ __('2101', 'Tên chi nhánh', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'title') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2102', 'Trạng thái', alias) }}</label>
+                </th>
+                <td>
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == attribute(target, alias).status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-address">{{ __('2103', 'Địa chỉ', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-address' type='text' class="form-control" name='{{ alias }}[address]' value='{{ attribute(target, alias).address }}' placeholder="{{ __('2103', 'Địa chỉ', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'address') }}
+                    {% endif %}
+                    <input id='{{alias}}-geo' name='{{ alias }}[location]' value='{{ attribute(target, alias).location }}' type='hidden' />
+                    <div id="map_canvas" data-address='{{ alias }}-address' data-geo='{{ alias }}-geo' data-template='{{alias}}-map-template'></div>
+                    <div id='{{alias}}-map-template' class='map-template'>
+                        <h4>{{ attribute(target, alias).title }}</h4><p>%s</p>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-phone">{{ __('2104', 'Điện thoại', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-phone' type='text' class="form-control" name='{{ alias }}[phone]' value='{{ attribute(target, alias).phone }}' placeholder="{{ __('2104', 'Điện thoại', alias) }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-email">{{ __('2105', 'Email liên hệ', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-email' type='text' class="form-control" name='{{ alias }}[email]' value='{{ attribute(target, alias).email }}' placeholder="{{ __('2105', 'Email liên hệ', alias) }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-product_category">{{ __('2106', 'Hãng mỹ phẩm', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-product_category' type='text' class="form-control" name='{{ alias }}[product_category]' value='{{ attribute(target, alias).product_category }}' placeholder="{{ __('2106', 'Hãng mỹ phẩm', alias) }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-summary">{{ __('2107', 'Sản phẩm chủ yếu', alias) }}</label>
+                </th>
+                <td>
+                    <input id='{{ alias }}-summary' type='text' class="form-control" name='{{ alias }}[summary]' value='{{ attribute(target, alias).summary }}' placeholder="{{ __('2107', 'Sản phẩm chủ yếu', alias) }}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="index">{{ __('2108', 'Logo', alias) }}</label>
+                </th>
+                <td>
+                    {% set url = 'file/upload/target:' ~ alias %}
+                    <div id='logo-uploader' class="b-upload" action='{{ url|url }}'>
+                        <div class="btn-upload b-upload__dnd">{{ __('2102', 'Kéo thả vào đây để upload', 'global') }}<input type="file" name="{{alias}}" /></div>
+
+                        <div class='preview-container'>
+                            <div class="js-files b-upload__files">
+                                <div class="js-file-tpl-logo b-thumb" data-wrapper='{{alias}}-logo-uploaded' data-preview='col-md-5'>
+                                    <div class="b-thumb__preview">
+                                        <div class="b-thumb__preview__pic"></div>
+                                    </div>
+                                    <div class="b-thumb__progress progress progress-small"><div class="bar"></div></div>
+                                    <div class="b-thumb__name"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul id='{{alias}}-logo-uploaded' class="div-hover row">
+                        {% if target.logo is defined %}
+                            {% for f in target.logo %}
+                                {% set f = file(f) %}
+                                <li id='img-container-{{ f.id }}' class='col-md-5'>
+                                    <input type='hidden' value='{{ f.id }}' name='{{alias}}[logo]' />
+                                    <figure class='nailthumb-container'>
+                                        {{ media(f, {'data-id': f.id}) }}
+                                        <figcaption>
+                                            <a href="javascript:;" class='remove-file' data-id='{{f.id}}'>{{ __('2103', 'Xóa', 'global') }}</a>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr>
+
+            {# <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="index">{{ __('2109', 'Hình ảnh', alias) }}</label>
+                </th>
+                <td>
+                    {% set url = 'file/upload/target:' ~ alias %}
+                    <div id='image-uploader' class="b-upload" action='{{ url|url }}'>
+                        <div class="btn-upload b-upload__dnd">{{ __('2102', 'Kéo thả vào đây để upload', 'global') }}<input type="file" name="{{alias}}" /></div>
+
+                        <div class='preview-container'>
+                            <div class="js-files b-upload__files">
+                                <div class="js-file-tpl-image b-thumb" data-wrapper='{{alias}}-uploaded' data-preview='col-md-5'>
+                                    <div class="b-thumb__preview">
+                                        <div class="b-thumb__preview__pic"></div>
+                                    </div>
+                                    <div class="b-thumb__progress progress progress-small"><div class="bar"></div></div>
+                                    <div class="b-thumb__name"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul id='{{alias}}-uploaded' class="div-hover row">
+                        {% if target.file is defined %}
+                            {% for f in target.file %}
+                                <li id='img-container-{{ f.id }}' class='col-md-5'>
+                                    <input type='hidden' value='{{ f.id }}' name='{{alias}}[file_id]' />
+                                    <figure class='nailthumb-container'>
+                                        {{ media(f, {'data-id': f.id}) }}
+                                        <figcaption>
+                                            <a href="javascript:;" class='remove-file' data-id='{{f.id}}'>{{ __('2103', 'Xóa', 'global') }}</a>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr> #}
+
+            <tr>
+                <th class='col-sm-3 table-label'><label class='control-label' for="{{ alias }}-content">{{ __('2110', 'Nội dung', alias) }}</label></th>
+                <td><textarea id='{{ alias }}-content' class="summernote-editor form-control" rows="3" name="{{ alias }}[content]" data-upload='{{ request().branchUrl ~ 'file/upload/target:' ~ alias }}'>{{ attribute(target, alias).content }}</textarea></td>
+            </tr>
+        </table>
+    </div>
+</section>

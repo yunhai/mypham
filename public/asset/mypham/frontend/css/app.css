@@ -1,0 +1,352 @@
+.logo-pc img {
+    height: 60px;
+}
+
+.search-category {
+    background: #eee;
+    padding: 7px;
+    border: 1px solid #e7e7e7;
+    border-right: 0;
+}
+.carousel-caption {
+    max-width: 100%;
+    width: 100%;
+    left: 0;
+}
+.panel {
+    border: 1px solid #e7e7e7;
+    border-top-width: 2px;
+}
+.panel-heading {
+    background:#f7f7f7;
+}
+
+.block-cate-home .box {
+    border: 1px solid #e7e7e7;
+    border-left: none;
+    border-top: none;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.no-border-bottom {
+    border-bottom: 0 !important;
+}
+
+.no-border-right {
+    border-right: 0 !important;
+}
+
+.block-cate-home .panel-heading h4 {
+    margin: 0;
+}
+
+.product-price-box {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 3px;
+    width: 100%;
+}
+.product-name {
+    display: block;
+    padding: 5px 0;
+    width: 100%;
+    height: 26px;
+    line-height: 26px;
+    overflow: hidden;
+}
+.home--top_panel {
+    height: 403px;
+    overflow: hidden;
+}
+
+.home--slider--item {
+    height: 403px !important;
+    width: 100%;
+}
+
+.item--top_panel--right {
+    border-right: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+    background: #fff;
+    display: block;
+    width: 100%;
+    height: 51px;
+    overflow: hidden;
+    padding: 10px 10px;
+}
+
+.item--top_panel--right span {
+    height: 18px;
+    display: block;
+    overflow: hidden;
+    line-height: 18px;
+}
+
+.item--top_panel--right_bottom,
+.item--top_panel--right_bottom:hover {
+    background: #f14976;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: #fff;
+    font-weight: bold;
+    height: 46px;
+    line-height: 26px;
+}
+.category-sidebar {
+    margin-top: 5px;
+    background: #fafafa;
+    border: 1px solid #efefef;
+    padding: 0px 10px 5px;
+}
+.btn-custom {
+    background: #e60f1e;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    padding: 10px 0px;
+    font-weight: bold;
+    margin: 15px 0 0;
+    width: 100%;
+    display: block;
+}
+
+.item--top_panel--right_bottom .fa-chevron-right {
+    margin-top: 8px;
+}
+
+.product-image {
+    padding: 5px;
+}
+.product-image img {
+    height: 200px;
+}
+.product-info a {
+    font-size: 14px;
+    font-weight: normal;
+    height: 20px;
+    overflow: hidden;
+}
+.add-to-cart {
+	font-weight: bold;
+	background-color: #fb3d7a;
+	color: #fff;
+	font-size: 12px;
+	height: 36px;
+	width: 100%;
+	display: block;
+    line-height: 36px;
+    text-align: center;
+    cursor: pointer;
+}
+.add-to-cart:hover {
+    color: #fff;
+}
+.tag-list {
+    margin: 10px 0;
+}
+.tag,
+.tag:hover {
+    margin: 0 5px 5px 0;
+    padding: 5px;
+    border: 1px solid #e60f1e;
+    background-color: #e60f1e;
+    display: inline-block;
+    height: 30px;
+    color:#fff;
+    cursor: pointer;
+}
+.product-form .product-info{
+    min-height: 23px;
+    line-height: 23px;
+    display: block;
+    margin-bottom: 5px;
+}
+.product-info .price {
+    color: #e5101d;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.product-info .price-old {
+    color: #505050;
+    font-size: 12px;
+    text-decoration: line-through;
+}
+.tab-pane {
+    border: 1px solid #ddd;
+    border-top: 0;
+    padding: 20px;
+}
+
+select {
+    min-width: 100px;
+}
+
+.btn-submit,
+.btn-submit:hover,
+.btn-submit:active {
+    display: block;
+    background: #3498db;
+    color: #fff;
+    padding: 10px 80px;
+    border: 0;
+    margin: auto;
+}
+#faq-callback,
+#rating-callback {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: none;
+}
+.item-list {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.product-rating-criteria {
+    margin: 10px 0 5px;
+    display: block;
+    width: 100%;
+}
+.star-ratings-css {
+    unicode-bidi: bidi-override;
+    color: #c5c5c5;
+    font-size: 25px;
+    height: 25px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0;
+    text-shadow: 0px 1px 0 #a2a2a2;
+    margin-right: 13px;
+}
+.star-ratings-css-top {
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.star-ratings-css-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+}
+.message-panel {
+    padding: 30px 0;
+    font-weight: bold;
+}
+#product-detail-slide {
+    margin-bottom: 15px;
+}
+.property-item {
+    padding: 10px;
+    border: solid 1px #888;
+    cursor: pointer;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    font-weight: bold;
+}
+.property-item:hover,
+.property-item.active {
+    border-color: #e5101d;
+    color: #e5101d;
+}
+.property-item_detail {
+    float: left;
+    overflow: hidden;
+    padding: 5px;
+    border: solid 1px #888;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.property-item_detail:hover,
+.property-item_detail.active {
+    border-color: #e5101d;
+    color: #e5101d;
+}
+.thumb-32x32,
+.thumbnail-small {
+    width: 50px;
+    height: 50px;
+}
+
+.selling-point-cart {
+    margin-top: 30px;
+    display: block;
+    width: 100%;
+    float: left;
+    color: #333;
+    padding: 0;
+    font-size: 14px;
+}
+.cart-value {
+    width: 100%;
+    display: block;
+}
+.price {
+    color: #e5101d;
+    text-align: right;
+}
+.cart-value-total {
+    font-size: 18px;
+}
+.cart-value {
+    font-weight: 14px;
+}
+.cart-value label{
+    width: 40%;
+    float: left;
+}
+.cart-value span{
+    width: 60%;
+    text-align: right;
+    float: left;
+}
+.card {
+    border: solid 1px #888;
+    display: block;
+    padding: 15px;
+}
+.secondary-link,
+.secondary-link:hover {
+    color: #0082dd;
+}
+
+.social-login {
+    margin-bottom: 10px;
+    text-align: center;
+    display: block;
+}
+
+#table-cart td.item-thumb {
+    min-width: 80px;
+}
+@media (max-width: 768px) {
+    #table-cart td.item-title {
+        max-width: 200px;
+    }
+}
+#table-cart td.qty {
+    max-width: 100px;
+}
+.text-danger {
+    color: #a94442;
+}
+.deliver_note {
+    display: block;
+    margin-bottom: 10px;
+}
+.page-content {
+    margin-bottom: 50px;
+}
+#province {
+    margin-bottom: 10px;
+}

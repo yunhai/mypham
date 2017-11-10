@@ -1,0 +1,35 @@
+<div id="product-faq" class="tab-pane fade"><!--tab ct-->
+    <div class='row'>
+        <div class="col-sm-12 col-md-4">
+            <div id='faq-callback'>
+                <span>Cám ơn quý khách đã nhận xét về sản phẩm.</span>
+                <hr  />
+            </div>
+            <form id="product-faq-form" method='post' data-action='{{ ('product/ask/' ~ item.id)|url }}'>
+                <input type='hidden' value='{{ item.id }}' name='target' />
+                <input type='hidden' value='{{ item.category_id }}' name='category' />
+                <div class="form-group">
+                    <label for="fullname">Họ tên</label>
+                    <input name='fullname' id="fullname" class='form-control'>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input name='email' id="email" class='form-control'>
+                </div>
+                <div class="form-group">
+                    <label for="question">Nội Dung</label>
+                    <textarea name="question" id='question' class='form-control' rows='10'></textarea>
+                </div>
+                <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="private" value='1'>
+                      Khóa không cho thành viên khác xem nội dung!
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-submit">Gửi câu hỏi</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-sm-12 col-md-8" id='faq-list' class="list" data-url='{{ ('product/faq/' ~ item.id)|url }}'></div>
+    </div>
+</div>

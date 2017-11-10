@@ -1,0 +1,29 @@
+<nav class="categories-list-box {% if 0 %} for-home fix-header-nav {% endif %}">
+    <ul class="nav-main">
+        {% for id, item in addon.product_category %}
+        <li class="menuItem item-1">
+            <div class="menuItem-box">
+                <strong><a href="javascript:;" title="{{ item.title }}">{{ item.title }}</a></strong>
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </div>
+
+            <div class="sub-cate women" style="display: none; width: 720px;">
+                <div class="sub-cate-inner">
+                    {% for level2 in item.children %}
+                    <ul>
+                        <li><a href='javascript:;' class="title">{{ level2.title }}</a></li>
+                        {% for level3 in level2.children %}
+                            <li>
+                                <a href="{{ level3|link('product', 'category') }}" title='{{ level3.title }}'>
+                                    {{ level3.title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>

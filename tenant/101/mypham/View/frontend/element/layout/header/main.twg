@@ -1,0 +1,108 @@
+<header class="hidden-xs">
+	<div id="bottom-header" class="bottom-header hidden-xs">
+		<div class="container">
+			<div class="row header-logo">
+				<div class="col-sm-2">
+					<div class="logo logo-pc col-left">
+						<a href="{{ request().home }}" title='{{ config('app.title') }}'>
+							{{ 'logo.png'|asset }}
+						</a>
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<div class="col-left label-search">
+						<div class="box-search">
+							<form action="/search">
+								<div class="box-search">
+									<div class="box-input">
+										<input type="hidden" name="type" value="product">
+										<div class="group-collection-search">
+											<!-- <button type="button" >Tất cả <i class="fa fa-angle-down"></i></button> -->
+											<select data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" name="category" class='select search-category'>
+				                                {% for item in addon.product_category %}
+				                                    {% set id = item.id %}
+				                                    <option value='{{ id }}'>{{ item.title }}</option>
+				                                    {% if item.children %}
+				                                        {% for item2 in item.children %}
+				                                            {% set id2 = item2.id %}
+				                                            <option value='{{ id2 }}'>&nbsp;&nbsp;&nbsp;&nbsp;{{ item2.title }}</option>
+				                                            {% if item2.children %}
+				                                            {% for id3, item3 in item2.children %}
+				                                                {% set id3 = item3.id %}
+				                                                <option value='{{ id3 }}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item3.title }}</option>
+				                                            {% endfor %}
+				                                        {% endif %}
+				                                        {% endfor %}
+				                                    {% endif %}
+				                                {% endfor %}
+				                            </select>
+										</div>
+										<div class="input-group-search" style="">
+											<input type="text" name="q" placeholder="Tìm kiếm ...">
+										</div>
+
+										<button type="submit"><i class="fa fa-search"></i></button>
+									</div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="col-right box-login">
+						<a href="/account" title="Tài khoản">
+							<div class="div-user-control control-2">
+							</div>
+							<div class="info">
+								<span>Tài khoản</span>
+							</div>
+						</a>
+					</div>
+					<div class="col-right box-carts">
+						<div class="cart-info hidden-xs">
+							<a class="cart-link" href="/cart">
+								<div class="div-user-control control-4">
+									<span class="cart-number">{{ addon.cart_total|default(0) }}</span>
+								</div>
+								<div class="info">
+									<span>Giỏ hàng</span>
+								</div>
+							</a>
+							<div class="cart-view clearfix" style="display: none;">
+								<table id="clone-item-cart" class="table-clone-cart">
+									<tbody><tr class="item_2 hidden">
+										<td class="img"><a href="" title=""><img src="" alt=""></a></td>
+										<td>
+											<a class="pro-title-view" href="" title=""></a>
+											<span class="pro-quantity-view"></span>
+											<span class="pro-price-view"></span>
+										</td>
+									</tr>
+								</tbody></table>
+								<table id="cart-view">
+
+									<tbody><tr>
+										<td>Hiện chưa có sản phẩm</td>
+									</tr>
+
+								</tbody></table>
+								<span class="line"></span>
+								<table class="table-total">
+									<tbody><tr>
+										<td align="left">TỔNG TIỀN:</td>
+										<td align="right" id="total-view-cart">0₫</td>
+									</tr>
+									<tr>
+										<td><a href="/cart" class="linktocart">Xem giỏ hàng</a></td>
+										<td><a href="/checkout" class="linktocheckout">Thanh toán</a></td>
+									</tr>
+								</tbody></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

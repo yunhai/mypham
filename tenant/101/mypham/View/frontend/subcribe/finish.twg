@@ -1,0 +1,7 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    <div class="wrapertv">
+        Cám ơn quý khách đã đăng ký nhận bản tin từ chúng tôi!
+    </div>
+{% endblock %}

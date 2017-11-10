@@ -1,0 +1,49 @@
+<form id='list-form' method='post' class='app-list'>
+    <table class="table table-hover table-striped table-responsive">
+        <thead>
+            <tr>
+                <th width='50'>
+                    <label class="checkbox m-n i-checks">
+                        <input type="checkbox"><i></i>
+                    </label>
+                </th>
+                <th class='col-sm-1'></th>
+                <th>{{ __('1002', 'Tiêu đề', alias) }}</th>
+                <th>{{ __('2006', 'Phí vận chuyển', alias) }}</th>
+                <th>{{ __('2007', 'Số ngày vận chuyển', alias) }}</th>
+                <th class='col-sm-1 text-center' title="{{ __('1002', 'Index', alias) }}">
+                    <i class='fa fa-sort'></i>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in option.list %}
+            <tr>
+                <td>
+                    <label class="checkbox m-n i-checks">
+                        <input type='checkbox' name='{{ alias }}[{{ attribute(item, alias).id }}]' value='{{ attribute(item, alias).id }}' /><i></i>
+                    </label>
+                </td>
+                <td>
+                    {{ attribute(item, alias).status|status(status) }}
+                </td>
+                <td>
+                    <a href='{{ load('url', 'helper').module('edit/' ~ attribute(item, alias).id) }}' title='{{ attribute(item, alias).title }}' class='edit-link'>
+                        {{ attribute(item, alias).title }}
+                    </a>
+                </td>
+                <td>
+                    {{ attribute(item, alias).delivery_price|number }}
+                </td>
+                <td>
+                    {{ attribute(item, alias).delivery_day }}
+                </td>
+                <td class='text-center'>
+                    {{ attribute(item, alias).idx }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>

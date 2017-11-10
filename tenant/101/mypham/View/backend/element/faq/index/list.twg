@@ -1,0 +1,51 @@
+{% set url = load('url', 'helper') %}
+
+<div class="table-responsive">
+    <form id='list-form' method='post' class='app-list'>
+        <table class="table table-hover table-striped table-responsive b-t b-light">
+            <thead>
+                <tr>
+                    <th width='50'>
+                        <label class="checkbox m-n i-checks">
+                            <input type="checkbox"><i></i>
+                        </label>
+                    </th>
+                    <th class='col-sm-1'></th>
+                    <th class='col-sm-2'>{{ __('1002', 'Trạng thái', 'faq') }}</th>
+                    <th>{{ __('1003', 'Câu hỏi', 'faq') }}</th>
+                    <th>{{ __('1004', 'Bài viết', 'faq') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data.list %}
+                <tr>
+                    <td>
+                        <label class="checkbox m-n i-checks">
+                            <input type='checkbox' name='faq[{{ item.id }}]' value='{{ item.id }}' /><i></i>
+                        </label>
+                    </td>
+                    <td>{{ item.status|status(status) }}</td>
+                    <td>
+                        <a href='{{ url.module('edit/' ~ item.id) }}'>
+                            {{ item.answer ? 'Đã trả lời' : 'Chưa trả lời' }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ item.question|nl2br }}
+                        <span class='info dashed'>{{ item.fullname }} | {{ item.email }} | {{ item.created|date('h:i d/m/Y') }}</span>
+                        <span class='info remark'>{{ item.private ? 'Khóa không cho thành viên khác xem nội dung' : '' }}</span>
+                    </td>
+                    <td>
+                        {% set target = attribute(attribute(option.origin, item.target_model), item.target_id) %}
+                        <a href='{{ url.full(target.model ~ '/edit/' ~ target.id) }}' title='{{ target.title }}' target='_blank'>
+                            {{ target.title }}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+{% embed 'element/master/index/pager.twg' %}{% endembed %}

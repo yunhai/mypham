@@ -8,15 +8,12 @@ use Mp\Core\Service\Service;
 use Mp\Lib\Utility\Hash;
 use Mp\Lib\Utility\Text;
 
-class File extends Service
-{
-    public function __construct($model = 'file', $table = 'file', $alias = 'file')
-    {
+class File extends Service {
+    public function __construct($model = 'file', $table = 'file', $alias = 'file') {
         parent::__construct($model, $table, $alias);
     }
 
-    public function upload($single = true, $target = '')
-    {
+    public function upload($single = true, $target = '') {
         $result = [];
 
         $media = App::load('html')->media();
@@ -36,14 +33,13 @@ class File extends Service
         return $result;
     }
 
-    private function init($fileHelper, $config, $single = true, $target = '')
-    {
+    private function init($fileHelper, $config, $single = true, $target = '') {
         $data = [];
 
         $location = $config->get('app.upload.location');
         $directories = $config->get('module');
 
-        $destination = ROOT . 'public' . DS . $location . DS;
+        $destination = ROOT . 'public' . DS . $location . DS . App::mp('login')->targetCode() . DS;
 
         if ($single) {
             foreach ($_FILES as $container => $item) {
@@ -61,7 +57,6 @@ class File extends Service
                     $data[] = $this->makeUpload($fileHelper, $info, $container, $destination, $directory);
                 }
             }
-
             return $data;
         }
 
@@ -83,8 +78,7 @@ class File extends Service
         return $data;
     }
 
-    private function makeUpload($fileHelper, $info = [], $container = '', $destination = '', $directory = '')
-    {
+    private function makeUpload($fileHelper, $info = [], $container = '', $destination = '', $directory = '') {
         $tmp = pathinfo($info['name']);
         $ext = $tmp['extension'];
 
@@ -107,8 +101,7 @@ class File extends Service
         ];
     }
 
-    public function target($id = [], $option = [])
-    {
+    public function target($id = [], $option = []) {
         if (empty($id)) {
             return [];
         }
@@ -120,14 +113,13 @@ class File extends Service
         $alias = $this->model()->alias();
         $default = [
             'select' => "{$alias}.id, {$alias}.name, {$alias}.directory",
-            'where' => 'id IN (' . $id . ')',
+            'where' => "id IN (" . $id . ')',
             'order' => "{$alias}.id desc",
         ];
 
         $default = array_merge($default, $option);
 
         $result = $this->model()->find($default);
-
         return Hash::combine($result, '{n}.file.id', '{n}.file');
     }
 }

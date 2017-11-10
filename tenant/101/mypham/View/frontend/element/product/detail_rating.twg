@@ -1,0 +1,58 @@
+<div id="product-rating" class="tab-pane fade"><!--tab ct-->
+    <div>
+        <label>Bạn đã sử dụng sản phẩm này chưa?</label>
+        <p>Nếu bạn đã từng sử dụng sản phẩm này, bạn có thể gởi lời nhận xét sản phẩm.</p>
+        <p>Nếu bạn cần tư vấn về sản phẩm vui lòng gửi thông tin theo bên dưới.</p>
+    </div>
+    <hr  />
+    <div class='row'>
+        <div class="col-sm-12 col-md-4">
+            <div id='faq-callback'>
+                <span>Cám ơn quý khách đã nhận xét về sản phẩm.</span>
+                <hr  />
+            </div>
+            <form id="product-vote-form" method='post' data-action='{{ ('product/vote/' ~ item.id)|url }}'>
+                <input type='hidden' value='{{ item.id }}' name='target' />
+                <div class="form-group">
+                    <label>Đánh giá</label>
+                    <div>
+                        <span class='product-rating-criteria'>Giá</span>
+                        <select name="price" class='form-control'>
+                            {% for i in 5..1 %}
+                            <option value="{{ i }}">{{ i }} sao</option>
+                            {% endfor %}
+                        </select>
+                        <span class='product-rating-criteria'>Chất lượng</span>
+                        <select name="quantity" class='form-control'>
+                            {% for i in 5..1 %}
+                            <option value="{{ i }}">{{ i }} sao</option>
+                            {% endfor %}
+                        </select>
+                        <span class='product-rating-criteria'>Chuyển hàng</span>
+                        <select name="shipping" class='form-control'>
+                            {% for i in 5..1 %}
+                            <option value="{{ i }}">{{ i }} sao</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullname">Họ tên</label>
+                    <input name='fullname' id="fullname" class='form-control'>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input name='email' id="email" class='form-control'>
+                </div>
+                <div class="form-group">
+                    <label for="content">Nội Dung</label>
+                    <textarea name="content" id='content' class='form-control' rows='10'></textarea>
+                </div>
+                <button type="submit" class="btn btn-submit">Gửi câu hỏi</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-sm-12 col-md-8" id='vote-list' data-url='{{ ('product/rating/' ~ item.id)|url }}'></div>
+    </div>
+</div>

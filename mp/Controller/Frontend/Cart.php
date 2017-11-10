@@ -21,6 +21,9 @@ class Cart extends Frontend
             case 'add':
                 $this->add();
                 break;
+            case 'delete':
+                $this->delete();
+                break;
             case 'update':
                 $this->update();
                 break;
@@ -33,6 +36,23 @@ class Cart extends Frontend
         }
     }
 
+    public function delete()
+    {
+        $request = App::mp('request');
+        $id = $request->query[2];
+        $detail = Session::read('cart.detail');
+
+        unset($detail[$id]);
+
+        $total = $this->cartTotal($detail);
+
+        $cart = compact('total', 'detail');
+
+        Session::write('cart', $cart);
+
+        $this->redirect('/cart/detail');
+    }
+
     public function update()
     {
         $request = App::mp('request');
@@ -40,21 +60,22 @@ class Cart extends Frontend
         if (empty($request->data['cart'])) {
             abort('NotFoundException');
         }
-
         $this->updateCart($request->data['cart'], false);
-        $this->reload(App::mp('request')->referer(), 'update');
+        // $this->reload(App::mp('request')->referer(), 'detail');
+        $this->redirect('/cart/detail');
     }
 
     public function destroy()
     {
         Session::delete('cart');
         Session::delete('order');
-        $this->reload(App::mp('request')->referer(), 'destroy');
+        $this->render('destroy');
     }
 
     public function detail($id = 0)
     {
         $cart = Session::read('cart');
+
         $this->render('detail', compact('cart'));
     }
 
@@ -77,7 +98,7 @@ class Cart extends Frontend
         $target['amount'] = 1;
 
         $this->updateCart($target);
-        $this->reload(App::mp('request')->referer(), 'add');
+        $this->back();
     }
 
     protected function upsertDetail($target = [], &$cart = [])
@@ -89,21 +110,17 @@ class Cart extends Frontend
             $cart[$id] = $target;
         }
 
-        $cart[$id]['sub_point'] = $target['point'] * $cart[$id]['amount'];
         $cart[$id]['sub_total'] = $cart[$id]['price'] * $cart[$id]['amount'];
         $cart[$id]['total'] = $cart[$id]['sub_total'];
     }
 
-    protected function modifyDetail($updateList = [], &$cart = [])
+    protected function modifyDetail($update = [], &$cart = [])
     {
         foreach ($cart as $id => &$item) {
-            if (array_key_exists($id, $updateList)) {
-                $item['selected-option'] = $updateList[$id]['selected-option'];
-
-                $item['amount'] = $updateList[$id]['amount'];
-                $item['sub_point'] = $item['point'] * $item['amount'];
+            if (array_key_exists($id, $update)) {
+                $item['amount'] = $update[$id]['amount'];
                 $item['sub_total'] = $item['price'] * $item['amount'];
-                $cart[$id]['total'] = $cart[$id]['sub_total'];
+                $item['total'] = $item['sub_total'];
             } else {
                 unset($cart[$id]);
             }
@@ -123,10 +140,17 @@ class Cart extends Frontend
             $this->modifyDetail($target, $detail);
         }
 
+        $total = $this->cartTotal($detail);
+        $cart = compact('total', 'detail');
+
+        Session::write('cart', $cart);
+    }
+
+    public function cartTotal($detail)
+    {
         $total = [
             'item' => 0,
             'amount' => 0,
-            'point' => 0,
             'sub_total' => 0,
             'total' => 0,
             'shipping' => 0
@@ -137,10 +161,8 @@ class Cart extends Frontend
             $total['amount'] += $item['amount'];
             $total['sub_total'] += $item['sub_total'];
             $total['total'] += $item['total'];
-            $total['point'] += $item['point'];
         }
 
-        $cart = compact('total', 'detail');
-        Session::write('cart', $cart);
+        return $total;
     }
 }

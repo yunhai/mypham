@@ -1,0 +1,30 @@
+{% set html = load('html', 'helper') %}
+
+<!DOCTYPE html>
+<html lang="en" class="app">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{ meta.title }}</title>
+    <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    {{ html.css(['bootstrap', 'animate', 'font-awesome.min', 'icon', 'font', 'app', 'common']) }}
+
+    <!--[if lt IE 9]>
+        {{ html.js(['html5shiv.min', 'respond.min', 'excanvas'], 'js/ie') }}
+    <![endif]-->
+</head>
+
+<body>
+    <section id="content" class="animated fadeInUp">
+        <div class="container">
+          {% block content %}{% endblock %}
+        </div>
+      </section>
+    {{ html.js(['jquery.min', 'bootstrap', 'app']) }}
+    {{ html.js(['jquery.slimscroll.min'], 'js/slimscroll') }}
+    {{ html.js(['app.plugin']) }}
+</body>
+
+</html>

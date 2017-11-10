@@ -1,0 +1,56 @@
+{% set file_id = detail.file_id %}
+<div id='card-{{ unique }}' class='card {{ class }}'>
+    <div class='card-body'>
+        <div class='card-content'>
+            <input type='text' placeholder='Mã quy cách' name='{{ name }}[title]' value='{{ detail.title }}' />
+        </div>
+        <div class='card-image'>
+            <div id='product-property-detail-{{ unique }}-image-uploader'
+                class="b-upload"
+                action='{{ ('file/upload/target:product-files')|url }}'>
+                <div id='product-property-detail-{{ unique }}-image-button' class="btn-upload b-upload__dnd {% if file_id %}b-upload-hide{% endif %}">
+                    Kéo / Chọn ảnh
+                    <input type="file" name="product-property-detail-files" />
+                </div>
+
+                <div id='product-property-detail-{{ unique }}-image-uploaded' class="div-hover">
+                    {% if file_id %}
+                    <div id='img-container-{{ file_id }}'>
+                        <input type='hidden' value='{{ file_id }}' name='{{ name }}[file_id]' />
+                        <figure class='nailthumb-container'>
+                            {{ f|media({'target_id': file_id, 'data-id': file_id}) }}
+                            <figcaption>
+                                <a href='javascript:;'
+                                   class='j-removePropertyDetailFile'
+                                   data-id='{{ file_id }}'
+                                   data-button='product-property-detail-{{ unique }}-image-button'>
+                                    Xóa
+                                </a>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class='preview-container'>
+                    <div class="js-files b-upload__property">
+                        <div class="js-file-tpl-product-property-detail-{{ unique }}-image b-thumb"
+                             data-wrapper='product-property-detail-{{ unique }}-image'
+                             data-hidden_name='{{ name }}[file_id]'>
+
+                            <div class="b-thumb__preview">
+                                <div class="b-thumb__preview__pic"></div>
+                            </div>
+                            <div class="b-thumb__progress progress progress-small">
+                                <div class="bar"></div>
+                            </div>
+                            <div class="b-thumb__name"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='card-bottom'>
+        <a href='#' class='btn btn-default j-removePropertyDetail' data-id='card-{{ unique }}'>Xóa</a>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+{% for item in items %}
+    {% embed 'element/product/item.twg' with {'item': item} %}{% endembed %}
+{% endfor %}

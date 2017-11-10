@@ -1,0 +1,17 @@
+<div class="box col-md-3 {{ class }}">
+    <a class="product-view" href="{{ target|link('product') }}" title="{{ target.title }}">
+        {{ target|media({'height': '178px'}) }}
+        <a class='add-to-cart' href='{{ ('cart/add/' ~ target.id)|url }}'>
+            Đặt mua
+        </a>
+        <p class="product-price-box">
+            {% if target.discount %}
+                <span class="curr-price">{{ target.promote|price }}</span>
+                <span class="old-price">{{ target.price|price }}</span>
+            {% else %}
+                <span class="curr-price">{{ target.price|price }}</span>
+            {% endif %}
+        </p>
+        <span class="product-name">{{ target.title }}</span>
+    </a>
+</div>

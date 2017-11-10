@@ -1,0 +1,34 @@
+
+<div class="row"><!--row-->
+    {% include 'element/common/makeup-sidebar.twg' %}
+    <div class="col-md-9 boder-left-dot main-content"><!--md-9-->
+        <h1 class="title-news">{{ target.title }}</h1>
+        <p class="date-detail">{{ target.modified|mydate }}</p>
+        <div class="editor"><!--editor-->
+            <div class="fck_detail width_common">
+                {{ target.content }}
+
+                {% include 'element/common/basic-info.twg' %}
+                <p style="text-align:right;">
+                    (Nguồn:&nbsp;<em>Công ty TNHH đầu tư Thanh Hằng</em>)
+                </p>
+            </div>
+        </div><!--editor-->
+        {% if others is not empty %}
+        <div class="wrap-ul-main">
+            <div class="wraper-ul-2"><!--wrapper-->
+                <ul class="news">
+                    {% for item in others %}
+                    <li>
+                        <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                            {{item.title}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class='clearfix'></div>
+            </div><!--end wrapper-->
+        </div>
+        {% endif %}
+    </div><!--end md-9-->
+</div><!--end row-->

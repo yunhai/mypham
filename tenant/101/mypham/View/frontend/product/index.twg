@@ -1,0 +1,41 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="row clearfix">
+    <aside class="col-md-12">
+        <div class="header-collection">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box-title-collection clearfix">
+                        <h1>{{ option.page_title }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9 col-xs-12">
+                    <div id='list-product' class="row">
+                        {% for item in data.list %}
+                            {% embed 'element/product/item.twg' with {item: item} %}{% endembed %}
+                        {% endfor %}
+                    </div>
+                    <div class='clearfix'></div>
+                    {% if option.page.current < option.page.total %}
+                        <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-product'>Xem thêm</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-xs-12">
+                    <label class='btn-custom'>{{ sidebar_title|default('Danh mục sản phẩm') }}</label>
+                    <ul class='nav category-sidebar'>
+                        {% for item in categories %}
+                            <li>
+                                <a href='{{ item|link('product', 'category') }}' title='{{ item.title }}'>{{ item.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
+{% endblock %}

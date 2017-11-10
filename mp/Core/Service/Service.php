@@ -6,21 +6,24 @@ use Mp\App;
 use Mp\Core\Master;
 use Mp\Lib\Utility\Hash;
 
-class Service extends Master{
-
+class Service extends Master
+{
     protected $model = null;
 
-    public function __construct($model = '', $table = '', $alias = '') {
+    public function __construct($model = '', $table = '', $alias = '')
+    {
         if ($model) {
             $this->model = App::load($model, 'model', compact('table', 'alias'));
         }
     }
 
-    public function category($name = '', $func = 'flat') {
+    public function category($name = '', $func = 'flat')
+    {
         $this->model->category(App::category()->$func($name));
     }
 
-    public function get($option = [], $extend = [], $association = []) {
+    public function get($option = [], $extend = [], $association = [])
+    {
         $alias = $this->model()->alias();
 
         $default = [

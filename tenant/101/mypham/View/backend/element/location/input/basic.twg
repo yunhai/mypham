@@ -1,0 +1,82 @@
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">
+        {{ __('1011', 'Basic') }}
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="panel-toggle text-muted"><i class="fa fa-caret-down text-active"></i><i class="fa fa-caret-up text"></i></a>
+            </li>
+        </ul>
+    </header>
+    <div class="panel-body">
+        <input type='hidden' name='{{ alias }}[id]' value='{{ attribute(target, alias).id }}' />
+
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="{{alias}}-title">{{ __('2001', 'Tiêu đề', alias) }}</label>
+                    <span class="text-danger pull-right">{{ __('2001', 'Bắt buộc', 'global') }}</span>
+                </th>
+                <td>
+                    <input class='form-control seo-permalink' data-model='{{ alias }}' data-prefix='{{ mp('config').get('seo.prefix.' ~ alias ~ '.detail') }}' name='{{ alias }}[title]' type='text' id='{{alias}}-title' value='{{ attribute(target, alias).title }}' placeholder='{{ __('2001', 'Tiêu đề', alias) }}' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'title') }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="{{alias}}-title">{{ __('2006', 'Phí vận chuyển', alias) }}</label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[delivery_price]' type='text' id='{{alias}}-delivery_price' value='{{ attribute(target, alias).delivery_price }}' placeholder='{{ __('2006', 'Phí vận chuyển', alias) }}' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'delivery_price') }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="{{alias}}-title">{{ __('2007', 'Số ngày vận chuyển', alias) }}</label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ alias }}[delivery_day]' type='text' id='{{alias}}-delivery_day' value='{{ attribute(target, alias).delivery_day }}' placeholder='{{ __('2007', 'Số ngày vận chuyển', alias) }}' />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'delivery_day') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'><label for="caption">{{ __('2004', 'Thứ tự hiển thị', alias) }}</label></th>
+                <td><input class='form-control' name='{{ alias }}[idx]' type='text' id='idx' value='{{ attribute(target, alias).idx }}' placeholder='{{ __('2004', 'Thứ tự hiển thị', alias) }}' /></td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'><label for="status">{{ __('2005', 'Trạng thái', alias) }}</label></th>
+                <td>
+                    {% for value, name in status %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[status]' {% if value == attribute(target, alias).status %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label for="category">{{ __('2006', 'Parent', alias) }}</label>
+                </th>
+                <td>
+                    <select class="form-control seo-permalink" data-model='{{alias}}' name='{{ alias }}[parent_id]' id='{{ alias }}-category'>
+                        {% for key, value in option.category %}
+                        <option value="{{ key }}" {% if key == attribute(target, alias).parent_id %} selected='selected' {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    <div>
+</section>

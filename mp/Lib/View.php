@@ -60,10 +60,9 @@ class View
         $meta = $this->variable['meta'];
 
         $title = App::mp('config')->get('app.title');
-
         if (empty($meta['title'])) {
             $meta['title'] = $title;
-        } else {
+        } elseif ($_SERVER['REQUEST_URI'] != '/') {
             $meta['title'] .= ' | ' . $title;
         }
 

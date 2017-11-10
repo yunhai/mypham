@@ -1,0 +1,80 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+    <div class="row" id="cart">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <h2 class="coll-title cart-title">Giỏ hàng</h2>
+            <form action="{{ 'cart/update'|url }}" method="post" id="cartform">
+                <div class="clearfix overflow-cart">
+                    <table id="table-cart">
+                        <tbody>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Thông tin sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th class="hidden-xs">Thành tiền</th>
+                                <th></th>
+                            </tr>
+                            {% for item in cart.detail %}
+                            {% set product_id = item.id %}
+                            {% set target = attribute(product, product_id) %}
+                            <tr>
+                                <td class='item-thumb'>
+                                    <input type='hidden' name='cart[{{ product_id }}][id]' value= '{{ product_id }}' />
+                                    <input type='hidden' class='cart-item-sub_total' value='{{ item.sub_total }}' />
+
+                                    <a href='{{ target|link('product') }}' title='{{ target.title }}' target='_blank'>
+                                        {{ target|media({'class': 'thumbnail-small'}) }}
+                                    </a>
+                                </td>
+                                <td class='item-title'>
+                                    <a href='{{ target|link('product') }}' title='{{ target.title }}' target='_blank'>
+                                        <strong>{{ target.title}}</strong>
+
+                                        <span class="variant_title">{{ item.property_text }} {% if item.property_detail_text %} / {{ item.property_detail_text }}{% endif %}</span>
+                                    </a>
+                                </td>
+                                <td>{{ (item.price)|price }}</td>
+                                <td class="qty">
+                                    <input type="number" size="4" name="cart[{{ product_id }}][amount]" min="1" value="{{ (item.amount) }}">
+                                </td>
+                                <td class="price hidden-xs">{{ (item.total)|price }}</td>
+                                <td class="remove">
+                                    <a href="{{ 'cart/delete/%s'|format(product_id)|url }}" class="cart" title='Xóa sản phẩm'>
+                                        <img src="//hstatic.net/203/1000094203/1000162309/remove-cart.png?v=825">
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="clearfix">
+                    <a class="continue-shopping" title="Mua tiếp" href="{{ ''|url }}">Mua tiếp</a>
+                    <button class="update-cart">Cập nhật giỏ hàng</button>
+                    <a class="continue-shopping" title="Hủy giỏ hàng" href="{{ 'cart/destroy'|url }}">Hủy giỏ hàng</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-xs-12">
+            <h2 class="coll-title cart-title">Đơn hàng</h2>
+            <div class="right-cart">
+                <span class='cart-value cart-value-total'>
+                    <label>Tổng tiền</label>
+                    <span class='price'>{{ (cart.total.total)|price }}</span>
+                    <div class='clearfix'></div>
+                </span>
+
+                <a class="checkout" href="{{ 'order/deliver'|url }}">
+                    Thanh toán
+                </a>
+            </div>
+            <div class='selling-point-cart'>
+                {% include 'element/common/product-order-caption.twg' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

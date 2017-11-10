@@ -1,0 +1,103 @@
+{% set name = '%s[property][%s]'|format(alias, index) %}
+<section id='propery-{{ index }}' class='panel panel-default {{ class }}'>
+    <header class="panel-heading font-bold">
+        &nbsp;
+        <ul class="nav nav-pills pull-right">
+            <li>
+                <a href="#" class="j-removeProperty" data-id='propery-{{ index }}'>
+                    Xóa
+                </a>
+            </li>
+            <li>
+                <a href="#" class="panel-toggle text-muted">
+                    <i class="fa fa-caret-down text-active"></i>
+                    <i class="fa fa-caret-up text"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class='panel-body'>
+        <table class="table table-bordered">
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Đơn vị
+                    </label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ name }}[title]' type='text' value='{{ property.title }}' placeholder="Đơn vị" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Đơn giá
+                    </label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ name }}[price]' type='text' value='{{ property.price }}' placeholder="Đơn giá" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Giá khuyến mãi
+                    </label>
+                </th>
+                <td>
+                    <input class='form-control' name='{{ name }}[price_promote]' type='text' value='{{ property.price_promote }}' placeholder="Giá khuyến mãi" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Chi tiết
+                    </label>
+                </th>
+                <td>
+                    <div class='text-right'>
+                        <a href='javascript:;' class='j-addPropertyDetail btn btn-primary'
+                           data-target='propery-detail-{{ index }}'>Thêm</a>
+                        <hr/>
+                    </div>
+
+                    <div id='propery-detail-{{ index }}'>
+                        {% for detail in property.detail %}
+                            {% set detail_index = loop.index %}
+                            {% set unique = '%s_a%s'|format(index, detail_index) %}
+                            {% set collection = collection|merge([unique]) %}
+
+                            {% set detail_name = '%s[detail][a%s]'|format(name, detail_index) %}
+                            {% set detail_class = 'j-productDetail' %}
+                            {% include 'element/product/input/property_detail_item.twg' with {
+                                    'unique': unique,
+                                    'name': detail_name,
+                                    'class': detail_class,
+                                    'detail': detail
+                                }
+                            %}
+                        {% endfor %}
+
+                        {% for detail_index in 1 .. property_detail %}
+                            {% set unique = '%s_b%s'|format(index, detail_index) %}
+                            {% set collection = collection|merge([unique]) %}
+
+                            {% set detail_name = '%s[detail][b%s]'|format(name, detail_index) %}
+                            {% set detail_class = 'j-productDetail init--property-detail' %}
+                            {% include 'element/product/input/property_detail_item.twg' with {
+                                    'unique': unique,
+                                    'name': detail_name,
+                                    'class': detail_class,
+                                }
+                            %}
+                        {% endfor %}
+                        {% include 'element/product/input/property_fileapi.twg' with {
+                                'collection': collection,
+                            }
+                        %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>

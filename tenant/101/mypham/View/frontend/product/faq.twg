@@ -1,0 +1,10 @@
+<div class='rating-list'>
+{% for item in list %}
+
+<div class="item-list">
+    <label>{{ item.question|nl2br }}</label>
+    {{ item.answer }}
+</div>
+
+{% endfor %}
+</div>

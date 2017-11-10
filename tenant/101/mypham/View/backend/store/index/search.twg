@@ -1,0 +1,48 @@
+<div class="table-responsive">
+    <form id='list-form' method='post' class='app-list'>
+        <table class="table table-hover table-striped table-responsive b-t b-light">
+            <thead>
+                <tr>
+                    <th width='50'>
+                        <label class="checkbox m-n i-checks">
+                            <input type="checkbox"><i></i>
+                        </label>
+                    </th>
+                    <th class='col-sm-1'>&nbsp;</th>
+                    <th>{{ __('1104', 'Tên chi nhánh', alias) }}</th>
+                    <th class='col-sm-4'>{{ __('1105', 'Địa chỉ', alias) }}</th>
+                    <th class='col-sm-2'>{{ __('1106', 'Điện thoại', alias) }}</th>
+                    <th class='col-sm-2'>{{ __('1107', 'Email', alias) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data.list %}
+                <tr>
+                    <td>
+                        <label class="checkbox m-n i-checks">
+                            <input type='checkbox' name='{{ alias }}[{{ attribute(item, alias).id }}]' value='{{ attribute(item, alias).id }}' /><i></i>
+                        </label>
+                    </td>
+                    <td>{{ attribute(item, alias).status|status(status) }}</td>
+                    <td>
+                        <a href='{{ load('url', 'helper').module('edit/' ~ attribute(item, alias).id) }}' title='{{ attribute(item, alias).title }}' class='edit-link'>
+                            {{ attribute(item, alias).title }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ attribute(item, alias).address }}
+                    </td>
+                    <td>
+                        {{ attribute(item, alias).phone }}
+                    </td>
+                    <td class='text-center'>
+                        {{ attribute(item, alias).email }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+{% embed 'element/master/index/pager_params.twg' with {'option': option.filter} %}{% endembed %}

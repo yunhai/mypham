@@ -1,0 +1,16 @@
+<div class='col-md-4'>
+
+    <div class='item-shop'>
+        <a href="{{ item|link('store') }}" title='{{ item.title }}'>
+            <div class='nailthumb thumb-75-75' style='margin-right: 5px;'>
+                {{ item|media({'class': 'thumb-75-75', 'field': 'logo' }) }}
+            </div>
+            <div class='detail'>
+                <span class='shop-title'>{{ item.title }}</span>
+                <span><b>ĐC:</b> {{ item.address }}</span>
+                <span><b>Tel:</b> {{ item.phone }}</span>
+                <span><b>E:</b> {{ item.email }}</span>
+            </div>
+        </a>
+    </div>
+</div>

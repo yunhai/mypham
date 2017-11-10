@@ -1,0 +1,44 @@
+#   backward compatibility ruleset for rewriting document.html to document.php
+#   when and only when document.php exists but no longer document.html
+
+#http://www.kensfi.com/serve-static-content-from-a-cookieless-domain/
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+	RewriteBase /
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php?request=$1 [L,QSA]
+</IfModule>
+
+# Set Expires Headers
+
+<IfModule mod_expires.c>
+	ExpiresActive On
+	#ExpiresByType application/javascript "access plus 1 years"
+</IfModule>
+
+<ifModule mod_headers.c>
+  Header unset ETag
+  FileETag None
+
+  # 2 DAYS
+  <FilesMatch "\.(xml|txt)$">
+	Header set Cache-Control "max-age=172800, public, must-revalidate"
+  </FilesMatch>
+
+  # 2 MONTHS
+  <FilesMatch "\.(html|php)$">
+    Header set Cache-Control "max-age=4838400, public"
+  </filesMatch>
+
+   # 1 year
+  <FilesMatch "\.(jpe?g|png|gif|js|css|ico)$">
+    Header set Cache-Control "max-age=31449600, public"
+    Header set Expires "Thu, 15 Jan 2015 20:00:00 GMT"
+  </filesMatch>
+</ifModule>
+
+
+#php_flag display_errors off
+#php_flag log_errors off

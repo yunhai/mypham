@@ -1,0 +1,43 @@
+<section id="block-camnang"><!--block tuvan-->
+    <ul class="tab">
+        {% set index = 1 %}
+        {% for categoryId, list in option.postByCategory %}
+        <li {% if index == 1 %}class="active"{% endif %}>
+            <a data-toggle="tab" href="#category-{{ categoryId }}">{{attribute(option.category, categoryId)}}</a>
+        </li>
+        {% set index = index + 1 %}
+        {% endfor %}
+    </ul>
+
+<div class="tab-content"><!--tab-content-->
+    {% set index = 1 %}
+    {% for categoryId, posts in option.postByCategory %}
+    <div id="category-{{ categoryId }}" class="tab-pane fade in {% if index == 1 %}active{% endif %}">
+        <div class="row"><!--row-->
+            {% for item in posts %}
+            <div class="col-md-4">
+                <div class="item">
+                    <div class='nailthumb thumb-100-100'>
+                        <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                            {{ item|media({'class': 'thumb-100-100'}) }}
+                        </a>
+                    </div>
+                    <div class="content">
+                        <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                            {{ item.title }}
+                        </a>
+                        <p>{{ item.content|truncate(120) }}&nbsp;</p>
+                        <a class="more" href="{{ item|link(alias) }}" title='{{ item.title }}'>>> Xem tiếp</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div><!--end row-->
+        <div class='category-viewall'>
+            <a href='{{ (alias ~ '/category/' ~ categoryId)|url }}' title='Xem toàn bộ'>Xem toàn bộ</a>
+        </div>
+    </div><!--end tab ct-->
+    {% set index = index + 1 %}
+    {% endfor %}
+</div><!--ed tab content-->
+</section><!--end block tuvan-->

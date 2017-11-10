@@ -1,0 +1,41 @@
+/******************************\ BEGIN Tinos ******************************/
+/*********** Tinos *********/
+@font-face{
+	font-family:'Tinos';
+	font-style: normal;
+	font-weight:400;
+	src:local('tinos regular'),
+		local('tinos regular'), 
+		url(//hstatic.net/0/0/global/design/member/fonts-master/apache/tinos/tinos-regular.ttf) format('truetype')
+}
+
+/*********** Tinos italic*********/
+@font-face{
+	font-family:'Tinos';
+	font-style: italic;
+	font-weight:400;
+	src:local('tinos italic'),
+		local('tinos italic'), 
+		url(//hstatic.net/0/0/global/design/member/fonts-master/apache/tinos/tinos-italic.ttf) format('truetype')
+}
+
+/*********** Tinos bold *********/
+@font-face{
+	font-family:'Tinos';
+	font-style: normal;
+	font-weight:700;
+	src:local('tinos bold'),
+		local('tinos bold'), 
+		url(//hstatic.net/0/0/global/design/member/fonts-master/apache/tinos/tinos-bold.ttf) format('truetype')
+}
+
+/*********** Tinos bold italic*********/
+@font-face{
+	font-family:'Tinos';
+	font-style: italic;
+	font-weight:700;
+	src:local('tinos bold italic'),
+		local('tinos bold italic'), 
+		url(//hstatic.net/0/0/global/design/member/fonts-master/apache/tinos/tinos-bolditalic.ttf) format('truetype')
+}
+/******************************\ END Tinos /******************************/

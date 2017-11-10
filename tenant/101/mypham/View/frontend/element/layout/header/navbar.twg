@@ -1,0 +1,52 @@
+<div class="block-nav-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-header">
+                    <div class="menu-btn click-menu-mobile ">
+                        <a href="#menu-mobile" class="navbar-toggle">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                    </div>
+                    <div class="pull-right mobile-menu-icon-wrapper">
+                        <div class="logo logo-mobile">
+                            <a href="{{ request().home }}" title='{{ config('app.title') }}'>
+    							{{ 'logo.png'|asset }}
+    						</a>
+                        </div>
+                        <ul class="mobile-menu-icon clearfix">
+                            <li id="cart-target" class="cart">
+                                <a href="/cart" class="cart " title="Giỏ hàng">
+                                    <span class="fa fa-shopping-cart"></span>
+                                    <span id="cart-count">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="categories-main-left categories-main nb-col-md-3 hidden-xs">
+                    <div class="categories-content-title">
+                        <i class="fa fa-bars"></i>
+                        <a href="#" class="text">Danh mục sản phẩm</a>
+                    </div>
+                    {% embed 'element/layout/header/category.twg' %}{% endembed %}
+                </div>
+
+                <div class="nav-marg220 nb-col-md-9 hidden-xs">
+                    <ul class="nav navbar-nav clearfix">
+                        {% for item in addon.main_menu %}
+                            <li>
+                                <a href="{{ item.url|url }}" title='{{ item.title }}'>
+                                    <span>{{ item.title }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
