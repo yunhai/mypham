@@ -66,11 +66,7 @@ class Frontend extends Controller
             $category = implode(',', array_keys($tmp));
         }
 
-        $association = [
-            'seo' => 'id, alias'
-        ];
-
-        $select = "{$alias}.id, {$alias}.title, {$alias}.seo_id";
+        $select = "{$alias}.id, {$alias}.title, {$alias}.seo_id, {$alias}.file_id";
         $where = "{$alias}.id < {$id} AND {$alias}.status > 0 AND {$alias}.category_id IN ({$category})";
         $order = "{$alias}.id desc";
         $limit = 5;
@@ -79,7 +75,9 @@ class Frontend extends Controller
         $others = $this->model()->find(compact('select', 'where', 'limit', 'order'));
         $others = Hash::combine($others, '{n}.' . $alias . '.id', '{n}.' . $alias);
 
-        return $this->model()->associate($others, $association);
+        $this->associate($others);
+
+        return $others;
     }
 
     public function isAjax()

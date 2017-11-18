@@ -103,11 +103,10 @@ class ProductService extends Product
 
     public function promote($limit = 20)
     {
-        $model = $this->model();
-        $alias = $model->alias();
+        $alias = $this->model()->alias();
 
         $query = [
-            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id, extension.string_1 as promote",
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
             'where' => 'CURDATE() BETWEEN extension.string_4 AND extension.string_5',
             'order' => 'extension.string_4 desc',
             'limit' => $limit,
@@ -122,14 +121,12 @@ class ProductService extends Product
         ];
 
         $result = [];
-        $tmp = $model->find($query);
+        $result = $this->model()->find($query);
 
-        foreach ($tmp as $id => $item) {
-            $result[$id] = array_merge($item['product'], $item['extension']);
-        }
-
+        $result = Hash::combine($result, '{n}.product.id', '{n}.product');
         $this->model()->checkPromotion($result);
-        
+        $this->associate($result);
+
         usort($result, function ($a, $b) {
             return ($a['discount'] > $b['discount']) ? -1 : 1;
         });
@@ -137,75 +134,41 @@ class ProductService extends Product
         return $result;
     }
 
-    public function hot($limit = 8)
+    public function bestSelling($limit = 8)
     {
-        $model = $this->model();
-        $alias = $model->alias();
-
         $query = [
-            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id, extension.string_1 as promote",
-            'where' => "{$alias}.status = 2 AND CURDATE() BETWEEN extension.string_4 AND extension.string_5",
-            'order' => 'extension.string_4 desc',
-            'limit' => $limit,
-            'join' => [
-                [
-                    'table' => 'extension',
-                    'alias' => 'extension',
-                    'type' => 'INNER',
-                    'condition' => 'extension.target_id = ' . $alias . '.id  AND extension.target_model = "' . $alias . '"'
-                ],
-            ]
+            'select' => 'id, title, price, file_id, seo_id',
+            'where' => 'status = 2',
+            'order' => 'id desc',
+            'limit' => $limit
         ];
 
-        $result = [];
-        $tmp = $model->find($query);
-        foreach ($tmp as $id => $item) {
-            $result[$id] = array_merge($item['product'], $item['extension']);
-        }
+        $alias = $this->model()->alias();
 
-        foreach ($result as $key => &$item) {
-            $item['discount'] = 0;
-            if ($item['price']) {
-                $discount = ((int) (($item['promote'] / $item['price']) * 100));
-                if ($discount) {
-                    $item['discount'] = 100 - $discount;
-                }
-            }
-        }
-        $result = array_values($result);
+        $result = $this->model()->find($query);
+        $result = Hash::combine($result, "{n}.{$alias}.id", "{n}.{$alias}");
+
+        $this->model()->checkPromotion($result);
         $this->associate($result);
 
         return $result;
     }
 
-    public function bestSelling($limit = 8)
+    public function lastest($limit = 8)
     {
-        $model = $this->model();
-
-        $virtualField = [
-            'string_1' => 'promote',
-            'string_4' => 'promote_start',
-            'string_5' => 'promote_end'
-        ];
-        $this->model()->extend($virtualField);
-
         $query = [
             'select' => 'id, title, price, file_id, seo_id',
-            'where' => 'status = 3',
+            'where' => 'status > 0',
             'order' => 'id desc',
             'limit' => $limit
         ];
 
-        $alias = $model->alias();
+        $alias = $this->model()->alias();
 
-        $result = $model->find($query);
+        $result = $this->model()->find($query);
         $result = Hash::combine($result, "{n}.{$alias}.id", "{n}.{$alias}");
 
-        $today = date('Y-m-d');
-        foreach ($result as $key => &$item) {
-            $model->promotion($item);
-        }
-
+        $this->model()->checkPromotion($result);
         $this->associate($result);
 
         return $result;

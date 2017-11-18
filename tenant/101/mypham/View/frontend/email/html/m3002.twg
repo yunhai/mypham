@@ -1,0 +1,14 @@
+Xin chào {{ fullname|default('quý khách hàng') }}<br />
+Cám ơn quý khách đã liên hệ <a href='{{ ''|url }}' title='{{ config('app.title') }}'>{{ config('app.title') }}</a>.<br />
+Chúng tôi sẽ phản hồi lại thông qua email dưới đây trong thời gian sớm nhất.<br />
+<br />
+<b>Thông tin liên hệ:</b><br />
+Mã liên hệ: {{ code }}<br />
+Họ tên: {{ fullname }}<br />
+Email: {{ email }}<br />
+Nội dung: {{ content }}<br />
+<br />
+<br />
+<br />
+<br />
+<br />

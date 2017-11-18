@@ -5,13 +5,15 @@ namespace Mp\Controller\Frontend;
 use Mp\App;
 use Mp\Core\Controller\Frontend;
 
-class Subcribe extends Frontend {
-
-    public function __construct($model = '', $table = '', $alias = 'subcribe', $template = 'subcribe') {
+class Subcribe extends Frontend
+{
+    public function __construct($model = '', $table = '', $alias = 'subcribe', $template = 'subcribe')
+    {
         parent::__construct($model, $table, $alias, $template);
     }
 
-    public function navigator() {
+    public function navigator()
+    {
         $request = App::mp('request');
 
         switch ($request->query['action']) {
@@ -21,37 +23,52 @@ class Subcribe extends Frontend {
             case 'cancel':
                 $this->cancel();
                 break;
-            default :
+            default:
                 $this->add();
                 break;
         }
     }
 
-    public function cancel() {
+    public function cancel()
+    {
         $request = App::mp('request');
 
+        $breadcrumb = [
+            ['title' => 'Hủy đăng ký nhận tin nhắn']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
         if (!empty($request->data)) {
             $model = App::load('mailRecipient', 'model');
             $model->delete("email = '{$request->data['email']}'");
+
             return $this->render('cancel_finish');
         }
+
 
         $this->render('cancel');
     }
 
-    public function add() {
+    public function add()
+    {
         $request = App::mp('request');
 
         if (!empty($request->data)) {
             $model = App::load('mailRecipient', 'model');
             $model->save($request->data);
-            $this->redirect(App::load('url')->module('finish'));
+
+            return $this->redirect(App::load('url')->module('finish'));
         }
 
         $this->redirect(App::load('url')->full());
     }
 
-    public function finish() {
+    public function finish()
+    {
+        $breadcrumb = [
+            ['title' => 'Đăng ký nhận tin nhắn']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
         $this->render('finish');
     }
 }

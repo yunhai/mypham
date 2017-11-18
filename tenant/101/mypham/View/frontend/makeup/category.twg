@@ -1,5 +1,0 @@
-{% extends "layout/default.twg" %}
-
-{% block content %}
-    {% include 'element/makeup/category.twg' %}
-{% endblock %}

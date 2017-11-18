@@ -1,8 +1,16 @@
 {% extends "layout/default.twg" %}
 
 {% block content %}
-<div class="wrapertv">
-    {% set balance = data.balance ? data.balance : 0 %}
-    Quý khách đã tích lũy được <span class='btn btn-success'>{{ balance|price }} điểm thưởng</span>
+<div class="row">
+    <div class="col-md-9 col-sm-12">
+        <div class="notification-message">
+            {% set balance = data.balance ? data.balance : 0 %}
+            Quý khách đã tích lũy được <b>{{ 1000|number_format }}</b> điểm thưởng.
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-12">
+        {% include 'element/post/sidebar.twg' with {} %}
+    </div>
 </div>
 {% endblock %}

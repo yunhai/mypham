@@ -9,7 +9,7 @@
   <div class="carousel-inner">
       {% for i, item in items %}
       <div class="item {% if i == 0 %} active {% endif %}">
-          {{ item|media({'class': '', 'alt': item.title}) }}
+          {{ item|media({'class': 'product--slider--item img-responsive', 'alt': item.title}) }}
       </div>
 
       {% endfor %}

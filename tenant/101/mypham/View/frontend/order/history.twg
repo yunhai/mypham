@@ -1,0 +1,38 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9 col-sm-12 col-xs-12">
+        <h1 class='post-title'></h1>
+        <div class="post-content">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Tổng tiền (VND)</th>
+                        <th>Ngày đặt</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    {% for id, item in data.list %}
+                    <tr>
+                        <tr>
+                            <td>
+                                <a href='{{ ('order/detail/%s'|format(item.code))|lower|url }}'>{{ item.code }}</a>
+                            </td>
+                            <td>{{ item.total|price}}</td>
+                            <td>{{ item.created|date('d/m/Y h:i') }}</td>
+                            <td>{{ attribute(status, item.status) }}</td>
+                            </td>
+                        </tr>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        {% include 'element/post/sidebar.twg' with {} %}
+    </div>
+</div>
+{% endblock %}

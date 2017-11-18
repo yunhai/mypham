@@ -1,19 +1,23 @@
 {% extends "layout/default.twg" %}
 
 {% block content %}
-<div class="wrapertv">
-    <form id="faq" method='post' data-action='{{ 'subcribe/cancel'|url }}'>
-        <p class="title">
-            Xin vui lòng điền thông tin bên dưới để hủy nhận bản tin.
-        </p>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <h1 class='post-title'></h1>
+        <div class="post-content">
+            <form id="faq" method='post' data-action='{{ 'subcribe/cancel'|url }}'>
+                <div class="form-group">
+                   <label for="email">Email</label>
+                   <input id='email' class="form-control" name="email" placeholder="Email" value="{{ target.email }}" />
+                </div>
 
-        <div class='product-detail-form-info'>
-            <span>Email:</span>
-            <input name="email" value='{{ target.email }}' />
-            <div class='clear'></div>
+                <input type="submit" class='btn-submit' value='Gửi' />
+            </form>
         </div>
+    </div>
 
-        <input type='submit' value='Gửi' class='contact-button' style='float: left; margin-left: 75px;'/>
-    </form>
+    <div class="col-md-offset-3 col-md-3 col-sm-12 col-xs-12">
+        {% include 'element/post/sidebar.twg' with {} %}
+    </div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 <section class="panel panel-default">
     <header class="panel-heading font-bold">
-        {{ __('1001', alias, alias) }}
+        {{ __('1001', 'Danh mục', alias) }}
         <ul class="nav nav-pills pull-right">
             <li>
                 <a href="#" class="panel-toggle text-muted">

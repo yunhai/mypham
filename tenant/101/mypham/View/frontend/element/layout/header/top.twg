@@ -49,15 +49,23 @@
                         </div>
                     </li>
                     <li>
-                        <a href="{{ 'huong-dan-dat-hang'|url }}" title="Hướng dẫn đặt hàng">
-                            <span>Hướng dẫn đặt hàng</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ 'contact'|url }}" title="Liên hệ">
+                        <a href="{{ 'lien-he'|url }}" title="Liên hệ">
                             <span>Liên hệ</span>
                         </a>
                     </li>
+                    {% if login().loggedin() %}
+                    <li>
+                        <a href="{{ 'user/logout'|url }}" title="Logout">
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ 'user/login'|url }}" title="Đăng nhập">
+                            <span>Đăng nhập</span>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

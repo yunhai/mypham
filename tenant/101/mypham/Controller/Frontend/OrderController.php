@@ -11,7 +11,11 @@ class OrderController extends Order
     public function navigator()
     {
         $request = App::mp('request');
-        if (!Session::check('cart')) {
+
+        $ignore = [
+            'history', 'detail'
+        ];
+        if (!in_array($request->query['action'], $ignore) && !Session::check('cart')) {
             $this->redirect(App::load('url')->full('/'));
         }
 
@@ -23,21 +27,6 @@ class OrderController extends Order
                 $this->go();
                 break;
 
-
-
-            // case 'recipient':
-            //     $this->recipient();
-            //     break;
-            // case 'checkout':
-            //     $this->checkout();
-            //     break;
-            //
-            // case 'payment':
-            //     $this->payment();
-            //     break;
-            // case 'go':
-            //     $this->go();
-            //     break;
             case 'finish':
                 $this->finish();
                 break;
@@ -145,7 +134,7 @@ class OrderController extends Order
         }
 
         $this->email($info);
-    
+
         $url = App::load('url')->full('order/finish');
         $this->redirect($url);
     }
@@ -276,45 +265,63 @@ class OrderController extends Order
         return $error;
     }
 
-    ///////////////////////////////////////////////////////////
     public function history()
     {
         $request = App::mp('request');
         $login = App::load('login');
-        if ($login->loggedIn()) {
-            $option = [
-                'select' => 'id, code, total, status, created, modified',
-                'where' => 'user_id = ' . $login->userId(),
-                'order' => 'id desc',
-                'limit' => 10,
-                'page' => empty($request->name['page']) ? 1 : $request->name['page'],
-                'paginator' => [
-                    'navigator' => false
-                ]
-            ];
 
-            $data = $this->paginate($option);
-
-            if ($data['list']) {
-                $data['list'] = Hash::combine($data['list'], '{n}.order.id', '{n}.order');
-                $this->set('status', $this->status($this->model()->alias()));
-            }
-
-            $this->set('data', $data);
+        if (!$login->loggedIn()) {
+            $url = App::load('url')->full('user/login');
+            $this->redirect($url);
         }
+
+        $breadcrumb = [
+            ['title' => 'Lịch sự giao dịch']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        $option = [
+            'select' => 'id, code, total, status, created, modified',
+            'where' => 'user_id = ' . $login->userId(),
+            'order' => 'id desc',
+            'limit' => 1000,
+            'page' => empty($request->name['page']) ? 1 : $request->name['page'],
+            'paginator' => [
+                'navigator' => false
+            ]
+        ];
+
+        $data = $this->paginate($option);
+
+        if ($data['list']) {
+            $data['list'] = Hash::combine($data['list'], '{n}.order.id', '{n}.order');
+            $this->set('status', $this->status($this->model()->alias()));
+        }
+
+        $this->set('data', $data);
 
         $this->render('history');
     }
 
-    public function detail($id = 0)
+    public function detail($code = 0)
     {
-        $id = (int) $id;
-
         $alias = $this->model()->alias();
+        $login = App::load('login');
+
+        if (!$login->loggedIn()) {
+            $url = App::load('url')->full('user/login');
+            $this->redirect($url);
+        }
 
         $fields = "{$alias}.id, {$alias}.user_id, {$alias}.code, {$alias}.total, {$alias}.tax, {$alias}.sub_total, {$alias}.status, {$alias}.recipient, {$alias}.note, {$alias}.modified, {$alias}.created";
+        $option = [
+            'select' => $fields,
+            'where' => 'user_id = ' . $login->userId() . ' AND ' . $alias .'.code = "' . $code . '"',
+            'limit' => 1
+        ];
 
-        $target = $this->model()->findById($id, $fields);
+        $target = $this->model()->find($option, 'first');
+
         if (empty($target)) {
             abort('NotFoundException');
         }
@@ -326,15 +333,23 @@ class OrderController extends Order
         $this->model()->attactCart();
 
         $target = $target[$alias];
-        $target['detail'] = $this->model()->cart($id);
+
+        $order_id = $target['id'];
+        $target['detail'] = $this->model()->cart($order_id);
 
         $this->associate(Hash::combine($target['detail'], '{n}.target_id', '{n}.target'));
         $status = $this->status($alias);
 
+        $breadcrumb = [
+            ['title' => 'Lịch sự giao dịch', 'url' => 'order/history'],
+            ['title' => 'Tra cứu đơn hàng']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
         return $this->render('detail', compact('target', 'status'));
     }
 
-    public function status($alias = '')
+    private function status($alias = '')
     {
         $status = App::mp('config')->get('status');
 
@@ -344,102 +359,4 @@ class OrderController extends Order
 
         return $status[$alias];
     }
-
-    // public function checkout()
-    // {
-    //     $login = App::load('login');
-    //     if ($login->loggedIn()) {
-    //         Session::write('order', ['target' => $login->user()]);
-    //         $this->redirect(App::load('url')->full('order/deliver'));
-    //     }
-    //     //'order/recipient'
-    //     $this->redirect(App::load('url')->full('don-hang/thanh-vien-he-thong'));
-    // }
-    //
-    // public function recipient()
-    // {
-    //     $request = App::mp('request');
-    //
-    //     $cart = Session::read('cart');
-    //     $tmp = Hash::combine($cart['detail'], '{n}.id', '{n}.option');
-    //
-    //     $tmp = array_filter($tmp);
-    //     $option = empty($tmp) ? false : true;
-    //
-    //     if (empty($request->data)) {
-    //         if (Session::check('order')) {
-    //             return $this->redirect(App::load('url')->full('order/deliver'));
-    //         }
-    //
-    //         return $this->render('recipient', compact('option', 'target'));
-    //     }
-    //
-    //     $type = $request->data['type'];
-    //     if ($type == 1) {
-    //         $target = [
-    //             'email' => '',
-    //             'fullname' => '',
-    //             'address' => '',
-    //             'phone' => '',
-    //             'type' => 1
-    //         ];
-    //     } else {
-    //         $target = [
-    //             'type' => 2
-    //         ];
-    //         $account = $request->data['login']['account'];
-    //         $password = $request->data['login']['password'];
-    //
-    //         $fields = [
-    //             'string_1' => 'address',
-    //             'string_2' => 'phone',
-    //         ];
-    //
-    //         $model = App::load('user', 'model');
-    //         $model->extension($fields);
-    //         $flag = App::load('user', 'service', [$model])->login($account, $password);
-    //         if ($flag) {
-    //             $target = array_merge($target, App::load('login')->user());
-    //         } else {
-    //             $error = ['Thông tin đăng nhập chưa chính xác'];
-    //
-    //             return $this->render('membership', compact('error', 'option', 'target'));
-    //         }
-    //     }
-    //
-    //     Session::write('order', compact('target'));
-    //     $this->redirect(App::load('url')->full('order/deliver'));
-    // }
-
-    // public function go()
-    // {
-    //     $request = App::mp('request');
-    //
-    //     $cart = Session::read('cart');
-    //
-    //     $order_code = '';
-    //     $this->save($cart, $order_code);
-    //
-    //     $info = [
-    //         'order' => Session::read('order'),
-    //         'cart' => $cart,
-    //         'code' => $order_code
-    //     ];
-    //
-    //     if ($info['order']['deliver']['payment'] == 2) {
-    //         $info['payment_text'] = 'Chuyển khoản ngân hàng';
-    //     } else {
-    //         $info['payment_text'] = 'Thanh toán khi nhận hàng';
-    //     }
-    //
-    //     if (!empty($request->data['subcribe'])) {
-    //         App::load('common')->subcribe($info['order']['target']);
-    //     }
-    //
-    //     $this->email($info);
-    //     //'order/finish'
-    //
-    //     $url = App::load('url')->full('don-hang/hoan-tat');
-    //     $this->redirect($url);
-    // }
 }

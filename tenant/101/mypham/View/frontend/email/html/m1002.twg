@@ -1,0 +1,7 @@
+Xin chào {{ fullname }}.<br />
+<br />
+Quý khách đã yêu cầu cập nhật mật khẩu.<br />
+Nếu quý khách không có gửi yêu cầu, vui lòng bỏ qua email này.<br /><br />
+Quý khách bấm vào đường dẫn sau để cập nhật mật khẩu mới.<br />
+
+<a href='{{ url }}' title='Cập nhật mật khẩu mới'>{{ url }}></a>

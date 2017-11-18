@@ -1,0 +1,13 @@
+Xin chào admin.<br />
+Hệ thông ghi nhận được thông tin liên hệ từ khách hàng.<br />
+<br />
+<b>Thông tin liên hệ:</b><br />
+Mã liên hệ: {{ code }}<br />
+Họ tên: {{ fullname }}<br />
+Email: {{ email }}<br />
+Nội dung: {{ content }}<br />
+<br />
+<br />
+<br />
+<br />
+<br />

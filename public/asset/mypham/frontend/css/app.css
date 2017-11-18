@@ -56,6 +56,9 @@
     line-height: 26px;
     overflow: hidden;
 }
+.product--slider--item {
+    height: 300px !important;
+}
 .home--top_panel {
     height: 403px;
     overflow: hidden;
@@ -151,11 +154,11 @@
 .tag:hover {
     margin: 0 5px 5px 0;
     padding: 5px;
-    border: 1px solid #e60f1e;
-    background-color: #e60f1e;
+    border: 1px solid #ddd;
+    background-color: #ddd;
     display: inline-block;
     height: 30px;
-    color:#fff;
+    color:#333;
     cursor: pointer;
 }
 .product-form .product-info{
@@ -349,4 +352,84 @@ select {
 }
 #province {
     margin-bottom: 10px;
+}
+.article-focus img {
+    height: 340px;
+}
+.article-item {
+    clear: both;
+    max-height: 90px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.article-item-image-small {
+    float: left;
+    width: 45%;
+    margin-right: 10px;
+}
+.blog-sidebar {
+    margin-bottom: 20px;
+}
+.article-title {
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.article-list-item {
+    padding-bottom: 10px;
+    border-bottom: dashed 1px #bbb;
+    margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+    .blog-content-short-description {
+        height: 55px;
+    }
+}
+#blog-category a.active {
+    background-color: #eee;
+    color: #ec5198;
+}
+.post-title {
+    margin-top: 0px;
+}
+.post-summerize {
+    color: #333;
+    padding: 10px;
+    background: #ddd;
+    margin-bottom: 10px;
+}
+.nav-tabs { min-width: 600px; }
+.nav-tabs-responsive { overflow: auto; }
+
+.others .box-title-collection {
+    margin-top: 20px;
+    padding: 10px;
+    font-weight:bold;
+}
+.product-notification {
+    margin-top: 10px;
+    display: block
+}
+.manufacturer-item img {
+    height: 100px;
+}
+.product-view {
+    display: block;
+    height: 178px;
+    overflow: hidden;
+}
+.notification-message {
+    padding: 20px 10px;
+    background: #eee;
+    margin-bottom: 100px;
+}
+.post-summary {
+    margin-bottom: 10px;
+    display: block;
+}
+.error-message {
+    color: #e60f1e;
+    display: block;
+    margin-top: 5px;
 }

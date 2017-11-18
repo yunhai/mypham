@@ -9,56 +9,61 @@ class MakeupController extends Frontend
     public function __construct($model = 'makeup', $table = 'post', $alias = 'makeup', $template = 'makeup')
     {
         parent::__construct($model, $table, $alias, $template);
+
         $this->model()->category(App::category()->flat($alias, false, 'title', '', ['where' => 'status > 0']));
     }
 
     public function index()
     {
-        $seoId = $fileId = [];
+        $request = App::mp('request');
         $alias = $this->model()->alias();
 
-        $query = [
-            'select' => 'id, title, content, file_id, seo_id',
-            'where' => 'status = 1',
-            'order' => 'id desc',
-            'limit' => 9
-        ];
-        $posts = App::load('common')->lastest($this->model(), $query);
-
-        if (isset($posts['main'])) {
-            $seoId = [$posts['main']['seo_id']];
-            $fileId = [$posts['main']['file_id']];
-        }
-
-        if (isset($posts['list'])) {
-            $seoId = array_merge($seoId, Hash::combine($posts['list'], '{n}.seo_id', '{n}.seo_id'));
-            $fileId = array_merge($fileId, Hash::combine($posts['list'], '{n}.file_id', '{n}.file_id'));
-        }
-
-        $category = $this->model()->category();
+        $page = empty($request->name['page']) ? 1 : $request->name['page'];
 
         $option = [
-            'category' => $category,
-            'postByCategory' => []
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.content, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
+            'where' => 'status = 1',
+            'order' => "{$alias}.id desc",
+            'page' => $page,
+            'limit' => 20,
+            'paginator' => [
+                'navigator' => false
+            ]
         ];
 
-        foreach ($category as $id => $element) {
-            $query['where'] = 'category_id = ' . $id . ' AND status > 0';
-            $tmp = $this->model()->find($query);
-            $tmp = Hash::combine($tmp, "{n}.{$alias}.id", "{n}.{$alias}");
+        $pager = [];
+        $data = $this->paginate($option, true, $pager);
 
-            if ($tmp) {
-                $seoId = array_merge($seoId, Hash::combine($tmp, '{n}.seo_id', '{n}.seo_id'));
-                $fileId = array_merge($fileId, Hash::combine($tmp, '{n}.file_id', '{n}.file_id'));
-            }
-            $option['postByCategory'][$id] = $tmp;
+        $data['list'] = Hash::combine($data['list'], "{n}.{$alias}.id", "{n}.{$alias}");
+
+        $this->associate($data['list']);
+
+        if ($this->isAjax()) {
+            return $this->loadAjax($data);
         }
-        $option['postByCategory'] = array_filter($option['postByCategory']);
 
-        $seoId = array_merge($seoId, App::category()->seoId(array_keys($category)));
-        $this->refer(['seo' => $seoId, 'file' => $fileId]);
+        $option = [
+            'page' => $pager,
+            'current_url' => App::load('url')->current()
+        ];
 
-        $this->render('index', compact('posts', 'option'));
+        $lastest = array_splice($data['list'], 0, 5);
+        $focus = array_shift($lastest);
+
+        $this->sidebar();
+        $this->render('index', compact('lastest', 'focus', 'option', 'data'));
+    }
+
+    private function loadAjax($data = [])
+    {
+        $item_list = $data['list'] ?? [];
+        $data = [
+            'total' => $data['page']['total'] ?? 0,
+            'current' => $data['page']['current'] ?? 0,
+            'html' => $this->render('item_list', compact('item_list')),
+        ];
+
+        return $this->renderJson($data);
     }
 
     public function detail($id = 0)
@@ -75,39 +80,41 @@ class MakeupController extends Frontend
 
         $target = $target[$alias];
         $others = $this->other($target);
-        $this->sidebar($id);
+        $sidebar = $this->sidebar();
 
+        $breadcrumb = [
+            $sidebar['category'][$target['category_id']],
+            $target
+        ];
+        
+        $this->set('breadcrumb', $breadcrumb);
         $this->render('detail', compact('target', 'others'));
     }
 
-    public function sidebar($current = 0)
+    public function sidebar()
     {
-        $model = $this->model();
-        $alias = $model->alias();
-        $ids = array_keys($model->category());
+        $alias = $this->model()->alias();
         $service = App::category();
+        $root = $service->root($alias);
 
-        $query = [
-            'select' => 'id, title, seo_id',
-            'where' => 'id IN (' . implode(',', $ids) . ') AND status = 1',
-            'order' => 'idx',
+        $category = $service->tree($alias, ['select' => 'seo_id', 'where' => 'status > 0']);
+        array_shift($category);
+        $category = Hash::combine($category, '{n}.id', '{n}');
+
+        $title = [
+            'makeup' => 'Cẩm nang làm đẹp',
+            'collection' => 'Bộ sưu tập',
+            'advisory' => 'Tư vấn'
         ];
 
-        $category = $service->model()->find($query);
-        $category = Hash::combine($category, '{n}.category.id', '{n}.category');
+        $sidebar = [
+            'category' => $category,
+            'alias_name' => $title[$alias]
+        ];
 
-        $this->refer(['seo' => Hash::combine($category, '{n}.seo_id', '{n}.seo_id')]);
-        $topCategory = array_shift($category);
+        $this->variable(compact('sidebar'));
 
-        $select = 'id, title, file_id, seo_id';
-        $where = "id <> {$current} AND status = 1";
-        $order = 'id desc';
-        $limit = 5;
-        $random = $model->find(compact('select', 'where', 'order', 'limit'));
-        $random = Hash::combine($random, "{n}.{$alias}.id", "{n}.{$alias}");
-
-        $this->associate($random);
-        $this->variable(compact('category', 'topCategory', 'random'));
+        return $sidebar;
     }
 
     public function category($category = 0)
@@ -122,24 +129,44 @@ class MakeupController extends Frontend
         }
 
         $page = empty($request->name['page']) ? 1 : $request->name['page'];
+
         $option = [
-            'select' => "{$alias}.id, {$alias}.title, {$alias}.content, {$alias}.file_id, {$alias}.seo_id",
-            'where' => 'status  = 1 AND category_id = ' . $category,
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.content, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
+            'where' => 'status = 1 AND category_id = ' . $category,
             'order' => "{$alias}.id desc",
             'page' => $page,
-            'limit' => 10,
+            'limit' => 6,
             'paginator' => [
                 'navigator' => false
             ]
         ];
 
-        $data = $this->paginate($option, true);
+        $pager = [];
+        $data = $this->paginate($option, true, $pager);
         $data['list'] = Hash::combine($data['list'], "{n}.{$alias}.id", "{n}.{$alias}");
 
         $this->associate($data['list']);
 
-        $data['category'] = $categories;
-        $this->sidebar(0);
-        $this->render('category', compact('data'));
+        if ($this->isAjax()) {
+            return $this->loadAjax($data);
+        }
+
+        $option = [
+            'page' => $pager,
+            'current_url' => App::load('url')->current(),
+            'category_id' => $category
+        ];
+
+        $lastest = array_splice($data['list'], 0, 5);
+        $focus = array_shift($lastest);
+
+        $breadcrumb = [
+            'category' => [
+                'title' => $categories[$category],
+            ],
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        $this->render('index', compact('lastest', 'focus', 'option', 'data'));
     }
 }

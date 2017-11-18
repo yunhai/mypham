@@ -9,7 +9,12 @@
 						{% if loop.last %}
 							<li class='active'>{{ item.title }}</li>
 						{% else %}
-			                <li><a href="{{ item|link(item.alias) }}" title='{{ item.title }}'>{{ item.title }}</a></li>
+							{% if item.url %}
+								{% set url = item.url|url %}
+							{% else %}
+								{% set url = item|link(item.alias) %}
+							{% endif %}
+			                <li><a href="{{ url }}" title='{{ item.title }}'>{{ item.title }}</a></li>
 			                <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
 						{% endif %}
 		            {% endfor %}

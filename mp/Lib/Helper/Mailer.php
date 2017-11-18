@@ -91,6 +91,10 @@ class Mailer
 
             return true;
         } catch (Exception $e) {
+            // print_r('<pre>');
+            // print_r($e);
+            // print_r('</pre>');
+
             abort('send mail error');
         }
 

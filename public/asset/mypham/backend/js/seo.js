@@ -31,6 +31,9 @@ $(".seo-permalink").change(function() {
         category = common.removeAccent($("#" + model + "-category option:selected").text());
         if (category) {
             text = category + '/' + title;
+            if ($("#" + model + "-category").data('prefix')) {
+                text = prefix + '/' + text;
+            }
         } else {
             text = prefix + '/' + title;
         }

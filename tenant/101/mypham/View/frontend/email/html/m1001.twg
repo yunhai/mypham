@@ -1,0 +1,9 @@
+Xin chào {{ fullname }}<br/>
+Cám ơn quý khách đã đăng ký trở thành thành viên của chúng tôi.<br/>
+Thông tin đăng nhập của quý khách như sau:<br/>
+<br/>
+Tài khoản: {{ email }}<br/>
+Mật khâu: {{ password }}<br/>
+<br/><br/>
+Quý khách vui lòng <a href='{{ url }}' title='Xác thực tài khoản'>xác thực tài khoản</a> theo đường dẫn sau:<br/>
+<a href='{{ url }}' title='Xác thực tài khoản'>{{ url }}</a>

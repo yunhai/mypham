@@ -2,5 +2,6 @@
 
 use Mp\Validator\User;
 
-class UserValidator extends User {
+class UserValidator extends User
+{
 }

@@ -50,7 +50,6 @@ class Twig
         $this->filterLink($template);
         $this->filterAsset($template);
 
-
         $this->functionFile($template);
         $this->functionLocale($template);
         $this->functionLoad($template);

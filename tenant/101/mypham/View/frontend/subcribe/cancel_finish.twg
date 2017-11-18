@@ -1,7 +1,7 @@
 {% extends "layout/default.twg" %}
 
 {% block content %}
-    <div class="wrapertv">
+    <div class="notification-message">
         Chúng tôi đã cập nhật yêu cầu hủy nhận bản tin của quý khách.
     </div>
 {% endblock %}

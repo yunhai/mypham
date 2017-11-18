@@ -1,36 +1,34 @@
-{% extends "layout/blank.twg" %}
+{% extends "layout/default.twg" %}
 
 {% block content %}
-    <div class='row'>
-        <div class="col-md-4 boder-right-dot col-md-offset-2">
-            <h3 class='login-label'>Login với tài khoản website</h3>
-
-            <form action="{{ 'user/login/local'|url }}" method='post' class='login-form-standalone'>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4 col-sm-12 col-xs-12">
+        <div class='card'>
+            <h4>Đăng nhập</h4>
+            <hr />
+                <a href='{{ 'user/sign-up'|url }}' title='Đăng ký thành viên' class='secondary-link'>Đăng ký thành viên</a> |
+                <a href='{{ 'user/forget-password'|url }}' title='Quên mật khẩu' class='secondary-link'>Quên mật khẩu</a>
+            <hr />
+            <form action="{{ 'user/login'|url }}" method="post">
                 {% if error is defined %}
                     {% include 'element/message/error.twg' with {'error': error} %}
                 {% endif %}
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name='email' placeholder="Email" required>
+                   <label for="email">Email</label>
+                   <input id='email' class="form-control" name="email" placeholder="Email" />
                 </div>
                 <div class="form-group">
-                    <label for="password">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" name='password' placeholder="Mật khẩu đăng nhập" required>
-                </div>
-                <div class="form-group text-right">
-                    <a href="{{ 'user/forget-password'|url }}">Quên mật khẩu?</a>
+                   <label for="password">Mật khẩu</label>
+                   <input id='password' class="form-control" name="password" placeholder="Mật khẩu" type='password' />
                 </div>
                 <div class="form-group">
-                    <button type="submit" class='btn btn-custom'>Đăng nhập</button>
+                      <button type="submit" class="btn-submit">Đăng nhập</button>
                 </div>
             </form>
-        </div>
-        <div class="col-md-3">
-            <h3 class='login-label'>Login with</h3>
-            <div class="login-social login-social-standalone">
-                <a href="{{ 'user/login/facebook'|url }}"><img src="{{ html.img }}/login-face.png"></a>
-                {# <a href="{{ 'user/login/google'|url }}"><img src="{{ html.img }}/login-gg.png"></a> #}
-            </div>
+            <hr />
+            <a href="{{ 'user/login/facebook'|url }}" class='social-login' title='Login bằng facebook'>{{ 'fa-login.png'|asset }}</a>
+            <a href="{{ 'user/login/google'|url }}" class='social-login' title='Login bằng google'>{{ 'gg-login.png'|asset }}</a>
         </div>
     </div>
+</div>
 {% endblock %}

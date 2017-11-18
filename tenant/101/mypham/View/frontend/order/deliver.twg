@@ -3,11 +3,14 @@
 {% block content %}
 
 <div class='row'>
-    <div class="{% if login().loggedin() %}col-md-12{% else %}col-md-9{% endif %}"><!--md 9-->
+    <div class="col-md-12">
         <form class='card' action="{{ 'order/deliver'|url }}" method="post">
             <div class="row">
                 <div class="col-md-4">
                     <h4>Thông tin đặt hàng</h4>
+                    <hr />
+                        <a href='{{ 'user/login'|url }}' title='Đăng nhập' class='secondary-link'>Đăng nhập</a> |
+                        <a href='{{ 'user/sign-up'|url }}' title='Đăng ký thành viên' class='secondary-link'>Đăng ký thành viên</a>
                     <hr />
                     <div class="form-group">
                        <label for="buyer_fullname">Họ tên</label>
@@ -101,33 +104,6 @@
             <input type="submit" class='btn-submit' value='Đặt hàng' />
         </form>
     </div>
-    {% if login().loggedin() == false %}
-    <div class="col-md-3">
-        <div class='card'>
-            <h4>Thành viên hệ thống</h4>
-            <hr />
-                <a href='{{ 'user/sign-up'|url }}' title='Đăng ký thành viên' class='secondary-link'>Đăng ký thành viên</a> |
-                <a href='{{ 'user/forget-password'|url }}' title='Quên mật khẩu' class='secondary-link'>Quên mật khẩu</a>
-            <hr />
-            <form action="{{ 'user/login'|url }}" method="post">
-                <div class="form-group">
-                   <label for="email">Email</label>
-                   <input id='email' class="form-control" name="email" placeholder="Email" />
-                </div>
-                <div class="form-group">
-                   <label for="password">Mật khẩu</label>
-                   <input id='password' class="form-control" name="password" placeholder="Mật khẩu" type='password' />
-                </div>
-                <div class="form-group">
-                      <button type="submit" class="btn-submit">Đăng nhập</button>
-                </div>
-            </form>
-            <hr />
-            <a href="{{ 'user/login/facebook'|url }}" class='social-login' title='Login bằng facebook'>{{ 'fa-login.png'|asset }}</a>
-            <a href="{{ 'user/login/google'|url }}" class='social-login' title='Login bằng google'>{{ 'gg-login.png'|asset }}</a>
-        </div>
-    </div><!--md-4-->
-    {% endif %}
 </div>
 <script>
     var locations = {{ location|json_encode() }};

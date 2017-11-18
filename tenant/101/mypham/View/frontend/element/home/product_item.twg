@@ -1,6 +1,6 @@
 <div class="box col-md-3 {{ class }}">
     <a class="product-view" href="{{ target|link('product') }}" title="{{ target.title }}">
-        {{ target|media({'height': '178px'}) }}
+        {{ target|media({'class': 'img-responsive', 'height': '178px'}) }}
         <a class='add-to-cart' href='{{ ('cart/add/' ~ target.id)|url }}'>
             Đặt mua
         </a>

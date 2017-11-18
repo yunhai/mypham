@@ -1,41 +1,30 @@
 {% extends "layout/default.twg" %}
 
 {% block content %}
-<div class="row clearfix">
-    <aside class="col-md-12">
-        <div class="header-collection">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box-title-collection clearfix">
-                        <h1>{{ option.page_title }}</h1>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="box-title-collection clearfix">
+                <h1>{{ option.page_title }}</h1>
             </div>
-
-            <div class="row">
-                <div class="col-md-9 col-xs-12">
-                    <div id='list-product' class="row">
-                        {% for item in data.list %}
-                            {% embed 'element/product/item.twg' with {item: item} %}{% endembed %}
-                        {% endfor %}
+            <div id='list-product' class="row">
+                {% if data.list is empty %}
+                    <div class='col-md-12 product-notification'>
+                        <span>Hiện thời chưa có sản phẩm.</span><br/>
+                        <span>Quý khách vui lòng quay lại sau, hoặc tìm kiếm với từ khóa khác</span>
                     </div>
-                    <div class='clearfix'></div>
-                    {% if option.page.current < option.page.total %}
-                        <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-product'>Xem thêm</a>
-                    {% endif %}
-                </div>
-                <div class="col-md-3 col-xs-12">
-                    <label class='btn-custom'>{{ sidebar_title|default('Danh mục sản phẩm') }}</label>
-                    <ul class='nav category-sidebar'>
-                        {% for item in categories %}
-                            <li>
-                                <a href='{{ item|link('product', 'category') }}' title='{{ item.title }}'>{{ item.title }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% else %}
+                    {% for item in data.list %}
+                        {% embed 'element/product/item.twg' with {item: item} %}{% endembed %}
+                    {% endfor %}
+                {% endif %}
             </div>
+            <div class='clearfix'></div>
+            {% if option.page.current < option.page.total %}
+                <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-product'>Xem thêm</a>
+            {% endif %}
         </div>
-    </aside>
-</div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            {% include 'element/product/sidebar.twg' with {category_id: option.category_id} %}
+        </div>
+    </div>
 {% endblock %}

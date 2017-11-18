@@ -33,11 +33,8 @@ class ProductController extends Frontend
             case 'vote':
                 $this->vote($request->query[2]);
                 break;
-            case 'hot':
-                $this->hot();
-                break;
-            case 'best_sell':
-                $this->bestSellFromShop();
+            case 'best_selling':
+                $this->bestSelling();
                 break;
             case 'manufacturer':
                 $this->manufacturer($request->query[2]);
@@ -89,11 +86,6 @@ class ProductController extends Frontend
         $option = [];
         $option['others'] = $this->other($target);
 
-        $service = App::load('product', 'service');
-        // $service->model()->removeExtension();
-        $option['promotion'] = $service->promote(12);
-        $this->associate($option['promotion']);
-
         $service = App::category();
         $category = $service->tree('product', ['select' => 'id, title, seo_id', 'where' => 'status > 0']);
         $option['category'] = $category;
@@ -103,18 +95,8 @@ class ProductController extends Frontend
         $category = $category[$target['category_id']];
 
         $breadcrumb = [
-            'category' => [
-                'id' => $category['id'],
-                'title' => $category['title'],
-                'alias' => 'category',
-                'seo_id' => $category['seo_id']
-            ],
-            'target' => [
-                'id' => $target['id'],
-                'title' => $target['title'],
-                'alias' => $alias,
-                'seo_id' => $target['seo_id']
-            ]
+            $category,
+            $target
         ];
         $this->set('breadcrumb', $breadcrumb);
 
@@ -131,12 +113,13 @@ class ProductController extends Frontend
         $target['manufacturer_target'] = $manufacturer;
         $this->associate($manufacturer);
         $this->associate([$target]);
+
         if (isset($target['property'])) {
             $detail_files = Hash::combine($target['property'], '{s}.detail.{s}.file_id', '{s}.detail.{s}.file_id');
             $this->refer(['file' => $detail_files]);
         }
 
-
+        $this->sideBar('detail', $target['category_id']);
 
         $this->render('detail', compact('target', 'option', 'manufacturer'));
     }
@@ -144,18 +127,15 @@ class ProductController extends Frontend
     public function category($category = 0)
     {
         $request = App::mp('request');
-
-        $service = App::category();
+        $model = $this->model();
+        $alias = $model->alias();
 
         $option['select'] = 'id, title, seo_id, parent_id';
-        $categories = $service->extract($category, false, 'title', '', $option);
+        $categories = App::category()->extract($category, false, 'title', '', $option);
 
         if (empty($categories)) {
             abort('NotFoundException');
         }
-
-        $model = $this->model();
-        $alias = $model->alias();
 
         $categories = Hash::combine($categories, '{n}.category.id', '{n}.category');
 
@@ -167,33 +147,27 @@ class ProductController extends Frontend
         ];
         $data = $this->filter($option);
 
-        $category = array_shift($categories);
-        if (!$categories) {
-            $parent_id = $category['parent_id'];
-            $option = [
-                'select' => 'id, title, seo_id, parent_id'
-            ];
-            $categories = $service->extract($parent_id, true, 'title', '', $option);
-            $categories = Hash::combine($categories, '{n}.category.id', '{n}.category');
-        }
-
-        $breadcrumb = [
-            'category' => array_merge(['alias' => 'category'], $category)
-        ];
-        $this->set('breadcrumb', $breadcrumb);
-
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
 
+        $category = array_shift($categories);
+
+        $breadcrumb = [
+            $category
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
         $option = [
             'page_title' => $category['title'],
             'category' => $category,
+            'category_id' => $category['id'],
             'page' => $data['page'],
             'current_url' => App::load('url')->current()
         ];
 
-        $this->render('index', compact('data', 'option', 'categories'));
+        $this->sideBar('category', $category['id']);
+        $this->render('index', compact('data', 'option'));
     }
 
     private function loadAjax($data = [])
@@ -214,38 +188,13 @@ class ProductController extends Frontend
         $model = $this->model();
         $alias = $model->alias();
 
-        if (empty($option['order'])) {
-            $orders = [
-                'lastest' => $alias . '.id desc',
-                'price-asc' => $alias . '.price asc',
-                'price-desc' => $alias . '.price desc'
-            ];
-
-            $order = empty($request->name['order']) ? 'lastest' : $request->name['order'];
-            $order = $orders[$order];
-        } else {
-            $order = $option['order'];
-        }
-
-        if (empty($option['page'])) {
-            $page = empty($request->name['page']) ? 1 : $request->name['page'];
-        } else {
-            $page = $option['page'];
-        }
+        $page = empty($request->name['page']) ? 1 : $request->name['page'];
 
         $default = [
-            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id, extension.string_1 as promote, extension.string_4 as promote_start, extension.string_5 as promote_end",
-            'order' => $order,
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
+            'order' => $alias . '.id desc',
             'page' => $page,
             'limit' => $option['limit'] ?? 20,
-            'join' => [
-                [
-                    'table' => 'extension',
-                    'alias' => 'extension',
-                    'type' => 'INNER',
-                    'condition' => 'extension.target_id = ' . $alias . '.id AND extension.target_model ="' . $alias . '"'
-                ],
-            ],
             'paginator' => [
                 'navigator' => false
             ]
@@ -255,21 +204,14 @@ class ProductController extends Frontend
 
         $page = [];
         $data = $this->paginate($default, true, $page);
+        $data['list'] = Hash::combine($data['list'], '{n}.product.id', '{n}.product');
 
         if ($data['list']) {
-            $today = date('Y-m-d');
-            foreach ($data['list'] as $id => &$item) {
-                $item = array_merge($item['product'], $item['extension']);
-                unset($item['extension']);
-
-                $model->promotion($item);
-            }
-
+            $model->checkPromotion($data['list']);
             $this->associate($data['list']);
         }
 
         $data['page'] = $page;
-        $data['order'] = $order;
 
         return $data;
     }
@@ -285,7 +227,8 @@ class ProductController extends Frontend
     {
         $request = App::mp('request');
 
-        $keyword = $category = $token = '';
+        $keyword = $category = $token = $search = '';
+        $page = 1;
         if (!empty($request->data) && empty($request->data['ajax'])) {
             extract($request->data);
 
@@ -318,9 +261,10 @@ class ProductController extends Frontend
                     $$key = $value;
                 }
             }
+        } else {
+            $page = $data = $search = [];
         }
 
-        $page = $data = $search = [];
         if (!empty($keyword)) {
             $alias = $this->model()->alias();
 
@@ -330,30 +274,13 @@ class ProductController extends Frontend
             $keyword = Text::slug($keyword, '');
             $keywordArray = explode(' ', $keyword);
 
-            $match = '';
-            $length = count($keywordArray);
-            foreach ($keywordArray as $value) {
-                $index++;
-                if ($index == $length) {
-                    $match .= ' < '.$value;
-                } else {
-                    $match .= ' <(>'.$value;
-                }
-            }
-            $match = trim($match, ' <(>');
-
-            for ($i = 1; $i < $index - 1; $i++) {
-                $match .= ')';
-            }
-
-            $match = "MATCH(keyword) AGAINST ('>{$match}' IN BOOLEAN MODE)";
             $match = "keyword LIKE '%{$keyword}%'";
-            $match = 1;
             $option = [
                 'select' => 'id, target_id',
                 'where' => $match . ' AND target_model = "' . $alias . '"',
                 'limit' => '1000'
             ];
+
             $data = [];
             $tmp = $model->find($option, 'all', 'target_id');
             if ($tmp) {
@@ -364,7 +291,6 @@ class ProductController extends Frontend
                 $id = implode(',', array_keys($tmp));
                 $option = [
                     'where' => "{$alias}.status > 0 AND {$alias}.id IN (" . $id . ") AND {$alias}.category_id IN ({$category})",
-                    'limit' => 5
                 ];
                 $data = $this->filter($option);
             }
@@ -373,24 +299,28 @@ class ProductController extends Frontend
                 'keyword' => $keyword
             ];
 
-            $page = $data['page'];
+            $page = $data['page'] ?? 1;
         }
 
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
 
-        $default = [
-            'page_name' => 'Tìm kiếm',
-            'token' => $token,
-            'search' => $search
+        $breadcrumb = [
+            ['title' => 'Tìm kiếm']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+        $this->set('search', $request->data);
+
+        $option = [
+            'page_title' => "Tìm kiếm [{$keyword}]",
+            'search' => $search,
+            'page' => $page,
+            'current_url' => App::load('url')->current() . '/token:' . $token
         ];
 
-        $option = $this->sideBar();
-        $option = array_merge($option, $default);
-
-        $current_url = App::load('url')->current();
-        $this->render('search', compact('data', 'option', 'current_url', 'page'));
+        $this->sideBar('search');
+        $this->render('index', compact('data', 'option'));
     }
 
     protected function other($target, $option = [])
@@ -410,16 +340,13 @@ class ProductController extends Frontend
         $select = "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.file_id, {$alias}.seo_id";
         $where = "{$alias}.id <> {$id} AND {$alias}.status > 0 AND {$alias}.category_id IN ({$category})";
         $order = "{$alias}.id desc";
-        $limit = 12;
+        $limit = 8;
 
         $others = $this->model()->find(compact('select', 'where', 'limit', 'order'));
 
         $others = Hash::combine($others, '{n}.' . $alias . '.id', '{n}.' . $alias);
         $this->associate($others);
-
-        foreach ($others as $key => &$item) {
-            $this->model()->promotion($item);
-        }
+        $this->model()->checkPromotion($others);
 
         return $others;
     }
@@ -428,45 +355,101 @@ class ProductController extends Frontend
     {
         $model = $this->model();
         $alias = $model->alias();
-        print_r('<pre>');
-        print_r($model);
-        print_r('</pre>');
-        exit;
+
         $option = [
-            'where' => "{$alias}.status = 2 AND CURDATE() BETWEEN extension.string_4 AND extension.string_5",
+            'where' => "{$alias}.status > 0 AND CURDATE() BETWEEN extension.string_4 AND extension.string_5",
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = ' . $alias . '.id AND extension.target_model ="' . $alias . '"'
+                ],
+            ],
         ];
-        $data = $this->filter($option, 0);
+        $data = $this->filter($option);
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
 
         $breadcrumb = [
-            'category' => ['title' => 'Khuyến mãi hot']
+            ['title' => 'Khuyến mãi']
         ];
-
-        $categories = $model->category();
-        $category = array_shift($categories);
-
-        $categories = Hash::nest($categories, [
-            'idPath' => '{n}.id',
-            'parentPath' => '{n}.parent_id',
-            'root' => $category['id']
-        ]);
-
-
+        $this->set('breadcrumb', $breadcrumb);
 
         $option = [
-            'page_title' => 'Khuyến mãi hot',
-            'category' => $category,
+            'page_title' => 'Khuyến mãi',
+
             'page' => $data['page'],
             'current_url' => App::load('url')->current()
         ];
 
-        $this->render('index', compact('data', 'option', 'categories'));
+        $this->sideBar();
+        $this->render('index', compact('data', 'option'));
+    }
+
+    public function bestSelling()
+    {
+        $model = $this->model();
+        $alias = $model->alias();
+
+        $option = [
+            'where' => "{$alias}.status = 2",
+        ];
+        $data = $this->filter($option);
+        if ($this->isAjax()) {
+            return $this->loadAjax($data);
+        }
+
+        $breadcrumb = [
+            ['title' => 'Sản phẩm bán chạy']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        $option = [
+            'page_title' => 'Sản phẩm bán chạy',
+
+            'page' => $data['page'],
+            'current_url' => App::load('url')->current()
+        ];
+
+        $this->sideBar('best_selling');
+        $this->render('index', compact('data', 'option'));
+    }
+
+    private function sideBar($current = '', $category_id = 0)
+    {
+        $service = App::load('product', 'service');
+
+        if ($current == 'best_selling') {
+            $sidebar_product = $service->promote(3);
+            $sidebar_product_block = 'Sản phẩm khuyến mãi';
+        } else {
+            $sidebar_product = $service->bestSelling(3);
+            $sidebar_product_block = 'Sản phẩm bán chạy';
+        }
+
+        if (!$sidebar_product) {
+            $sidebar_product = $service->lastest(3);
+            $sidebar_product_block = 'Sản phẩm mới nhất';
+        }
+
+        if (!$category_id) {
+            $category_id = $this->model()->category();
+            $category_id = array_shift($category_id);
+        }
+
+        $sidebar = [
+            'product' => $sidebar_product,
+            'product_block' => $sidebar_product_block,
+            'category_id' => $category_id
+        ];
+
+        $this->set('sidebar', $sidebar);
     }
 
     public function manufacturer($manufacturer_id = '')
-    { //nhan hang
+    {
         $model = $this->model();
         $alias = $model->alias();
 
@@ -474,10 +457,23 @@ class ProductController extends Frontend
         $manufacturer_id = array_pop($manufacturer_id);
 
         $option = [
-            'where' => "{$alias}.status > 0 AND extension.string_3 = " . $manufacturer_id
+            'where' => "{$alias}.status > 0 AND extension.string_3 = " . $manufacturer_id,
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = ' . $alias . '.id AND extension.target_model ="' . $alias . '"'
+                ],
+            ],
         ];
-        $data = $this->filter($option, 0);
+        $data = $this->filter($option);
 
+        if ($this->isAjax()) {
+            return $this->loadAjax($data);
+        }
+
+        $data = $this->filter($option);
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
@@ -486,90 +482,21 @@ class ProductController extends Frontend
         $manufacturer = $service->getById($manufacturer_id);
         $manufacturer = current($manufacturer);
 
-        $default = [
-            'page_name' => $manufacturer['title'] ?? 'Nhan hang'
+        $manufacturer = 'Nhãn hàng ' . ($manufacturer['title'] ?? '');
+
+        $breadcrumb = [
+            ['title' => $manufacturer]
         ];
-        $option = $this->sideBar();
-        $option = array_merge($option, $default);
-
-        $page = $data['page'];
-        $current_url = App::load('url')->current();
-        $this->render('index', compact('data', 'option', 'current_url', 'page'));
-    }
-
-    public function bestSellFromShop()
-    { //best sales
-        $model = $this->model();
-        $alias = $model->alias();
+        $this->set('breadcrumb', $breadcrumb);
 
         $option = [
-            'where' => "{$alias}.status = 3"
+            'page_title' => $manufacturer,
+            'page' => $data['page'],
+            'current_url' => App::load('url')->current()
         ];
-        $data = $this->filter($option, 0);
 
-        if ($this->isAjax()) {
-            return $this->loadAjax($data);
-        }
-
-        $default = [
-            'page_name' => 'Bán chạy từ shop'
-        ];
-        $option = $this->sideBar();
-        $option = array_merge($option, $default);
-
-        $page = $data['page'];
-        $current_url = App::load('url')->current();
-        $this->render('index', compact('data', 'option', 'current_url', 'page'));
-    }
-
-    public function hot()
-    {//san pham hot
-        $model = $this->model();
-        $alias = $model->alias();
-
-        $option = [
-            'where' => "{$alias}.status = 2"
-        ];
-        $data = $this->filter($option);
-
-        if ($this->isAjax()) {
-            return $this->loadAjax($data);
-        }
-
-        $default = [
-            'page_name' => 'Sản phẩm hot'
-        ];
-        $option = $this->sideBar();
-        $option = array_merge($option, $default);
-
-        $page = $data['page'];
-        $current_url = App::load('url')->current();
-        $this->render('index', compact('data', 'option', 'current_url', 'page'));
-    }
-
-    private function sideBar($categories = [], $category = 0)
-    {
-        // $this->associate($categories);
-
-        // $tree = $this->formatProductCategory($categories);
-
-        return [
-            'categories' => $categories,
-            'current_product_category' => $category,
-            'page_name' => isset($categories[$category]['title']) ? $categories[$category]['title'] : ''
-        ];
-    }
-
-    private function formatProductCategory($categories)
-    {
-        $categories = Hash::nest($categories, [
-            'idPath' => '{n}.id',
-            'parentPath' => '{n}.parent_id',
-        ]);
-
-        $categories = current($categories);
-
-        return $categories;
+        $this->sideBar();
+        $this->render('index', compact('data', 'option'));
     }
 
     public function rating($id = 0)

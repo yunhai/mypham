@@ -24,25 +24,13 @@
                     </span>
                 </th>
                 <td>
-                    <input class='form-control seo-permalink' data-model='{{alias}}' data-prefix='{{ mp('config').get('seo.prefix.' ~ alias ~ '.detail') }}' name='{{ alias }}[title]' type='text' id='{{ alias }}-title' value='{{ attribute(target, alias).title  }}' placeholder="{{ __('2001', 'Tiêu đề', alias) }}" />
+                    <input class='form-control seo-permalink' data-model='{{ alias }}' data-prefix='{{ mp('config').get('seo.prefix.' ~ alias ~ '.detail') }}' name='{{ alias }}[title]' type='text' id='{{ alias }}-title' value='{{ attribute(target, alias).title  }}' placeholder="{{ __('2001', 'Tiêu đề', alias) }}" />
                     {% if error is defined %}
                         {{ error|error(alias, 'title') }}
                     {% endif %}
                 </td>
             </tr>
 
-            {% block index %}
-            <tr>
-                <th class='col-sm-3 table-label'>
-                    <label class='control-label' for="{{ alias }}-index">{{ __('2002', 'Thứ tự hiển thị', alias) }}</label>
-                </th>
-                <td>
-                    <input id='{{ alias }}-index' type='text' class="form-control" name='{{ alias }}[idx]' value='{{ attribute(target, alias).idx }}' placeholder="{{ __('2002', 'Index', alias) }}" />
-                </td>
-            </tr>
-            {% endblock %}
-
-            {% block status %}
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="status">{{ __('2003', 'Trạng thái', alias) }}</label>
@@ -58,9 +46,7 @@
                     {% endfor %}
                 </td>
             </tr>
-            {% endblock %}
 
-            {% block image %}
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="image">{{ __('2004', 'Hình ảnh', alias) }}</label>
@@ -100,9 +86,7 @@
                     </ul>
                 </td>
             </tr>
-            {% endblock %}
 
-            {% block category %}
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="{{ alias }}-category">{{ __('2006', 'Danh mục', alias) }}</label>
@@ -115,16 +99,51 @@
                     </select>
                 </td>
             </tr>
-            {% endblock %}
-
-            {% block option %}{% endblock %}
-
-            {% block content %}
             <tr>
-                <th class='col-sm-3 table-label'><label class='control-label' for="{{ alias }}-content">{{ __('2007', 'Nội dung', alias) }}</label></th>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="title">
+                        {{ __('2001', 'Họ tên người gửi', alias) }}
+                    </label>
+                </th>
+                <td>
+                    <input class='form-control'
+                        name='{{ alias }}[fullname]' type='text'
+                        id='{{ alias }}-fullname' value='{{ attribute(target, alias).fullname }}'
+                        placeholder="{{ __('2001', 'Họ tên người gửi', alias) }}" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="title">
+                        {{ __('2001', 'Email người gửi', alias) }}
+                    </label>
+                </th>
+                <td>
+                    <input class='form-control'
+                        name='{{ alias }}[email]' type='text'
+                        id='{{ alias }}-email' value='{{ attribute(target, alias).email }}'
+                        placeholder="{{ __('2001', 'Email người gửi', alias) }}" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="title">
+                        {{ __('2001', 'Câu hỏi', alias) }}
+                    </label>
+                </th>
+                <td>
+                    <textarea class='form-control'
+                        name='{{ alias }}[question]'
+                        id='{{ alias }}-question'
+                        placeholder="{{ __('2001', 'Câu hỏi', alias) }}"
+                        rows='5'
+                    />{{ attribute(target, alias).question }}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'><label class='control-label' for="{{ alias }}-content">{{ __('2007', 'Trả lời', alias) }}</label></th>
                 <td><textarea id='{{ alias }}-content' class="summernote-editor form-control" rows="3" name="{{ alias }}[content]" data-upload='{{ request().branchUrl ~ 'file/upload/target:' ~ alias }}'>{{ attribute(target, alias).content }}</textarea></td>
             </tr>
-            {% endblock %}
         </table>
     </div>
 </section>

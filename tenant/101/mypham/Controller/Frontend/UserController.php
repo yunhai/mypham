@@ -60,6 +60,11 @@ class UserController extends Frontend
             }
         }
 
+        $breadcrumb = [
+            ['title' => 'Cập nhật mật khẩu']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
         return $this->render('update-password');
     }
 
@@ -90,9 +95,13 @@ class UserController extends Frontend
             'where' => 'id = ' . $id
         ];
 
-        $this->model()->extension();
         $data = $this->model()->find($option, 'first');
         $data = current($data);
+
+        $breadcrumb = [
+            ['title' => 'Thông tin điểm thưởng']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
 
         $this->render('balance', compact('data'));
     }
@@ -102,26 +111,26 @@ class UserController extends Frontend
         $request = App::mp('request');
 
         $id = App::load('login')->userId();
+        
         $option = [
             'select' => 'id, email, fullname, account',
             'where' => 'id = ' . $id
         ];
 
-        $this->model()->extension();
         $data = $this->model()->find($option, 'first');
         $data = current($data);
-        $tmp = explode('-', $data['birthday']);
-        $data['birthday'] = [
-            'year' => isset($tmp[0]) ? $tmp[0]: '',
-            'month' => isset($tmp[1]) ? $tmp[1]: '',
-            'day' => isset($tmp[2]) ? $tmp[2]: ''
-        ];
 
-        if (isset($request->data)) {
-            $data = $request->data;
+        if (!empty($request->data)) {
+            $data = array_merge($data, $request->data);
             $data['id'] = $id;
             $this->makeMe($data);
         }
+
+        $breadcrumb = [
+            ['title' => 'Thông tin tài khoản']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
 
         $this->render('me', compact('data'));
     }
@@ -134,8 +143,6 @@ class UserController extends Frontend
         $data['channel'] = $channel;
         $data['group_id'] = current(array_flip(App::load('group', 'model')->base()));
 
-        $data['birthday'] = empty(array_filter($data['birthday'])) ? '' : sprintf('%04d-%02d-%02d', $data['birthday']['year'], $data['birthday']['month'], $data['birthday']['day']);
-
         $error = [];
         $flag = $this->validate($this->model()->alias(), $data, $error, 1, 'signUp');
 
@@ -145,112 +152,60 @@ class UserController extends Frontend
             return false;
         }
 
-        $this->model()->extension();
-        $flag = $this->model()->save($data);
-        if (!$flag) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function verify()
-    {
-        $request = App::mp('request');
-
-        $token = mb_substr($request->get()['request'], 12);
-
-        if ($token) {
-            $api = $this->appApi();
-
-            $security = new \Mp\Lib\Helper\Security();
-            $id = (int) ($security->decrypt($token, $api, 2));
-            if ($id) {
-                $this->model()->modify(['status' => 1], 'id = ' . $id);
-
-                return $this->render('verify');
-            }
-        }
-
-        abort('NotFoundException');
+        return $this->model()->save($data);
     }
 
     public function resetPassword()
     {
         $request = App::mp('request');
+        $token = mb_substr($request->get()['request'], 20);
+
+        $token = $this->extractToken($token);
 
         if (empty($request->data)) {
-            $render = $this->renderResetPasswordForm();
-            if ($render) {
+            if ($token) {
                 return $this->render('reset-password');
             }
             abort('NotFoundException');
         }
 
-        return $this->makeResetPassword();
+        $breadcrumb = [
+            ['title' => 'Cập nhật mật khẩu']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        return $this->makeResetPassword($token);
     }
 
-    public function makeResetPassword()
+    public function makeResetPassword($token)
     {
         $request = App::mp('request');
-        $token = mb_substr($request->get()['request'], 20);
 
         if ($token) {
+            $error = [];
             $data = $request->data;
-            $api = $this->appApi();
-
-            $security = new \Mp\Lib\Helper\Security();
-            $token = $security->decrypt($token, $api, 2);
-
-            $params = [];
-            if ($token) {
-                foreach (explode('&', $token) as $item) {
-                    list($key, $value) = explode('=', $item);
-                    $params[$key] = $value;
-                }
-            }
-
-            if ($params) {
-                $error = [];
-                $target = $this->model()->get($params['email']);
-                $data['id'] = $target[$this->model()->alias()]['id'];
+            if ($token['email'] !== $data['email']) {
+                $error = [
+                    'email' => [
+                        'Địa chỉ email không chính xác'
+                    ]
+                ];
+            } else {
+                $target = $this->model()->get($data['email']);
+                $target = $target[$this->model()->alias()];
+                $data = array_merge($target, $data);
 
                 $flag = App::load('user', 'service', [$this->model()])->updatePassword($data, $error, true, 'resetPassword');
+
                 if ($flag) {
                     return $this->render('reset-password-finish');
                 }
-
-                return $this->render('reset-password', compact('error'));
             }
+
+            return $this->render('reset-password', compact('error', 'data'));
         }
 
         abort('NotFoundException');
-    }
-
-    public function renderResetPasswordForm()
-    {
-        $request = App::mp('request');
-
-        $token = mb_substr($request->get()['request'], 20);
-
-        if ($token) {
-            $api = $this->appApi();
-
-            $security = new \Mp\Lib\Helper\Security();
-            $token = $security->decrypt($token, $api, 2);
-
-            $params = [];
-            if ($token) {
-                foreach (explode('&', $token) as $item) {
-                    list($key, $value) = explode('=', $item);
-                    $params[$key] = $value;
-                }
-
-                return $params && dechex(time()) <= $params['expire'];
-            }
-        }
-
-        return false;
     }
 
     protected function email($template = '', $data = [], $mail = [], $priority = 30)
@@ -269,24 +224,28 @@ class UserController extends Frontend
             if ($target) {
                 $target = $this->master($target, $this->model()->alias());
 
-                $email = $target['email'];
-                $api = $this->appApi();
+                $token = [
+                    'email' => $target['email'],
+                    'expire' => dechex(strtotime('+1 hour', time())),
+                ];
 
-                $token = 'email=' . $email . '&expire=' . dechex(strtotime('+1 hour', time()));
-
-                $security = new \Mp\Lib\Helper\Security();
-                $token = $security->encrypt($token, $api, 2);
+                $token = $this->generateToken($token);
 
                 $target['url'] = App::load('url')->module('reset-password') . '/' . $token;
 
                 $info = [
                     'to' => $target['email']
                 ];
-                $this->email('12002', $target, $info, 1);
+                $this->email('m1002', $target, $info);
 
                 return $this->render('forget-password-finish');
             }
         }
+
+        $breadcrumb = [
+            ['title' => 'Khôi phục mật khẩu']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
 
         $this->render('forget-password');
     }
@@ -298,6 +257,11 @@ class UserController extends Frontend
         if (App::load('login')->loggedIn()) {
             return $this->redirect(App::load('url')->module('me'));
         }
+
+        $breadcrumb = [
+            ['title' => 'Đăng ký thành viên']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
 
         if (isset($request->data)) {
             $flag = $this->makeSignUp($request->data);
@@ -319,14 +283,6 @@ class UserController extends Frontend
         $data['channel'] = $request->branch();
         $data['group_id'] = current(array_flip(App::load('group', 'model')->base()));
 
-        $data['birthday'] = '';
-        if (!empty($data['birthday'])) {
-            $tmp = array_filter($data['birthday']);
-            if ($tmp) {
-                $data['birthday'] = sprintf('%04d-%02d-%02d', $tmp['year'], $tmp['month'], $tmp['day']);
-            }
-        }
-
         $error = [];
         $flag = $this->validate($this->model()->alias(), $data, $error, 1, 'signUp');
 
@@ -338,7 +294,7 @@ class UserController extends Frontend
 
         $data['account'] = $data['email'];
         $data['password'] = App::load('user', 'service', [$this->model()])->encryptPassword($data['password']);
-        $this->model()->extension();
+
         $flag = $this->model()->save($data);
 
         if (!$flag) {
@@ -357,12 +313,14 @@ class UserController extends Frontend
             App::load('common')->subcribe($data);
         }
 
-        $api = $this->appApi();
-        $token = $this->model()->lastInsertId();
+        $token = [
+            'id' => $this->model()->lastInsertId(),
+            'email' => $data['account'],
+            'provider' => 'local',
+            'expire' => dechex(strtotime('24 hour', time()))
+        ];
 
-        $security = new \Mp\Lib\Helper\Security();
-        $token = $security->encrypt($token, $api, 2);
-
+        $token = $this->generateToken($token);
         $data['url'] = App::load('url')->module('verify') . '/' . $token;
 
         $info = [
@@ -370,9 +328,76 @@ class UserController extends Frontend
         ];
 
         $data['password'] = $data['confirm-password'];
-        $this->email('12001', $data, $info, 1);
+        $this->email('m1001', $data, $info, 1);
 
         return true;
+    }
+
+    public function verify()
+    {
+        $request = App::mp('request');
+
+        $token = mb_substr($request->get()['request'], 12);
+
+        $token = $this->extractToken($token);
+
+        $breadcrumb = [
+            ['title' => 'Xác thực tài khoản']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        if ($token) {
+            $alias = $this->model()->alias();
+            $target = $this->model()->id($token['id'], "{$alias}.id, {$alias}.email, {$alias}.provider", 1);
+
+            $target = $target[$alias];
+            if ($target['email'] == $token['email'] && $target['provider'] == $token['provider']) {
+                $this->model()->modify(['status' => 1], 'id = ' . $token['id']);
+
+                return $this->render('verify');
+            }
+        }
+        abort('NotFoundException');
+    }
+
+    public function extractToken($token)
+    {
+        $token = trim($token, '/');
+        if ($token) {
+            $api = $this->appApi();
+
+            $security = new \Mp\Lib\Helper\Security();
+            $token = $security->decrypt($token, $api, 2);
+
+            if ($token) {
+                $params = [];
+                foreach (explode('&', $token) as $item) {
+                    list($key, $value) = explode('=', $item);
+                    $params[$key] = $value;
+                }
+
+                if ($params && dechex(time()) <= $params['expire']) {
+                    return $params;
+                }
+            }
+        }
+
+        return [];
+    }
+
+    private function generateToken($data = [])
+    {
+        $token = [];
+        foreach ($data as $key => $value) {
+            $token[] = $key . '=' . $value;
+        }
+
+        $token = implode($token, '&');
+        $security = new \Mp\Lib\Helper\Security();
+
+        $api = $this->appApi();
+
+        return $security->encrypt($token, $api, 2);
     }
 
     private function appApi()
@@ -412,23 +437,11 @@ class UserController extends Frontend
     protected function _localLogin()
     {
         $request = App::mp('request');
-        
+
         $account = $request->data['email'];
         $password = $request->data['password'];
 
-        $this->_extension();
-
         return App::load('user', 'service', [$this->model()])->login($account, $password);
-    }
-
-    protected function _extension()
-    {
-        $fields = [
-            'string_1' => 'address',
-            'string_2' => 'phone',
-        ];
-
-        $this->model()->extension($fields);
     }
 
     protected function _facebookLogin()
@@ -503,7 +516,6 @@ class UserController extends Frontend
         $alias = $this->model()->alias();
         $fields = "{$alias}.id, {$alias}.fullname, {$alias}.email";
 
-        $this->_extension();
         $info = $this->model()->externalLogin($data['uid'], $provider, $fields);
 
         if (empty($info)) {
@@ -558,6 +570,10 @@ class UserController extends Frontend
         $request = App::mp('request');
 
         $strategy = isset($request->query[2]) ? $request->query[2] : 'local';
+
+        if ($strategy == 'local' && empty($request->data)) {
+            return $this->render('login');
+        }
         if ($strategy) {
             $flag = $this->_login($strategy);
 

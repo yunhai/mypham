@@ -43,13 +43,11 @@ class ProductModel extends Product
             foreach ($data as &$target) {
                 $this->promotion($target);
             }
-
-            return $data;
         } else {
             $this->promotion($data);
-
-            return $data;
         }
+
+        return $data;
     }
 
     public function promotion(&$target = [])

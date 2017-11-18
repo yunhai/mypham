@@ -14,7 +14,7 @@ class FrontendAddonComponent
 
         $product_category = $this->getProductCategory();
         $product_category = Hash::combine($product_category, '{n}.id', '{n}');
-        
+
         $cart = Session::read('cart');
         $order = Session::read('order');
         $addon = compact('main_menu', 'product_category', 'cart', 'order');
@@ -24,14 +24,20 @@ class FrontendAddonComponent
             $file = Hash::combine($cart['detail'], '{n}.id', '{n}.file_id');
 
             App::refer(compact('seo', 'file'));
-            
+
             $addon['cart_total'] = $cart['total']['item'];
         }
 
-        $banner = $this->banner();
+        $addon['banner'] = $this->banner();
+
         $breadcrumb = $this->breadcrumb();
         $manufacturer = $this->manufacturer();
-        
+
+        $manufacturer = array_merge($manufacturer, $manufacturer, $manufacturer, $manufacturer, $manufacturer);
+        $manufacturer = array_merge($manufacturer, $manufacturer);
+
+        $manufacturer = array_chunk($manufacturer, 6);
+
         return compact('addon', 'breadcrumb', 'banner', 'manufacturer');
     }
 
@@ -39,6 +45,7 @@ class FrontendAddonComponent
     {
         $service = App::load('manufacturer', 'service');
         $tmp = $service->all();
+
         foreach ($tmp as $id => $item) {
             $tmp[$id]['slug'] = Text::slug($item['title']) . '-' . $id;
         }
@@ -61,6 +68,17 @@ class FrontendAddonComponent
         ]);
 
         $product_category = current($product_category);
+
+        foreach ($product_category['children'] as $level1 => &$item1) {
+            foreach ($item1['children'] as $level2 => &$item2) {
+                if (!$item2['children']) {
+                    unset($item1['children'][$level2]);
+                }
+            }
+            if (!$item1['children']) {
+                unset($product_category['children'][$level1]);
+            }
+        }
 
         return $product_category['children'];
     }
@@ -90,10 +108,6 @@ class FrontendAddonComponent
             }
             $result[$name] = $list;
         }
-        // print_r('<pre>');
-        // print_r($result);
-        // print_r('</pre>');
-        // exit();
 
         return $result;
     }
@@ -143,23 +157,11 @@ class FrontendAddonComponent
             ]
         ];
 
-        $breadcrumb = App::mp('view')->get('breadcrumb');
-        if (empty($breadcrumb)) {
-            $request = App::mp('request');
-            $module = isset($map[$request->query['module']]) ? $map[$request->query['module']] : [];
-            if ($module) {
-                $breadcrumb = [
-                    $module
-                ];
-            }
-        } else {
-            $seo = [];
-            foreach ($breadcrumb as $key => $value) {
-                if (isset($value['seo_id'])) {
-                    $seo[] = $value['seo_id'];
-                }
-            }
-            App::refer(['seo' => $seo]);
+        $breadcrumb = App::mp('view')->get('breadcrumb') ?: [];
+        $request = App::mp('request');
+        $module = $map[$request->query['module']] ?? [];
+        if ($module) {
+            array_unshift($breadcrumb, $module);
         }
 
         return $breadcrumb;

@@ -46,9 +46,11 @@ class Contact extends Frontend
 
             $data['code'] = mb_strtoupper(dechex(time()));
             $data['info'] = json_encode($json, true);
+
             $flag = $this->model()->save($data);
             if ($flag) {
-                $this->email($request->data);
+                $data = array_merge($request->data, $data);
+                $this->email($data);
                 $this->redirect(App::load('url')->module('finish'));
             }
             $this->set('target', $request->data);
@@ -70,7 +72,7 @@ class Contact extends Frontend
             'to' => $data['email']
         ];
 
-        $common->sendEmail('32002', $data, $info); // to client
-        $common->sendEmail('32001', $data); // to admin
+        $common->sendEmail('m3001', $data); // to admin
+        $common->sendEmail('m3002', $data, $info); // to client
     }
 }

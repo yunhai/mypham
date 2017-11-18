@@ -1,26 +1,32 @@
 {% extends "layout/default.twg" %}
 
 {% block content %}
-<div class="wrapertv">
-    <form id="faq" method='post' data-action='{{ 'contact'|url }}'>
-        <p class="title">
-            <span>Mọi phản hồi của quý khách về sản phẩm xin vui lòng điền thông dưới đây.</span>
-        </p>
+<div class="row">
+    <div class="col-md-8 col-sm-12 col-xs-12">
+        <div class="post-content">
+            <form id="faq" method='post' data-action='{{ 'contact'|url }}'>
+                <div class="form-group">
+                   <label for="fullname">Họ tên</label>
+                   <input id='fullname' class="form-control" name="fullname" placeholder="Họ tên" value="{{ target.buyer_fullname }}" />
+                </div>
 
-        <div class='product-detail-form-info'>
-            <span>Họ tên:</span>
-            <input name="fullname" value='{{ target.fullname }}' />
-            <div class='clear'></div>
+                <div class="form-group">
+                   <label for="email">Email</label>
+                   <input id='email' class="form-control" name="email" placeholder="Email" value="{{ target.email }}" />
+                </div>
+
+                <div class="form-group">
+                   <label for="note">Nội dung</label>
+                   <textarea id='content' class="form-control" rows='5' name="content" placeholder="Nội dung">{{ target.content }}</textarea>
+                </div>
+
+                <input type="submit" class='btn-submit' value='Gửi' />
+            </form>
         </div>
-        <div class='product-detail-form-info'>
-            <span>Email:</span>
-            <input name="email" value='{{ target.email }}' />
-            <div class='clear'></div>
-        </div>
-        <span>Nội Dung: </span>
-        <textarea name="content">{{ target.content }}</textarea>
-        <div class='clear'></div>
-        <input type='submit' value='Gửi' class='contact-button'/>
-    </form>
+    </div>
+
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        {% include 'element/post/sidebar.twg' with {} %}
+    </div>
 </div>
 {% endblock %}

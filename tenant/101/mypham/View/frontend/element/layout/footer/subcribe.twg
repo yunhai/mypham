@@ -15,14 +15,9 @@
                              Hưởng quyền lợi giảm giá riêng biệt
                         </div>
                         <div class="block_content">
-                            <form id="mc-embedded-subscribe-form" accept-charset="UTF-8" action="/account/contact" class="contact-form" method="post">
-                                <input name="form_type" type="hidden" value="customer">
-                                <input name="utf8" type="hidden" value="✓">
-                                <input type="hidden" id="contact_tags" name="contact[tags]" value="khách hàng tiềm năng,Bản tin">
-                                <input type="hidden" id="newsletter-first-name" name="contact[first_name]" value="Người đăng ký">
-                                <input type="hidden" id="newsletter-last-name" name="contact[last_name]" value="">
+                            <form id="mc-embedded-subscribe-form" action="{{ 'subcribe'|url() }}" class="contact-form" method="post">
                                 <div class="newsletter-form">
-                                    <input type="email" placeholder="Nhập email của bạn.." name="contact[email]" id="mail" class="newsletter-input form-control input-lg">
+                                    <input type="email" placeholder="Nhập email của bạn.." name="email" id="mail" class="newsletter-input form-control input-lg">
                                     <button class="btn-newsletter" type="submit">
                                         <span>Gửi</span>
                                     </button>

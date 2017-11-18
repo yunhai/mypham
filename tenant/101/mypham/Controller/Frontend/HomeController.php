@@ -29,12 +29,11 @@ class HomeController extends Frontend
 
         $top_banner = $this->banner();
         $home_product = $service->home();
-        $hot_product = $service->hot(8); // san pham hot
-        $promote_product = $service->promote(7); // san pham khuyen mai
-        
-        $best_selling_product = $service->bestSelling(10);
 
-        $this->render('index', compact('top_banner', 'home_product', 'promote_product', 'hot_product', 'best_selling_product'));
+        $promote_product = $service->promote(7); // san pham khuyen mai
+        $best_selling_product = $service->bestSelling(10); // san pham ban chay
+
+        $this->render('index', compact('top_banner', 'home_product', 'promote_product', 'best_selling_product'));
     }
 
     private function banner()

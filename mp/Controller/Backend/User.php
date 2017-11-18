@@ -6,14 +6,15 @@ use Mp\App;
 use Mp\Lib\Helper\Security;
 use Mp\Core\Controller\Backend;
 
-class User extends Backend {
-
-    public function __construct($model = 'user', $table = 'user', $alias = 'user', $template = '') {
+class User extends Backend
+{
+    public function __construct($model = 'user', $table = 'user', $alias = 'user', $template = '')
+    {
         parent::__construct($model, $table, $alias, $template);
-        $this->model()->extension();
     }
 
-    public function navigator() {
+    public function navigator()
+    {
         $request = App::mp('request');
 
         switch ($request->query['action']) {
@@ -47,7 +48,8 @@ class User extends Backend {
         }
     }
 
-    protected function makeFilter($criteria = [], $token = '', $filter = '', $channel = 1) {
+    protected function makeFilter($criteria = [], $token = '', $filter = '', $channel = 1)
+    {
         $request = App::mp('request');
         $alias = $this->model()->alias();
 
@@ -108,15 +110,16 @@ class User extends Backend {
         $this->render('search', compact('data', 'groups', 'option'));
     }
 
-    public function updatePassword($channel = 1) {
+    public function updatePassword($channel = 1)
+    {
         $request = App::mp('request');
         $alias = $this->model()->alias();
 
-        $id = intval($request->query[2]);
+        $id = (int) ($request->query[2]);
 
         $target = $this->model()->id($id, "{$alias}.id, {$alias}.account, {$alias}.email", $channel);
         if (empty($target)) {
-           abort('target not found', 404);
+            abort('target not found', 404);
         }
 
         if (!empty($request->data[$alias])) {
@@ -137,14 +140,16 @@ class User extends Backend {
         return $this->render('password', compact('target'));
     }
 
-    public function logout() {
+    public function logout()
+    {
         $service = App::load('user', 'service', [$this->model()]);
 
         $url = $service->logout() ? 'login' : '';
         $this->redirect(App::load('url')->module($url));
     }
 
-    public function delete() {
+    public function delete()
+    {
         $request = App::mp('request');
 
         if (!empty($request->data[$this->model()->alias()])) {
@@ -158,11 +163,13 @@ class User extends Backend {
         return $this->back();
     }
 
-    protected function groups($channel = 1) {
+    protected function groups($channel = 1)
+    {
         return App::load('group', 'model')->available($channel);
     }
 
-    public function add($channel = 1) {
+    public function add($channel = 1)
+    {
         $request = App::mp('request');
 
         $alias = $this->model()->alias();
@@ -175,6 +182,7 @@ class User extends Backend {
 
             if ($flag) {
                 $this->flash('edit', __('m0001', 'Your data have been saved.'), 'success');
+
                 return $this->redirect(App::load('url')->module());
             }
 
@@ -193,10 +201,11 @@ class User extends Backend {
         return $this->render('input', compact('target', 'option'));
     }
 
-    public function edit($id = 0, $channel = 1) {
+    public function edit($id = 0, $channel = 1)
+    {
         $alias = $this->model()->alias();
 
-        $id = intval($id);
+        $id = (int) $id;
         $fields = "{$alias}.id, {$alias}.account, {$alias}.email, {$alias}.fullname, {$alias}.group_id, {$alias}.status";
 
         $target = $this->model()->id($id, $fields, $channel);
@@ -217,7 +226,14 @@ class User extends Backend {
                 $this->set('error', [$alias => $error]);
                 $this->flash('edit', __('m0002', 'Please review your data.'), 'error');
             }
+            print_r('<pre>');
+            print_r($this->model());
+            print_r('</pre>');
 
+            print_r('<pre>');
+            print_r(App::sql());
+            print_r('</pre>');
+            exit;
             $target = array_merge($target, $request->data);
         }
 
@@ -227,17 +243,20 @@ class User extends Backend {
         return $this->render('input', compact('target', 'option'));
     }
 
-    public function lastCheck(&$data = []) {
+    public function lastCheck(&$data = [])
+    {
     }
 
-    private function encryptPassword(&$data = []) {
+    private function encryptPassword(&$data = [])
+    {
         if (isset($data['password'])) {
             $security = new security();
             $data['password'] = $security->hash($data['password']);
         }
     }
 
-    public function save($data = [], &$error = [], $validator = true, $rule = 'def') {
+    public function save($data = [], &$error = [], $validator = true, $rule = 'def')
+    {
         $alias = $this->model()->alias();
 
         if ($validator) {
@@ -252,7 +271,8 @@ class User extends Backend {
         return $this->model()->save($data[$alias]);
     }
 
-    public function index($channel = 1) {
+    public function index($channel = 1)
+    {
         $request = App::mp('request');
 
         $groups = $this->groups($channel);
@@ -280,7 +300,8 @@ class User extends Backend {
         $this->render('index', compact('data', 'groups', 'option'));
     }
 
-    public function login() {
+    public function login()
+    {
         $request = App::mp('request');
         $option = [];
         $alias = $this->model()->alias();
