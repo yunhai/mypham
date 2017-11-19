@@ -2,7 +2,6 @@
 
 namespace Mp\Service;
 
-use Mp\App;
 use Mp\Lib\Utility\Hash;
 use Mp\Service\Category;
 
@@ -18,6 +17,14 @@ class Menu extends Category
         ];
         $data = $this->branch($branch, true, 'title', '', $option);
 
-        return Hash::nest($data);
+        $data = Hash::combine($data, '{n}.' . $alias . '.id', '{n}.' . $alias);
+        $root = current($data);
+        $root = $root['parent_id'];
+
+        return Hash::nest($data, [
+            'idPath' => '{n}.id',
+            'parentPath' => '{n}.parent_id',
+            'root' => $root
+        ]);
     }
 }

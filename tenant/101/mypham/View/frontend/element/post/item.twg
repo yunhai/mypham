@@ -1,0 +1,16 @@
+<div class="article-list-item {{ class }}">
+    <div class="blog-item-image">
+        <a href="{{ item|link(alias) }}" title="{{ item.title }}">
+            {{ item|media({'class': 'article-list-item--image img-responsive', 'alt': item.title}) }}
+        </a>
+    </div>
+    <div class="blog-item-title">
+        <a href="{{ item|link(alias) }}" title="{{ item.title }}" class='article-title'>
+            {{ item.title }}
+        </a>
+        <div class="blog-content-short-description">
+            {{ item.content|truncate(500) }}
+        </div>
+    </div>
+    <div class='clearfix'></div>
+</div>

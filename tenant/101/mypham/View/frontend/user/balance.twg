@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-12 sidebar">
         {% include 'element/post/sidebar.twg' with {} %}
     </div>
 </div>

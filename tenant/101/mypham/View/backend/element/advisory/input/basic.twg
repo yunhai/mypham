@@ -49,6 +49,26 @@
 
             <tr>
                 <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2003', 'Phản hồi khách hàng', alias) }}</label>
+                </th>
+                <td>
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="1" name='{{ alias }}[reply]' {% if 1 == attribute(target, alias).reply %} checked='checked' {% endif %}/>
+                            <i></i>Gửi phản hồi
+                        </label>
+                    </div>
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="0" name='{{ alias }}[reply]' {% if 0 == attribute(target, alias).reply %} checked='checked' {% endif %}/>
+                            <i></i>Không gửi phản hồi
+                        </label>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class='col-sm-3 table-label'>
                     <label class='control-label' for="image">{{ __('2004', 'Hình ảnh', alias) }}</label>
                 </th>
                 <td>

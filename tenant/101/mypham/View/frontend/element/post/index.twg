@@ -1,0 +1,48 @@
+
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-8 col-md-7 col-xs-12 article-focus">
+                    {% if focus %}
+                    <a href="{{ focus|link(alias) }}" title='{{ focus.title }}'>
+                        {{ focus|media({'class': 'article-focus--image img-responsive', 'alt': focus.title}) }}
+
+                        <div class="article-title-fetured">
+                            <h2>{{ focus.title }}</h2>
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 col-md-5 hidden-xs hidden-sm">
+                    <ul>
+                        {% for item in lastest %}
+                        <li class="article-item">
+                            <a href="{{ item|link(alias) }}" title='{{ item.title }}'>
+                                {{ item|media({'class': 'article-item-image-small img-responsive', 'alt': item.title}) }}
+                                {{ item.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <hr class='line-hr' />
+
+            <div class="row">
+                <div class="col-xs-12 blog-list-articles lists-articles" id="list-articles">
+                    {% include 'element/post/item_list.twg' with { item_list: lastest, class: 'hidden-md hidden-md hidden-lg' } %}
+                    {% include 'element/post/item_list.twg' with { item_list: data.list } %}
+                </div>
+
+                {% if option.page.current < option.page.total %}
+                <div class="col-xs-12 clearfix loadmore">
+                    <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-articles'>Xem thêm</a>
+				</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 sidebar">
+            {% include 'element/post/sidebar.twg' with {category_id: option.category_id}%}
+        </div>
+    </div>

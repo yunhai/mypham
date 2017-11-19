@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="navbar-header">
-                    <div class="menu-btn click-menu-mobile ">
-                        <a href="#menu-mobile" class="navbar-toggle">
+                    <div class="menu-btn click-menu-mobile">
+                        <a id='toggle-sidebar' href="#menu-mobile" class="navbar-toggle easy-sidebar-toggle">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -14,14 +14,14 @@
                     <div class="pull-right mobile-menu-icon-wrapper">
                         <div class="logo logo-mobile">
                             <a href="{{ request().home }}" title='{{ config('app.title') }}'>
-    							{{ 'logo.png'|asset }}
+    							{{ config('app.title') }}
     						</a>
                         </div>
                         <ul class="mobile-menu-icon clearfix">
                             <li id="cart-target" class="cart">
                                 <a href="/cart" class="cart " title="Giỏ hàng">
                                     <span class="fa fa-shopping-cart"></span>
-                                    <span id="cart-count">0</span>
+                                    <span id="cart-count">{{ addon.cart_total|default(0) }}</span>
                                 </a>
                             </li>
                         </ul>

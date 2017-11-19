@@ -10,7 +10,7 @@
 
                 <div class="form-group">
                     <label for="fullname">Họ tên</label>
-                    <input type="text" class="form-control" id="fullname" name='fullname' placeholder="Họ tên" required value='{{ data.fullname }}' />
+                    <input type="text" class="form-control" id="fullname" name='fullname' placeholder="Họ tên" value='{{ data.fullname }}' />
                     {% if error.fullname is defined %}
                         {% for e in error.fullname %}
                         <span class='error-message'>{{e}}</span>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name='email' placeholder="Email" required value='{{ data.email }}' />
+                    <input type="email" class="form-control" id="email" name='email' placeholder="Email" value='{{ data.email }}' />
                     {% if error.email is defined %}
                         {% for e in error.email %}
                         <span class='error-message'>{{e}}</span>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" name='password' placeholder="Mật khẩu" required />
+                    <input type="password" class="form-control" id="password" name='password' placeholder="Mật khẩu" />
                     {% if error.password is defined %}
                         {% for e in error.password %}
                         <span class='error-message'>{{e}}</span>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="confirm-password">Nhập lại mật khẩu</label>
-                    <input type="password" class="form-control" id="confirm-password" name='confirm-password' placeholder="Nhập lại mật khẩu" required />
+                    <input type="password" class="form-control" id="confirm-password" name='confirm-password' placeholder="Nhập lại mật khẩu" />
                     {% if attribute(error, 'confirm-password') is defined %}
                         {% for e in attribute(error, 'confirm-password') %}
                         <span class='error-message'>{{e}}</span>

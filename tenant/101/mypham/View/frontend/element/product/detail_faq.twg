@@ -1,6 +1,6 @@
 <div id="product-faq" class="tab-pane fade"><!--tab ct-->
     <div class='row'>
-        <div class="col-sm-12 col-md-4">
+        <div class="col-sm-12 col-md-5">
             <div id='faq-callback'>
                 <span>Cám ơn quý khách đã nhận xét về sản phẩm.</span>
                 <hr  />
@@ -30,6 +30,6 @@
             </form>
             <div class="clearfix"></div>
         </div>
-        <div class="col-sm-12 col-md-8" id='faq-list' class="list" data-url='{{ ('product/faq/' ~ item.id)|url }}'></div>
+        <div class="col-sm-12 col-md-7" id='faq-list' class="list" data-url='{{ ('product/faq/' ~ item.id)|url }}'></div>
     </div>
 </div>

@@ -58,7 +58,6 @@ class Twig
         $this->functionMp($template);
         $this->functionConfig($template);
 
-        // $template->addExtension(new Twig_Extension_Debug());
         $this->functionMedia($template); // sap bo
         $this->functionDebug($template); // sap bo
 

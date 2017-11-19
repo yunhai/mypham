@@ -3,7 +3,7 @@
         {% for id, item in addon.product_category %}
         <li class="menuItem item-1">
             <div class="menuItem-box">
-                <strong><a href="{{ level1|link('product', 'category') }}" title="{{ item.title }}">{{ item.title }}</a></strong>
+                <strong><a href="{{ item|link('product', 'category') }}" title="{{ item.title }}">{{ item.title }}</a></strong>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </div>
 

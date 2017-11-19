@@ -5,7 +5,7 @@
 				<div class="col-sm-2">
 					<div class="logo logo-pc col-left">
 						<a href="{{ request().home }}" title='{{ config('app.title') }}'>
-							{{ 'logo.png'|asset }}
+							{{ 'logo.png'|asset({'class': 'img-responsive'}) }}
 						</a>
 					</div>
 				</div>

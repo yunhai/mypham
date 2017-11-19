@@ -49,7 +49,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="{{ 'lien-he'|url }}" title="Liên hệ">
+                        <a href="{{ 'contact'|url }}" title="Liên hệ">
                             <span>Liên hệ</span>
                         </a>
                     </li>

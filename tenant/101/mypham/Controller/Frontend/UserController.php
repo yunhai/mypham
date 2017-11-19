@@ -61,7 +61,7 @@ class UserController extends Frontend
         }
 
         $breadcrumb = [
-            ['title' => 'Cập nhật mật khẩu']
+            ['title' => 'Thay đổi mật khẩu']
         ];
         $this->set('breadcrumb', $breadcrumb);
 
@@ -111,7 +111,7 @@ class UserController extends Frontend
         $request = App::mp('request');
 
         $id = App::load('login')->userId();
-        
+
         $option = [
             'select' => 'id, email, fullname, account',
             'where' => 'id = ' . $id
@@ -162,17 +162,17 @@ class UserController extends Frontend
 
         $token = $this->extractToken($token);
 
+        $breadcrumb = [
+            ['title' => 'Cập nhật mật khẩu']
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
         if (empty($request->data)) {
             if ($token) {
                 return $this->render('reset-password');
             }
             abort('NotFoundException');
         }
-
-        $breadcrumb = [
-            ['title' => 'Cập nhật mật khẩu']
-        ];
-        $this->set('breadcrumb', $breadcrumb);
 
         return $this->makeResetPassword($token);
     }
@@ -412,7 +412,7 @@ class UserController extends Frontend
         $helper = App::mp('config');
 
         $file = [
-            $helper->appLocation() . 'Config' . DS . 'auth'
+            ROOT . 'config' . DS . 'auth'
         ];
 
         $conf = App::mp('config')->load($file);

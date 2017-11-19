@@ -1,20 +1,9 @@
 <div id="hot-product-slide" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-      {% for item in item_list %}
-      {% set index = loop.index %}
-      <li data-target="#hot-product-slide" data-slide-to="{{ index }}"
-      {% if index == 1 %} class="active" {% endif %}></li>
-      {% endfor %}
-  </ol>
-
   <div class="carousel-inner">
       {% for item in item_list %}
       {% set index = loop.index %}
       <a class="item {% if index == 1 %} active {% endif %}" href='{{ item.url|url }}' title='{{ item.title }}'>
           {{ item|media({'class': 'home--slider--item img-responsive', 'alt': item.title}) }}
-          <div class="carousel-caption">
-            <h3>{{ item.title }}</h3>
-          </div>
       </a>
       {% endfor %}
   </div>

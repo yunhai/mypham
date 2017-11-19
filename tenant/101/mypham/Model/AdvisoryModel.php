@@ -24,6 +24,7 @@ class AdvisoryModel extends Post
             'string_1' => 'question',
             'string_2' => 'email',
             'string_3' => 'fullname',
+            'string_4' => 'replied',
         ];
     }
 }

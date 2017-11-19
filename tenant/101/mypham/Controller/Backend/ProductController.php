@@ -11,11 +11,6 @@ class ProductController extends Product
     public function __construct($model = 'product', $table = 'product', $alias = 'product', $template = '')
     {
         parent::__construct($model, $table, $alias, $template);
-
-        $virtualField = $this->model()->field();
-
-        $this->model()->loadExtension(new \Mp\Model\Extension());
-        $this->model()->virtualField($virtualField);
     }
 
     public function navigator()
@@ -388,7 +383,11 @@ class ProductController extends Product
             ]
         );
 
-        $this->render('index', compact('data', 'option'));
+        $service = App::load('manufacturer', 'service');
+        $manufacturer = $service->all();
+        $manufacturer = Hash::combine($manufacturer, '{n}.id', '{n}.title');
+
+        $this->render('index', compact('data', 'option', 'manufacturer'));
     }
 
     public function countFaqRating($id = [])
@@ -536,7 +535,7 @@ class ProductController extends Product
             'status' => $this->status($alias),
             'category' => $this->getCategory($alias, true, 'title', '&nbsp;&nbsp;&nbsp;&nbsp;')
         ];
-        
+
         return $this->render('input', compact('target', 'option'));
     }
 

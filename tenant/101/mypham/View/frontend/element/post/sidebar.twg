@@ -1,0 +1,93 @@
+{% if sidebar_advisory %}
+<div class='card blog-sidebar'>
+    <div class="title-decoration">
+        <span>Góc tư vấn</span>
+        <div class="decoration"></div>
+    </div>
+    <form action="{{ 'advisory/ask'|url }}" method="post">
+        <div class="form-group">
+           <input id='email' class="form-control" name="email" placeholder="Email" />
+        </div>
+        <div class="form-group">
+           <input id='fullname' class="form-control" name="fullname" placeholder="Họ tên" />
+        </div>
+        <div class="form-group">
+           <select id="category_id" name="category_id" class="form-control">
+               {% for id, item in sidebar.category %}
+                   <option value='{{ item.id }}'>{{ item.title }}</option>
+               {% endfor %}
+           </select>
+        </div>
+        <div class="form-group">
+           <input id='title' class="form-control" name="title" placeholder="Câu hỏi" />
+        </div>
+        <div class="form-group">
+           <textarea id='question' class="form-control" name="question" placeholder="Nội dung chi tiết"></textarea>
+        </div>
+        <div class="form-group">
+              <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+        </div>
+    </form>
+</div>
+{% endif %}
+{% if others %}
+    <div class="blog-sidebar">
+		<div class="title-decoration">
+            <span>Bài viết cùng cùng chủ đề</span>
+            <div class="decoration"></div>
+        </div>
+		<ul class="blog-list-articles">
+            {% for item in others %}
+			<li class="clearfix">
+				<div class="blog-item-image">
+					<a href="{{ item|link(alias) }}" title="{{ item.title }}">
+                        {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
+					</a>
+				</div>
+				<div class="blog-item-title">
+					<a href="{{ item|link(alias) }}" title="{{ item.title }}">
+						{{ item.title }}
+					</a>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endif %}
+
+{% if sidebar.category %}
+<div class="blog-sidebar">
+    <div class="title-decoration">
+        <span>{{ sidebar.alias_name }}</span>
+        <div class="decoration"></div>
+    </div>
+    <ul class="nav sidebar" id="blog-category">
+        {% for item in sidebar.category %}
+        <li>
+            <a href="{{ item|link('makeup', 'category') }}" title='{{ item.title }}'
+               class="{% if item.id == category_id %} active{% endif %}">
+                <span>{{ item.title }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<div class="ads clearfix">
+    <div class='col-md-12 col-sm-6 col-xs-12'>
+        <div class="title-decoration">
+            <span>Quảng cáo</span>
+            <div class="decoration"></div>
+        </div>
+        <div id="sidebar_banner" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+              {% for item in addon.banner.sidebar %}
+              <a href="{{ item.url|url }}" title='{{ item.title }}' class='item {% if loop.index == 1 %} active {% endif %}'>
+                  {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
+              </a>
+              {% endfor %}
+          </div>
+        </div>
+    </div>
+</div>

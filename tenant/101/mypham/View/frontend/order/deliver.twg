@@ -9,9 +9,11 @@
                 <div class="col-md-4">
                     <h4>Thông tin đặt hàng</h4>
                     <hr />
-                        <a href='{{ 'user/login'|url }}' title='Đăng nhập' class='secondary-link'>Đăng nhập</a> |
-                        <a href='{{ 'user/sign-up'|url }}' title='Đăng ký thành viên' class='secondary-link'>Đăng ký thành viên</a>
+                    {% if login().loggedin() == false %}
+                    <a href='{{ 'user/login'|url }}' title='Đăng nhập' class='secondary-link'>Đăng nhập</a> |
+                    <a href='{{ 'user/sign-up'|url }}' title='Đăng ký thành viên' class='secondary-link'>Đăng ký thành viên</a>
                     <hr />
+                    {% endif %}
                     <div class="form-group">
                        <label for="buyer_fullname">Họ tên</label>
                        <input id='buyer_fullname' class="form-control" name="order[buyer_fullname]" placeholder="Họ tên" value="{{ info.buyer_fullname }}" />

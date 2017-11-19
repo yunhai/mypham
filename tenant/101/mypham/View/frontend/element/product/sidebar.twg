@@ -1,5 +1,5 @@
 {% if sidebar.product %}
-<div class='blog-sidebar'>
+<div class='blog-sidebar clearfix'>
     <div class="title-decoration">
         <span>{{ sidebar.product_block }}</span>
         <div class="decoration"></div>
@@ -7,7 +7,7 @@
     <div id="sidebar_product" class="box-product" style='border: solid 0px #e7e7e7'>
       <ul>
           {% for i, item in sidebar.product %}
-          <li>
+          <li class='col-md-12 col-sm-3 col-xs-6'>
               <a href="{{ item|link('product') }}" title="{{ item.title }}">
                   <div class="box-img">
                       {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
@@ -34,16 +34,18 @@
 {% endif %}
 {% if banner %}
 <div class="ads clearfix">
-    <div class="title-decoration">
-        <span>Quảng cáo</span>
-        <div class="decoration"></div>
-    </div>
-    <div>
-        {% for item in banner %}
-        <a href="{{ item.url|url }}" title='{{ item.title }}'>
-            {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
-        </a>
-        {% endfor %}
+    <div class='col-md-12 col-sm-6 col-xs-12'>
+        <div class="title-decoration">
+            <span>Quảng cáo</span>
+            <div class="decoration"></div>
+        </div>
+        <div>
+            {% for item in banner %}
+            <a href="{{ item.url|url }}" title='{{ item.title }}'>
+                {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endif %}

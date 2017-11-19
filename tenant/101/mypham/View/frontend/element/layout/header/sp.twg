@@ -1,0 +1,86 @@
+<!-- https://www.jqueryscript.net/menu/Create-An-Off-canvas-Sidebar-Navigation-with-jQuery-Bootstrap.html -->
+<nav class="navbar easy-sidebar">
+    <div class='container-fluid'>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ ''|url }}" title='{{ config("app.title") }}'>{{ config("app.title") }}</a>
+        </div>
+            <ul class="nav navbar-nav offcanvas-user">
+                {% if login().loggedin() %}
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Tài khoản <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a class='user--link' href='{{ 'user/update-password'|url }}' title='Đổi mật khẩu'>
+                                Đổi mật khẩu
+                            </a>
+                        </li>
+                        <li>
+                            <a class='user--link' href='{{ 'user/balance'|url }}' title='Thông tin điểm thưởng'>
+                                Thông tin điểm thưởng
+                            </a>
+                        </li>
+                        <li>
+                            <a class='user--link' href='{{ 'order/history'|url }}' title='Lịch sử giao dịch'>
+                                Lịch sử giao dịch
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ 'user/logout'|url }}" title='Logout'>
+                        Logout
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{{ 'user/login'|url }}" title='Đăng nhập'>
+                        Đăng nhập
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    Danh mục sản phẩm <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    {% for id, item in addon.product_category %}
+                    <li>
+                        <a href="{{ item|link('product', 'category') }}" title="{{ item.title }}">
+                            {{ item.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        	{% for item in addon.offcanvas_menu %}
+                {% if item.children is empty %}
+        		<li>
+        			<a href="{{ item.url|url }}" title='{{ item.title }}'>
+        				{{ item.title }}
+        			</a>
+        		</li>
+                {% else %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{ item.title }} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for item_level2 in item.children %}
+                        <li>
+                            <a href="{{ item_level2.url|url }}" title='{{ item_level2.title }}'>
+                				{{ item_level2.title }}
+                			</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+        	{% endfor %}
+        </ul>
+    </div>
+</nav>

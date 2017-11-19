@@ -1,0 +1,3 @@
+{% for item in item_list %}
+    {% include 'element/post/item.twg' with {item: item} %}
+{% endfor %}

@@ -46,7 +46,7 @@
                     <label class='control-label' for="private">{{ __('2104', 'Hiển thị trên web', 'faq') }}</label>
                 </th>
                 <td>
-                    <div class='inline'>{{ option.private ? 'Công khai' : 'Cá nhân' }}</div>
+                    <div class='inline'>{{ target.private ? 'Không công khai' : 'Công khai' }}</div>
                 </td>
             </tr>
 

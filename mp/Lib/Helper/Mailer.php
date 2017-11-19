@@ -10,6 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 class Mailer
 {
     private $config = [];
+    private $debug = 0;
 
     public function __construct()
     {
@@ -111,7 +112,7 @@ class Mailer
             'bcc' => 'addBCC',
         ];
 
-        $mailer->SMTPDebug = 0;
+        $mailer->SMTPDebug = $this->debug;
         $mailer->SMTPAuth = true;
 
         foreach ($attr as $key => $f) {

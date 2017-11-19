@@ -2,18 +2,18 @@
 
 {% block content %}
     <div class='row home--top_panel'>
-        <div class='col-md-9' style='padding-right: 0'>
+        <div class='col-md-9 home--top_panel--slider'>
             {% embed 'element/home/slider.twg' with {item_list: top_banner} %}{% endembed %}
         </div>
-        <div class='col-md-3' style='padding-left: 0'>
+        <div class='col-md-3 home--top_panel--promotion'>
             {% for i, item in promote_product %}
-                <a class="item--top_panel--right" href='{{ item|link('product') }}' title='{{ item.title }}'>
+                <a class="home--top_panel--promotion_item {% if loop.index > 3 %}hidden-sm hidden-xs{% endif %}" href='{{ item|link('product') }}' title='{{ item.title }}'>
                     <span>{{ item.title }}</span>
                     <span class='curr-price'>{{ item.promote|price }}</span>
                     <span class='old-price'>{{ item.price|price }}</span>
                 </a>
             {% endfor %}
-            <a class="item--top_panel--right_bottom" href='{{ 'product/promote'|url }}' title='Tất cả sản phẩm khuyến mãi'>
+            <a class="home--top_panel--promotion_item-button" href='{{ 'product/promote'|url }}' title='Tất cả sản phẩm khuyến mãi'>
                 Sản phẩm khuyến mãi
                 <i class='fa fa-chevron-right pull-right'></i>
             </a>
@@ -47,15 +47,16 @@
 
     <div class='row clearfix' style='margin-top: 20px'>
         <div class='col-md-9'>
-            {% for category_id, item_list in home_product %}
-            {% set category = attribute(addon.product_category, category_id) %}
+            {% for category_id, target in home_product %}
+            {% set category = target.category %}
+            {% set item_list = target.product %}
             {% set index = loop.id %}
             <div class="section_{{ index + 1}} clearfix block-cate-home">
                 <div>
                     <div class="panel">
                         <div class="panel-heading">
                             <h4>
-                                <a class="category-title" href="{{ category|link('product', 'category') }}" title="{{ item.title }}">
+                                <a class="category-title" href="{{ category|link('product', 'category') }}" title="{{ category.title }}">
                                     {{ category.title }}
                                     <i class='fa fa-chevron-right pull-right'></i>
                                 </a>
@@ -63,12 +64,9 @@
                         </div>
                         <div class="panel-body">
                             {% for target in item_list %}
-                                {% set class = '' %}
-                                {% if loop.index is divisible by(4) %}
-                                    {% set class = 'no-border-right' %}
-                                {% endif %}
-                                {% if loop.index > 4 %}
-                                    {% set class = 'no-border-bottom' %}
+                                {% set class = 'box-item-' ~ loop.index %}
+                                {% if loop.index is divisible by(2) %}
+                                    {% set class = class ~ ' box-item-odd' %}
                                 {% endif %}
 
                                 {% embed 'element/home/product_item.twg' with {target: target, class: class} %}{% endembed %}
@@ -89,7 +87,7 @@
 
 			<ul>
 				{% for i, item in best_selling_product %}
-				<li>
+				<li class='col-md-12 col-sm-3 col-xs-6'>
 					<a class="product-home-right" href="{{ item|link('product') }}" title="{{ item.title }}">
 						<div class="box-img">
                             {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}

@@ -50,9 +50,10 @@ class ProductService extends Product
         $root = $categoryService->root('product');
         $option = [
             'where' => 'status > 0',
-            'select' => 'id, parent_id'
+            'select' => 'id, parent_id, seo_id'
         ];
         $product_category = $categoryService->tree('product', $option);
+
         $product_category = Hash::nest($product_category, [
             'idPath' => '{n}.id',
             'parentPath' => '{n}.parent_id',
@@ -73,6 +74,7 @@ class ProductService extends Product
                 }
             }
         }
+        $product_category = Hash::combine($product_category, '{n}.id', '{n}');
 
         $default = [
             'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
@@ -82,7 +84,6 @@ class ProductService extends Product
         ];
 
         $result = [];
-
         foreach ($category as $id => $id_list) {
             if (empty($id_list)) {
                 continue;
@@ -94,7 +95,13 @@ class ProductService extends Product
                 $product_list = Hash::combine($product_list, '{n}.product.id', '{n}.product');
                 $model->checkPromotion($product_list);
                 $this->associate($product_list);
-                $result[$id] = $product_list;
+
+                $tmp = $product_category[$id];
+                unset($tmp['children']);
+                $result[$id] = [
+                    'category' => $tmp,
+                    'product' => $product_list
+                ];
             }
         }
 

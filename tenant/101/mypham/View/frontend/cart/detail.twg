@@ -9,7 +9,7 @@
                     <table id="table-cart">
                         <tbody>
                             <tr>
-                                <th>Sản phẩm</th>
+                                <th class='hidden-xs'>Sản phẩm</th>
                                 <th>Thông tin sản phẩm</th>
                                 <th>Đơn giá</th>
                                 <th>Số lượng</th>
@@ -20,7 +20,7 @@
                             {% set product_id = item.id %}
                             {% set target = attribute(product, product_id) %}
                             <tr>
-                                <td class='item-thumb'>
+                                <td class='hidden-xs'>
                                     <input type='hidden' name='cart[{{ product_id }}][id]' value= '{{ product_id }}' />
                                     <input type='hidden' class='cart-item-sub_total' value='{{ item.sub_total }}' />
 

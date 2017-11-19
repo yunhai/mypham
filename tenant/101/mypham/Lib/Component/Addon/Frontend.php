@@ -9,15 +9,15 @@ class FrontendAddonComponent
 {
     public function init()
     {
-        $main_menu = App::load('menu', 'service', [App::load('menu', 'model')])->retrieve('frondend-main-menu');
-        $main_menu = Hash::combine($main_menu, '{n}.menu.id', '{n}.menu');
+        $service = App::load('menu', 'service', [App::load('menu', 'model')]);
+        $main_menu = $service->retrieve('frondend-main-menu');
+        $offcanvas_menu = $service->retrieve('frondend-offcanvas-menu');
 
         $product_category = $this->getProductCategory();
         $product_category = Hash::combine($product_category, '{n}.id', '{n}');
 
         $cart = Session::read('cart');
-        $order = Session::read('order');
-        $addon = compact('main_menu', 'product_category', 'cart', 'order');
+        $addon = compact('main_menu', 'offcanvas_menu', 'product_category', 'cart');
 
         if ($cart) {
             $seo = Hash::combine($product_category, '{n}.id', '{n}.seo_id');
@@ -32,9 +32,6 @@ class FrontendAddonComponent
 
         $breadcrumb = $this->breadcrumb();
         $manufacturer = $this->manufacturer();
-
-        $manufacturer = array_merge($manufacturer, $manufacturer, $manufacturer, $manufacturer, $manufacturer);
-        $manufacturer = array_merge($manufacturer, $manufacturer);
 
         $manufacturer = array_chunk($manufacturer, 6);
 

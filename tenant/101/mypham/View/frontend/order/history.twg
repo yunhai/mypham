@@ -3,7 +3,6 @@
 {% block content %}
 <div class="row">
     <div class="col-md-9 col-sm-12 col-xs-12">
-        <h1 class='post-title'></h1>
         <div class="post-content">
             <table class="table">
                 <tbody>
@@ -31,7 +30,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-12 col-xs-12">
+    <div class="col-md-3 col-sm-12 col-xs-12 sidebar">
         {% include 'element/post/sidebar.twg' with {} %}
     </div>
 </div>

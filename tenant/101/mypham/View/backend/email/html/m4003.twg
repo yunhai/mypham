@@ -1,0 +1,8 @@
+Xin chào {{ fullname|default('quý khách hàng') }}<br />
+Chúng tôi xin phản hồi thông tin cần tư vấn của quý khách như sau.<br />
+<br />
+
+<b>Nội dung phản hồi:</b><br />
+Tiêu đề: {{ title }}<br />
+Câu hỏi: {{ question }}<br />
+Trả lời: {{ content|raw }}<br />

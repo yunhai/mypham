@@ -1,0 +1,10 @@
+Xin chào admin.<br />
+Hệ thông ghi nhận được thông tin liên hệ tư vấn từ khách hàng.<br />
+<br />
+<b>Thông tin khách hàng:</b><br />
+Họ tên: {{ fullname }}<br />
+Email: {{ email }}<br />
+<br />
+<b>Nội dung cần tư vấn:</b><br />
+Tiêu đề: {{ title }}<br />
+Câu hỏi: {{ question }}<br />

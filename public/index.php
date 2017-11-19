@@ -35,10 +35,7 @@ try {
     App::invoke();
 } catch (Exception $e) {
     App::log(print_r($e, true), 'error');
-    print_r('<pre>');
-    print_r($e);
-    print_r('</pre>');
-    exit;
+
     try {
         $func = 'error404';
         $content = App::mp('view')->finalize(App::load('error', 'controller'), $func);

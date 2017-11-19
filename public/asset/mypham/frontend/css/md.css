@@ -1,0 +1,41 @@
+@media (min-width: 992px) {
+    #hot-product-slide {
+        display: block;
+        height: 403px !important;
+        overflow: hidden;
+    }
+    .home--top_panel {
+        height: 403px;
+        overflow: hidden;
+    }
+    .home--top_panel--slider {
+        padding-right: 0;
+    }
+    .home--top_panel--promotion {
+        padding-left: 0;
+    }
+    .home--top_panel--promotion_item {
+        border-right: solid 1px #ddd;
+        padding: 10px;
+    }
+    .article-focus--image {
+        height: 340px;
+    }
+    .article-list-item--image {
+        height: 125px;
+    }
+    .blog-list-articles .blog-item-image {
+    	width: 20%;
+    	float:left;
+    }
+    .blog-content-short-description {
+        height: auto;
+    }
+    .sidebar,
+    #faq-list,
+    #vote-list {
+        border-top: 0;
+        margin-top: 0;
+        padding-top: 0;
+    }
+}

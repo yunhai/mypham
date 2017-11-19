@@ -57,6 +57,13 @@ class ProductController extends Frontend
         }
     }
 
+    public function index()
+    {
+        $category = $this->model()->category();
+        $category_id = current(array_keys($category));
+        $this->category($category_id);
+    }
+
     public function detail($id = 0)
     {
         $alias = $this->model()->alias();
@@ -422,15 +429,15 @@ class ProductController extends Frontend
         $service = App::load('product', 'service');
 
         if ($current == 'best_selling') {
-            $sidebar_product = $service->promote(3);
+            $sidebar_product = $service->promote(4);
             $sidebar_product_block = 'Sản phẩm khuyến mãi';
         } else {
-            $sidebar_product = $service->bestSelling(3);
+            $sidebar_product = $service->bestSelling(4);
             $sidebar_product_block = 'Sản phẩm bán chạy';
         }
 
         if (!$sidebar_product) {
-            $sidebar_product = $service->lastest(3);
+            $sidebar_product = $service->lastest(4);
             $sidebar_product_block = 'Sản phẩm mới nhất';
         }
 

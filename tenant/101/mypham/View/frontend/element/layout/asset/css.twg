@@ -28,4 +28,4 @@
 %}
 
 {{ html.css(css, 'css/library') }}
-{{ html.css(['font-awesome.min', 'app']) }}
+{{ html.css(['font-awesome.min', 'app', 'sm', 'md']) }}

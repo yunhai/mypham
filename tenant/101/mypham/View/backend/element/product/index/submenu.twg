@@ -1,6 +1,22 @@
 <div class='sub-navigator'>
-    {% for item in attribute(submenu, alias) %}
-        <a href='{{ item.url|url }}' title='{{ item.caption }}' target='_blank'>
+    {% set submenu = [
+        {
+            'title': 'Danh mục',
+            'url': 'category/product'
+        },
+        {
+            'title': 'Đánh giả sản phẩm',
+            'url': 'rating'
+        },
+        {
+            'title': 'Tư vấn sản phẩm',
+            'url': 'faq'
+        },
+    ]
+    %}
+
+    {% for item in submenu %}
+        <a href='{{ item.url|url }}' title='{{ item.title }}' target='_blank'>
             {{ item.title }}
         </a>
     {% endfor %}

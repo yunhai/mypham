@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 sidebar">
             {% include 'element/post/sidebar.twg' with {category_id: target.category_id, others: others} %}
         </div>
     </div>

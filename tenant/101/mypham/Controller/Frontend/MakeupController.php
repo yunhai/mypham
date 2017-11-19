@@ -25,7 +25,7 @@ class MakeupController extends Frontend
             'where' => 'status = 1',
             'order' => "{$alias}.id desc",
             'page' => $page,
-            'limit' => 20,
+            'limit' => 6,
             'paginator' => [
                 'navigator' => false
             ]
@@ -82,11 +82,15 @@ class MakeupController extends Frontend
         $others = $this->other($target);
         $sidebar = $this->sidebar();
 
-        $breadcrumb = [
-            $sidebar['category'][$target['category_id']],
-            $target
-        ];
-        
+        if ($sidebar['category']) {
+            $breadcrumb = [
+                $sidebar['category'][$target['category_id']],
+                $target
+            ];
+        }
+
+        $breadcrumb[] = $target;
+
         $this->set('breadcrumb', $breadcrumb);
         $this->render('detail', compact('target', 'others'));
     }
@@ -166,7 +170,7 @@ class MakeupController extends Frontend
             ],
         ];
         $this->set('breadcrumb', $breadcrumb);
-
+        $sidebar = $this->sidebar();
         $this->render('index', compact('lastest', 'focus', 'option', 'data'));
     }
 }

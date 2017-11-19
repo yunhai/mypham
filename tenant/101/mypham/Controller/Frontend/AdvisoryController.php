@@ -64,15 +64,35 @@ class AdvisoryController extends MakeupController
     {
         $request = App::mp('request');
 
-        $category = $this->model()->category();
+        if (!empty($request->data)) {
+            $category = $this->model()->category();
 
-        if (array_key_exists($request->data['category_id'], $category)) {
-            $request->data['status'] = 2;
-            $this->model()->save($request->data);
+            $data = $request->data;
+            if (array_key_exists($data['category_id'], $category)) {
+                $data['status'] = 2;
+                $this->model()->save($data);
+            }
+
+            $info = [
+                'to' => $data['email']
+            ];
+            $this->email('m4001', $data); // to admin
+            $this->email('m4002', $data, $info); // to client
         }
 
-        // send mail
+        $sidebar = $this->sidebar();
+        $breadcrumb = [
+            ['title' => 'Gửi tư vấn']
+        ];
 
-        $this->back();
+        $this->set('breadcrumb', $breadcrumb);
+
+        $this->render('finish');
+    }
+
+    protected function email($template = '', $data = [], $mail = [], $priority = 30)
+    {
+        $common = App::load('common');
+        $common->sendEmail($template, $data, $mail);
     }
 }

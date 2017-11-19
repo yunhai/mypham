@@ -2,12 +2,11 @@
     <div>
         <label>Bạn đã sử dụng sản phẩm này chưa?</label>
         <p>Nếu bạn đã từng sử dụng sản phẩm này, bạn có thể gởi lời nhận xét sản phẩm.</p>
-        <p>Nếu bạn cần tư vấn về sản phẩm vui lòng gửi thông tin theo bên dưới.</p>
     </div>
     <hr  />
     <div class='row'>
         <div class="col-sm-12 col-md-4">
-            <div id='faq-callback'>
+            <div id='vote-callback'>
                 <span>Cám ơn quý khách đã nhận xét về sản phẩm.</span>
                 <hr  />
             </div>

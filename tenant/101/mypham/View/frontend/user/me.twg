@@ -52,24 +52,24 @@
             <div class="decoration"></div>
         </div>
         <div>
-            <ul>
+            <ul class="post-content">
                 <li>
-                    <a href='{{ 'user/update-password'|url }}' title='Đổi mật khẩu'>
+                    <a class='user--link' href='{{ 'user/update-password'|url }}' title='Đổi mật khẩu'>
                         Đổi mật khẩu
                     </a>
                 </li>
                 <li>
-                    <a href='{{ 'user/balance'|url }}' title='Thông tin điểm thưởng'>
+                    <a class='user--link' href='{{ 'user/balance'|url }}' title='Thông tin điểm thưởng'>
                         Thông tin điểm thưởng
                     </a>
                 </li>
                 <li>
-                    <a href='{{ 'order/history'|url }}' title='Lịch sử giao dịch'>
+                    <a class='user--link' href='{{ 'order/history'|url }}' title='Lịch sử giao dịch'>
                         Lịch sử giao dịch
                     </a>
                 </li>
                 <li>
-                    <a href='{{ 'user/logout'|url }}' title='Logout'>
+                    <a class='user--link' href='{{ 'user/logout'|url }}' title='Logout'>
                         Logout
                     </a>
                 </li>
@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-12 col-xs-12 sidebar">
         {% include 'element/post/sidebar.twg' with {} %}
     </div>
 </div>

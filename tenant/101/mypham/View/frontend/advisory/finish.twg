@@ -1,0 +1,8 @@
+{% extends "layout/default.twg" %}
+
+{% block content %}
+    <div class="notification-message">
+        Cám ơn quý khách đã liên hệ chúng tôi! <br />
+        Chúng tôi sẽ giải đáp trong thời gian sớm nhất.
+    </div>
+{% endblock %}

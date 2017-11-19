@@ -12,8 +12,8 @@
                             {{ target|media({'class': '' }) }}
                         </div>
                     {% endif %}
-                </div><!--md-4-->
-                <div class="col-md-6"><!--md 8-->
+                </div>
+                <div class="col-md-6">
                     <div class='row'>
                         <form action='{{ ('cart/add/' ~ target.id)|url }}' method='post' id='order-form' class='product-form variant-style'>
                             <div class="form-group">
@@ -75,9 +75,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                             {% endif %}
-
                             <hr />
-
                             {% if target.property %}
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">{{ target.property_name.level1 }}</label>
@@ -181,7 +179,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <div class="col-md-3 col-sm-12 col-xs-12 sidebar">
             {% include 'element/product/sidebar.twg' with { category_id: sidebar.category_id }%}
         </div>
     </div>

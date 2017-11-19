@@ -5,15 +5,17 @@ namespace Mp\Controller\Backend;
 use Mp\App;
 use Mp\Core\Controller\Backend;
 
-class Post extends Backend {
-
-    public function __construct($model = 'post', $table = 'post', $alias = 'post', $template = '') {
+class Post extends Backend
+{
+    public function __construct($model = 'post', $table = 'post', $alias = 'post', $template = '')
+    {
         parent::__construct($model, $table, $alias, $template);
 
         $this->model()->category(App::category()->flat($alias));
     }
 
-    public function navigator() {
+    public function navigator()
+    {
         $request = App::mp('request');
 
         switch ($request->query['action']) {
@@ -32,13 +34,14 @@ class Post extends Backend {
             case 'filter':
                 $this->filter();
                 break;
-            default :
+            default:
                 $this->index();
                 break;
         }
     }
 
-    public function index() {
+    public function index()
+    {
         $request = App::mp('request');
 
         $alias = $this->model()->alias();
@@ -65,7 +68,8 @@ class Post extends Backend {
         $this->render('index', compact('data', 'option'));
     }
 
-    public function edit($id = 0) {
+    public function edit($id = 0)
+    {
         $request = App::mp('request');
 
         $id = intval($id);
@@ -103,7 +107,8 @@ class Post extends Backend {
         return $this->render('input', compact('target', 'option'));
     }
 
-    public function add() {
+    public function add()
+    {
         $request = App::mp('request');
 
         $alias = $this->model()->alias();
@@ -123,6 +128,7 @@ class Post extends Backend {
 
             if ($flag) {
                 $this->flash('edit', __('m0001', 'Your data have been saved.'), 'success');
+
                 return $this->redirect(App::load('url')->module());
             }
 
@@ -135,13 +141,15 @@ class Post extends Backend {
         $this->attach($target, $alias);
 
         $option = [
-            'category' => $this->getCategory($alias)
+            'category' => $this->getCategory($alias, true, 'title', '&nbsp;&nbsp;&nbsp;&nbsp;')
         ];
+
 
         return $this->render('input', compact('target', 'option'));
     }
 
-    public function delete() {
+    public function delete()
+    {
         $request = App::mp('request');
 
         $alias = $this->model()->alias();

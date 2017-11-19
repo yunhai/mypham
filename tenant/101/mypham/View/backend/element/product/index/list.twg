@@ -36,7 +36,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {{ attribute(item, alias).manufacturer }}
+                        {{ attribute(manufacturer, attribute(item, alias).manufacturer_id) }}
                     </td>
                     <td>
                         {{ attribute(data.category, attribute(item, alias).category_id) }}

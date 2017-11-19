@@ -16,11 +16,15 @@ $(document).ready(function(){
 
                 var btn = $('.j-loadmore');
                 btn.data('page', data.current)
-                console.log(data.current);
                 if (data.current == data.total) {
                     btn.unbind('click').hide();
                 }
             }
         });
     });
+});
+$('.easy-sidebar-toggle').click(function(e) {
+    e.preventDefault();
+    $('body').toggleClass('toggled');
+    $('.navbar.easy-sidebar').removeClass('toggled');
 });

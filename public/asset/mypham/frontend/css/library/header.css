@@ -368,7 +368,7 @@ i.i-view-more {
 	border-top-color:#e60f1e;
 }
 .top-header li {
-	padding: 0 20px;
+	padding: 0 15px;
 	float: left;
 	white-space: nowrap;
 }
@@ -672,27 +672,21 @@ height: $font-size*$line-height*$lines-to-show;  Fallback for non-webkit
 }
 
 @media (min-width: 768px){
-	.label-search {
-		width: 350px;
-	}
 	.box-account, .box-cart {
 		width: 40px;
 		margin: 0 20px 0 0;
 	}
-#slider .slider-thumb{
-width:74px;
-}
+    #slider .slider-thumb{
+        width:74px;
+    }
 }
 @media (min-width: 992px){
-	.label-search {
-		width: 500px;
-	}
 	.box-account, .box-cart {
 		width: 40px;
 	}
-#slider .slider-thumb{
-width:73px;
-}
+    #slider .slider-thumb{
+        width:73px;
+    }
 }
 @media (min-width: 1200px){
 	.label-search {

@@ -26,7 +26,6 @@ class OrderController extends Order
             case 'go':
                 $this->go();
                 break;
-
             case 'finish':
                 $this->finish();
                 break;
@@ -276,7 +275,7 @@ class OrderController extends Order
         }
 
         $breadcrumb = [
-            ['title' => 'Lịch sự giao dịch']
+            ['title' => 'Lịch sử giao dịch']
         ];
         $this->set('breadcrumb', $breadcrumb);
 
@@ -341,7 +340,7 @@ class OrderController extends Order
         $status = $this->status($alias);
 
         $breadcrumb = [
-            ['title' => 'Lịch sự giao dịch', 'url' => 'order/history'],
+            ['title' => 'Lịch sử giao dịch', 'url' => 'order/history'],
             ['title' => 'Tra cứu đơn hàng']
         ];
         $this->set('breadcrumb', $breadcrumb);
