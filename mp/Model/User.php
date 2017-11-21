@@ -5,27 +5,31 @@ namespace Mp\Model;
 use Mp\App;
 use Mp\Core\Model\Model;
 
-class User extends Model {
-
-    public function __construct($table = 'user', $alias = 'user') {
+class User extends Model
+{
+    public function __construct($table = 'user', $alias = 'user')
+    {
         parent::__construct($table, $alias);
     }
 
-    public function login($account = '', $fields = '') {
+    public function login($account = '', $fields = '')
+    {
         $alias = $this->alias();
-        $where = "({$alias}.account = '" . $account . "' OR {$alias}.email = '" . $account . "')";
+        $where = "({$alias}.account = '" . $account . "' OR {$alias}.email = '" . $account . "') AND {$alias}.status > 0";
 
         return $this->makeLogin($where, $fields);
     }
 
-    public function externalLogin($uid = '', $provider = 'facebook', $fields = '') {
+    public function externalLogin($uid = '', $provider = 'facebook', $fields = '')
+    {
         $alias = $this->alias();
         $where = "{$alias}.uid = '" . $uid . "' AND {$alias}.provider = '" . $provider . "'";
 
         return $this->makeLogin($where, $fields);
     }
 
-    private function makeLogin($where = '', $fields = '') {
+    private function makeLogin($where = '', $fields = '')
+    {
         $request = App::mp('request');
 
         $current = $request->channel;
@@ -67,7 +71,8 @@ class User extends Model {
         return $info;
     }
 
-    public function id($id, $fields = '', $channel = 2) {
+    public function id($id, $fields = '', $channel = 2)
+    {
         $alias = $this->alias();
         $model = App::load('group', 'model');
 
@@ -89,7 +94,8 @@ class User extends Model {
         return $this->find($option, 'first');
     }
 
-    public function get($account = '', $fields = '') {
+    public function get($account = '', $fields = '')
+    {
         $request = App::mp('request');
 
         $channel = App::mp('config')->get('app.channel');

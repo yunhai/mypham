@@ -5,23 +5,30 @@ namespace Mp\Lib\Package\Auth;
 use Mp\App;
 use Mp\Lib\Session;
 
-class Auth {
-
+class Auth
+{
     private $method = null;
-    public function __construct($method = null) {
+
+    public function __construct($method = null)
+    {
         $this->method = $method;
     }
 
-    public function login($account = '', $password = '') {
+    public function login($account = '', $password = '')
+    {
         return $this->authorize($account, $password);
     }
 
-    public function logout() {
+    public function logout()
+    {
+        return Session::destroy();
         $key = App::mp('login')->targetId() . '.' . App::mp('request')->channel;
+
         return Session::delete('auth.' . $key);
     }
 
-    private function authorize($account = '', $password = '') {
+    private function authorize($account = '', $password = '')
+    {
         $info = $this->method->authorize($account, $password);
 
         if (empty($info)) {
@@ -31,14 +38,16 @@ class Auth {
         return $this->storeLoginInfo($info);
     }
 
-    public function storeLoginInfo($info = []) {
+    public function storeLoginInfo($info = [])
+    {
         $info['locale'] = Session::read('target.locale');
         $key = App::mp('login')->targetId() . '.' . App::mp('request')->channel;
 
         return Session::write('auth.' . $key, $info);
     }
 
-    static public function authenticate() {
+    public static function authenticate()
+    {
         $request = App::mp('request');
         $config = App::mp('config');
         $login = App::mp('login');
