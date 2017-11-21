@@ -44,4 +44,12 @@ $(function() {
     })
 
     $('#province').trigger('change');
+
+    $('#buyer_seperate').change(function() {
+        if ($(this).is(':checked')) {
+            $('.j-buyer_seperate').removeClass('hidden');
+        } else {
+            $('.j-buyer_seperate').addClass('hidden');
+        }
+    });
 })

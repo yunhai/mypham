@@ -73,7 +73,7 @@ ul.mobile-menu-icon li#cart-target span {
 	color:#fff;
 }
 .mobile-menu-icon-wrapper {
-	width: calc(100% - 70px);
+	width: calc(100% - 120px);
 	display: none;
 }
 ul.mobile-menu-icon>li {

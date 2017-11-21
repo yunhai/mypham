@@ -251,7 +251,7 @@ select {
 .property-item_detail {
     float: left;
     overflow: hidden;
-    padding: 5px;
+    padding: 2px;
     border: solid 1px #888;
     cursor: pointer;
     margin-right: 10px;
@@ -261,10 +261,13 @@ select {
     border-color: #e5101d;
     color: #e5101d;
 }
-.thumb-32x32,
 .thumbnail-small {
     width: 50px;
     height: 50px;
+}
+.product-item_detail--thumbnail{
+    width: 25px;
+    height: 25px;
 }
 
 .selling-point-cart {
@@ -504,4 +507,13 @@ body.toggled {
 }
 .navbar.easy-sidebar .nav.navbar-nav>li>a:hover {
     color: #333;
+}
+.hidden {
+    display: none;
+}
+.logo-mobile {
+    padding-top: 8px;
+}
+.btn-submit {
+    margin-top: 20px;
 }
