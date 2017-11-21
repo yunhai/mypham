@@ -108,7 +108,7 @@
                                                     {% if is_text %}
                                                         {{ level2.title }}
                                                     {% else %}
-                                                        {{ level2|media({'class': 'thumb-32x32', 'alt': level2.title}) }}
+                                                        {{ level2|media({'class': 'product-item_detail--thumbnail', 'alt': level2.title}) }}
                                                     {% endif %}
                                                 </div>
                                                 {% endfor %}

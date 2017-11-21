@@ -14,22 +14,33 @@
                     <a href='{{ 'user/sign-up'|url }}' title='Đăng ký thành viên' class='secondary-link'>Đăng ký thành viên</a>
                     <hr />
                     {% endif %}
-                    <div class="form-group">
+
+                    <div class="checkbox">
+                       <label>
+                         <input type="checkbox" id='buyer_seperate' name='order[buyer_seperate]' value='1'
+                            {% if info.buyer_seperate == 1 %} checked {% endif %}/>
+                         Thông tin đặt hàng khác thông tin giao hàng
+                       </label>
+                    </div>
+                    <hr class='j-buyer_seperate hidden' />
+                    <div class="form-group j-buyer_seperate hidden">
                        <label for="buyer_fullname">Họ tên</label>
                        <input id='buyer_fullname' class="form-control" name="order[buyer_fullname]" placeholder="Họ tên" value="{{ info.buyer_fullname }}" />
                        {% if error.fullname %}<span class="help-block text-danger">{{ error.buyer_fullname }}</span>{% endif %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group j-buyer_seperate hidden">
                        <label for="buyer_phone">Điện thoại</label>
                        <input id='buyer_phone' class="form-control" name="order[buyer_phone]" placeholder="Điện thoại" value="{{ info.buyer_phone }}" />
                        {% if error.buyer_phone %}<span class="help-block text-danger">{{ error.buyer_phone }}</span>{% endif %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group j-buyer_seperate hidden">
                        <label for="buyer_email">Email</label>
                        <input id='buyer_email' class="form-control" name="order[buyer_email]" placeholder="Email" value="{{ info.buyer_email }}" />
                        {% if error.buyer_email %}<span class="help-block text-danger">{{ error.buyer_email }}</span>{% endif %}
                     </div>
                 </div>
+                
+                <hr class='hidden-md hidden-lg' />
                 <div class="col-md-4">
                     <h4>Thông tin giao hàng</h4>
                     <hr />
@@ -75,6 +86,7 @@
                     </div>
                 </div>
 
+                <hr class='hidden-md hidden-lg' />
                 <div class="col-md-4">
                     <h4>Hình thức thanh toán</h4>
                     <hr />
