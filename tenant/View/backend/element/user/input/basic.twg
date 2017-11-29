@@ -30,7 +30,7 @@
             </tr>
 
             {% if attribute(target, alias).id > 0 %}
-            <tr>
+            <!-- <tr>
                 <th class='col-sm-3 table-label'>
                     <label for="password">{{ __('2102', 'Mật khẩu', alias) }}</label>
                 </th>
@@ -39,7 +39,7 @@
                         {{ __('2103', 'Cập nhật mật khẩu', alias) }}
                     </a>
                 </td>
-            </tr>
+            </tr> -->
             {% else %}
             <tr>
                 <th class='col-sm-3 table-label'>

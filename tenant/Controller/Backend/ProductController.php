@@ -533,7 +533,7 @@ class ProductController extends Product
         $this->attach($target, $alias);
         $option = [
             'status' => $this->status($alias),
-            'category' => $this->getCategory($alias, true, 'title', '&nbsp;&nbsp;&nbsp;&nbsp;')
+            'category' => $this->getCategory($alias)
         ];
 
         return $this->render('input', compact('target', 'option'));

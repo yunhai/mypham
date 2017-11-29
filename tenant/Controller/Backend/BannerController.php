@@ -45,7 +45,7 @@ class BannerController extends Post
         $this->attach($target, $alias);
 
         $option = [
-            'category' => $this->getCategory($alias, true, 'title', '&nbsp;&nbsp;&nbsp;&nbsp;'),
+            'category' => $this->getCategory($alias),
             'sub_category' => $this->getCategory('product'),
         ];
 
@@ -85,7 +85,7 @@ class BannerController extends Post
         $this->attach($target, $alias);
 
         $option = [
-            'category' => $this->getCategory($alias, true, 'title', '&nbsp;&nbsp;&nbsp;&nbsp;'),
+            'category' => $this->getCategory($alias),
             'sub_category' => $this->getCategory('product'),
         ];
 

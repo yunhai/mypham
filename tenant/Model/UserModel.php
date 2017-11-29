@@ -6,10 +6,12 @@ class UserModel extends User
 {
     use \Mp\Lib\Traits\Extension;
 
-    public function __construct()
+    public function __construct($table = 'user', $alias = 'user')
     {
-        parent::__construct();
-        $this->extension();
+        parent::__construct($table, $alias);
+        if ($alias == 'user') {
+            $this->extension();
+        }
     }
 
     public function login($account = '', $fields = '')
