@@ -64,13 +64,7 @@ class Config
 
     public function appLocation()
     {
-        $request = App::mp('request');
-
-        if (empty($request->app)) {
-            return '';
-        }
-
-        return TENANT_PATH . $request->tenant . DS . $request->app . DS;
+        return TENANT_PATH;
     }
 
     public function load($list = [])

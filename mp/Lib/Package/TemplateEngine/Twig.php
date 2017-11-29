@@ -32,7 +32,7 @@ class Twig
         $base = $config->appLocation();
         $folder = $config->get('app.view.' . $request->channel);
         if ($option['cache']) {
-            $option['cache'] = $base . "Tmp/cache/view/{$folder}";
+            $option['cache'] = ROOT . "storage/cache/view/{$folder}";
         }
 
         Twig_Autoloader::register();
@@ -218,7 +218,7 @@ class Twig
 
     protected function makeMediaPath($file)
     {
-        return App::load('html')->media() . '/' . $file['directory'] . $file['name'];
+        return App::load('html')->media() . $file['directory'] . $file['name'];
     }
 
     protected function makeImg($path = '', $option = [])

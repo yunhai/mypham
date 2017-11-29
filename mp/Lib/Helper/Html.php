@@ -1,26 +1,29 @@
 <?php
 
 namespace Mp\Lib\Helper;
+
 use Mp\App;
 
-class Html {
-
-    public function media() {
-        return App::mp('config')->get('app.url.media') .
-               App::mp('login')->targetCode();
+class Html
+{
+    public function media()
+    {
+        return App::mp('config')->get('app.url.media');
     }
 
-    public function asset() {
+    public function asset()
+    {
         return App::mp('config')->get('app.url.asset') .
-               App::mp('login')->targetCode() . '/' .
                App::mp('config')->get('app.view.' . App::mp('request')->channel);
     }
 
-    public function img() {
+    public function img()
+    {
         return self::asset() . '/img';
     }
 
-    public function js($list = [], $path = '') {
+    public function js($list = [], $path = '')
+    {
         if (empty($path)) {
             $path = 'js';
         }
@@ -37,7 +40,8 @@ class Html {
         return $result;
     }
 
-    public function css($list = [], $path = '') {
+    public function css($list = [], $path = '')
+    {
         if (empty($path)) {
             $path = 'css';
         }

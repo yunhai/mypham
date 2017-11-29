@@ -207,10 +207,8 @@ class App
 
     public static function log($message, $file = 'log')
     {
-        $target = App::mp('login')->target('app');
-
-        $path = TENANT_PATH . $target['tenant_id'] . DS . $target['code'] . DS . 'Tmp' . DS . 'log' . DS;
-
+        $path = ROOT . 'storage/log' . DS;
+        
         $file = fopen($path . $file . '.txt', 'a');
 
         fwrite($file, date('Y-m-d H:m:s') . ':');

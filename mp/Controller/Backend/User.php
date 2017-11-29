@@ -226,14 +226,7 @@ class User extends Backend
                 $this->set('error', [$alias => $error]);
                 $this->flash('edit', __('m0002', 'Please review your data.'), 'error');
             }
-            print_r('<pre>');
-            print_r($this->model());
-            print_r('</pre>');
-
-            print_r('<pre>');
-            print_r(App::sql());
-            print_r('</pre>');
-            exit;
+        
             $target = array_merge($target, $request->data);
         }
 

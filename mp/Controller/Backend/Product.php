@@ -96,7 +96,7 @@ class Product extends Backend
         $this->attach($target);
 
         $option = [
-            'category' => $this->getCategory($alias, true, 'title', '&nbsp;&nbsp;&nbsp;&nbsp;')
+            'category' => $this->getCategory($alias)
         ];
 
         return $this->render('input', compact('target', 'option'));
