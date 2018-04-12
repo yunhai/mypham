@@ -184,6 +184,7 @@ select {
     padding: 10px 80px;
     border: 0;
     margin: auto;
+    margin-top: 20px;
 }
 #faq-callback,
 #vote-callback {
@@ -508,12 +509,6 @@ body.toggled {
 .navbar.easy-sidebar .nav.navbar-nav>li>a:hover {
     color: #333;
 }
-.hidden {
-    display: none;
-}
 .logo-mobile {
     padding-top: 8px;
-}
-.btn-submit {
-    margin-top: 20px;
 }

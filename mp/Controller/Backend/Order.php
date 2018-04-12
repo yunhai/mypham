@@ -191,7 +191,6 @@ class Order extends Backend
         $this->model()->attactCart();
         $target['detail'] = $this->model()->cart($id);
 
-        $target['order']['shipping'] = $target['order']['tax'];
         $option = [
             'status' => $this->status($alias),
         ];

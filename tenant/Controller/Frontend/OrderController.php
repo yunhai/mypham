@@ -53,13 +53,12 @@ class OrderController extends Order
         $freeship = ($_SESSION['cart']['total']['sub_total'] >= $freeship);
 
         $location = $province = [];
-        if (!$freeship) {
-            $model = App::load('location', 'model');
-            $location = $model->list();
 
-            $root = key(current($location));
-            $province = $location[$root];
-        }
+        $model = App::load('location', 'model');
+        $location = $model->list();
+
+        $root = key(current($location));
+        $province = $location[$root];
 
         if (empty($request->data)) {
             $cart = Session::read('cart');
@@ -81,19 +80,28 @@ class OrderController extends Order
 
         $deliver = $request->data['order'];
 
-        $error = $this->validateDelivery($request->data, $freeship);
+        if (empty($deliver['buyer_seperate'])) {
+            $deliver['buyer_fullname'] = $deliver['fullname'];
+            $deliver['buyer_phone'] = $deliver['phone'];
+            $deliver['buyer_email'] = $deliver['email'];
+        }
+
+        $error = $this->validateDelivery($deliver, $freeship);
         if ($error) {
             $info = $deliver;
 
             return $this->render('deliver', compact('error', 'info', 'location', 'province', 'freeship'));
         }
 
+        $shipping = 0;
+        $delivery_day = '';
         if (!$freeship) {
             $tmp = $location[$deliver['province']] ? $location[$deliver['province']] : [];
             $tmp = $tmp ? $tmp[$deliver['district']] : [];
-            $shipping = 0;
+
             if ($tmp) {
                 $shipping = $tmp['delivery_price'];
+                $delivery_day = $tmp['delivery_day'];
             }
 
             $_SESSION['cart']['total']['shipping'] = $shipping;
@@ -105,6 +113,8 @@ class OrderController extends Order
             $deliver['address'] .= " ({$address2}, {$address1})";
         }
 
+        $deliver['shipping'] = $shipping;
+        $deliver['delivery_day'] = $delivery_day;
         Session::write('order.deliver', $deliver);
 
         $url = App::load('url')->full('order/go');
@@ -179,6 +189,7 @@ class OrderController extends Order
     protected function save($cart = [], &$code = '')
     {
         $recipient = Session::read('order.deliver');
+
         $userId = App::load('login')->userId() ?? 0;
         $order = [
             'user_id' => $userId,
@@ -186,8 +197,9 @@ class OrderController extends Order
             'sub_total' => $cart['total']['sub_total'],
             'total' => $cart['total']['total'],
             'shipping' => $cart['total']['shipping'] ?? 0,
+            'delivery_day' => $recipient['delivery_day'] ?? '0',
             'status' => 0,
-            'note' => Session::read('order.deliver.note')
+            'note' => $recipient['note']
         ];
         $flag = $this->model()->save($order);
         if (!$flag) {
@@ -233,31 +245,31 @@ class OrderController extends Order
     {
         $error = [];
 
-        if (empty($data['order']['buyer_fullname'])) {
+        if (empty($data['buyer_fullname'])) {
             $error['buyer_fullname'] = 'Họ tên không được để trống';
         }
-        if (empty($data['order']['buyer_phone'])) {
+        if (empty($data['buyer_phone'])) {
             $error['buyer_phone'] = 'Số điện thoại không được để trống';
         }
-        if (empty($data['order']['buyer_email'])) {
+        if (empty($data['buyer_email'])) {
             $error['buyer_email'] = 'Email không hợp lệ';
         }
-        if (empty($data['order']['fullname'])) {
+        if (empty($data['fullname'])) {
             $error['fullname'] = 'Họ tên không được để trống';
         }
-        if (empty($data['order']['phone'])) {
+        if (empty($data['phone'])) {
             $error['phone'] = 'Số điện thoại không được để trống';
         }
-        if (empty($data['order']['email'])) {
+        if (empty($data['email'])) {
             $error['email'] = 'Email không hợp lệ';
         }
-        if (empty($data['order']['address'])) {
+        if (empty($data['address'])) {
             $error['address'] = 'Địa chỉ không được để trống';
         }
-        if (empty($data['order']['payment'])) {
+        if (empty($data['payment'])) {
             $error['payment'] = 'Phương thức thanh toán chưa được chọn';
         }
-        if (!$freeship && empty($data['order']['district'])) {
+        if (!$freeship && empty($data['district'])) {
             $error['district'] = 'Tỉnh thành / quận huyện chưa được chọn';
         }
 

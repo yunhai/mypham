@@ -211,7 +211,7 @@ class UserController extends Frontend
     protected function email($template = '', $data = [], $mail = [], $priority = 30)
     {
         $common = App::load('common');
-        $common->sendEmail($template, $data, $mail);
+        return $common->sendEmail($template, $data, $mail);
     }
 
     public function forgetPassword()

@@ -26,6 +26,7 @@ class OrderModel extends Order
         $this->loadExtension(new \Mp\Model\Extension());
         $this->virtualField([
             'string_1' => 'shipping',
+            'string_2' => 'delivery_day',
         ]);
     }
 }

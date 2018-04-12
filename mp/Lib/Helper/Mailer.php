@@ -88,14 +88,8 @@ class Mailer
                 return true;
             }
 
-            $this->makeSend($mailer, $info);
-
-            return true;
+            return $this->makeSend($mailer, $info);
         } catch (Exception $e) {
-            // print_r('<pre>');
-            // print_r($e);
-            // print_r('</pre>');
-
             abort('send mail error');
         }
 

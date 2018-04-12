@@ -20,8 +20,22 @@
                 </div>
                 <div class="info-group">
                     <label>{{ __('3004', 'Phí vận chuyển', alias) }}</label>
-                    <span>{{ attribute(target, alias).shipping|number }}</span>
+                    <span>
+                        {% if attribute(target, alias).shipping %}
+                            {{ attribute(target, alias).shipping|number }}
+                        {% endif %}&nbsp;
+                    </span>
                 </div>
+
+                <div class="info-group">
+                    <label>{{ __('3004', 'Số ngày vận chuyển', alias) }}</label>
+                    <span>
+                        {% if attribute(target, alias).delivery_day %}
+                            {{ attribute(target, alias).delivery_day }} ngày
+                        {% endif %}&nbsp;
+                    </span>
+                </div>
+
                 <div class="info-group">
                     <label>{{ __('3004', 'Thành tiền', alias) }}</label>
                     <span>{{ attribute(target, alias).total|number }}</span>

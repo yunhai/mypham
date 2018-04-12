@@ -44,6 +44,7 @@ $(function() {
     })
 
     $('#province').trigger('change');
+    $('#district').trigger('change');
 
     $('#buyer_seperate').change(function() {
         if ($(this).is(':checked')) {
