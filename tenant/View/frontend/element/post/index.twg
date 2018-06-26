@@ -37,7 +37,7 @@
                 {% if option.page.current < option.page.total %}
                 <div class="col-xs-12 clearfix loadmore">
                     <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-articles'>Xem thêm</a>
-				</div>
+                </div>
                 {% endif %}
             </div>
         </div>

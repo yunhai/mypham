@@ -30,10 +30,34 @@
                     {% endif %}
                 </td>
             </tr>
-
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-code">{{ __('2105', 'Mã sản phẩm', alias) }}</label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input id='{{ alias }}-code' type='text' class="form-control" name='{{ alias }}[code]' value='{{ attribute(target, alias).code }}' placeholder="{{ __('2105', 'Mã sản phẩm', alias) }}" />
+                    {% if error is defined %}
+                        {{ error|error(alias, 'code') }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="{{ alias }}-manufacturer">{{ __('2112', 'Tồn kho', alias) }}</label>
+                </th>
+                <td>
+                    <input id='product-inventory' class='form-control' name='{{ alias }}[inventory]' type='text' id='{{ alias }}-inventory' value='{{ attribute(target, alias).inventory }}' placeholder="{{ __('2101', 'Tồn kho', alias) }}" />
+                </td>
+            </tr>
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="{{ alias }}-category">{{ __('2102', 'Danh mục', alias) }}</label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
                 </th>
                 <td>
                     <select class="form-control seo-permalink" data-model='{{alias}}' name='{{ alias }}[category_id]' id='{{ alias }}-category'>
@@ -43,10 +67,12 @@
                     </select>
                 </td>
             </tr>
-
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="status">{{ __('2103', 'Trạng thái', alias) }}</label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
                 </th>
                 <td>
                     {% for value, name in status %}
@@ -59,10 +85,12 @@
                     {% endfor %}
                 </td
             </tr>
-
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="{{ alias }}-manufacturer">{{ __('2112', 'Thương hiệu', alias) }}</label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
                 </th>
                 <td>
                     <select id="select-manufacturer" class="repositories" placeholder="{{ __('2112', 'Thương hiệu', alias) }} ..." name="{{ alias }}[manufacturer_id]" data-url="/backend/manufacturer/search">
@@ -77,22 +105,45 @@
                     {% endif %}
                 </td>
             </tr>
-
+            <!---- --->
             <tr>
                 <th class='col-sm-3 table-label'>
-                    <label class='control-label' for="{{ alias }}-code">{{ __('2105', 'Mã sản phẩm', alias) }}</label>
+                    <label class='control-label' for="status">{{ __('2103', 'Loại da', alias) }}</label>
                 </th>
                 <td>
-                    <input id='{{ alias }}-code' type='text' class="form-control" name='{{ alias }}[code]' value='{{ attribute(target, alias).code }}' placeholder="{{ __('2105', 'Mã sản phẩm', alias) }}" />
-                    {% if error is defined %}
-                        {{ error|error(alias, 'code') }}
-                    {% endif %}
-                </td>
+                    {% for value, name in option.skin_mode %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[skin_mode]' 
+                            {% if value == attribute(target, alias).skin_mode %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td
             </tr>
-
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label' for="status">{{ __('2103', 'Thể loại', alias) }}</label>
+                </th>
+                <td>
+                    {% for value, name in option.state_mode %}
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ value }}" name='{{ alias }}[state_mode]' 
+                            {% if value == attribute(target, alias).state_mode %} checked='checked' {% endif %}/>
+                            <i></i>{{ name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </td
+            </tr>
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="{{ alias }}-price">{{ __('2106', 'Đơn giá', alias) }}</label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
                 </th>
                 <td>
                     <div class='input-group'>
@@ -105,16 +156,6 @@
                     {% endif %}
                 </td>
             </tr>
-<!--
-            <tr>
-                <th class='col-sm-3 table-label'>
-                    <label class='control-label' for="{{ alias }}-point">{{ __('2107', 'Điểm tích lũy', alias) }}</label>
-                </th>
-                <td>
-                    <input id='{{ alias }}-point' type='text' class="form-control" name='{{ alias }}[point]' value='{{ attribute(target, alias).point }}' placeholder="{{ __('2107', 'Điểm tích lũy', alias) }}" />
-                </td>
-            </tr> -->
-
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label' for="{{ alias }}-promote">{{ __('2108', 'Giá khuyến mãi', alias) }}</label>
@@ -185,7 +226,6 @@
                     </ul>
                 </td>
             </tr>
-
             <tr>
                 <th class='col-sm-3 table-label'><label class='control-label' for="{{ alias }}-content">{{ __('2115', 'Nội dung chi tiết', alias) }}</label></th>
                 <td><textarea id='{{ alias }}-content' class="summernote-editor form-control" rows="3" name="{{ alias }}[content]" data-upload='{{ request().branchUrl ~ 'file/upload/target:' ~ alias }}'>{{ attribute(target, alias).content }}</textarea></td>

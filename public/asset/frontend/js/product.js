@@ -1,23 +1,22 @@
 $('.j-property').click(function() {
     var self = $(this);
     var id = self.data('id');
+
+    $('.j-productDetailProperty').addClass('hidden');
+    $('#product-detail--price__'+id).removeClass('hidden');
     $('.j-property').removeClass('active');
     $('.j-propertyInput').attr("disabled", "disabled");
     $('#j-propertyInput'+id).removeAttr("disabled");
     self.addClass('active');
-
-    $('.j-propertyDetailContainer').hide();
-    $('#property-detail-' + id).show();
 })
 
-$('.j-propertyDetail').click(function() {
-    var self = $(this);
-    var id = self.data('id');
-    $('.j-propertyDetail').removeClass('active');
-    $('.j-propertyDetailInput').attr("disabled", "disabled");
-    $('#j-propertyDetailInput'+id).removeAttr("disabled");
+$('#j-buyNow').click(function() {
+    $('#product-detail--form').append('<input type="hidden" value="1" name="buynow" />')
+    $('#product-detail--form').submit();
+})
 
-    self.addClass('active');
+$('#j-addToCart').click(function() {
+    $('#product-detail--form').submit();
 })
 
 $(document).ready(function() {

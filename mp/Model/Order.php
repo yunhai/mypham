@@ -6,17 +6,20 @@ use Mp\App;
 use Mp\Core\Model\Model;
 use Mp\Lib\Utility\Hash;
 
-class Order extends Model {
-
-    public function __construct($table = 'order', $alias = 'order') {
+class Order extends Model
+{
+    public function __construct($table = 'order', $alias = 'order')
+    {
         parent::__construct($table, $alias);
     }
 
-    public function attactCart() {
+    public function attactCart()
+    {
         $this->cart = new Cart();
     }
 
-    public function baseCondition() {
+    public function baseCondition()
+    {
         $request = App::mp('request');
         $branch = $request->branch();
 
@@ -28,13 +31,16 @@ class Order extends Model {
         return parent::baseConditionWithAppId();
     }
 
-    public function beforeSave(&$data = []) {
+    public function beforeSave(&$data = [])
+    {
         parent::beforeSave($data);
         $data['app_id'] = App::mp('login')->targetId();
     }
 
-    public function cart($orderId = 0) {
+    public function cart($orderId = 0)
+    {
         $tmp = $this->cart->orderDetail($orderId);
+        
         return Hash::combine($tmp, '{n}.cart.id', '{n}.cart');
     }
 }

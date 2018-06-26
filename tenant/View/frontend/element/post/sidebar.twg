@@ -32,27 +32,27 @@
 {% endif %}
 {% if others %}
     <div class="blog-sidebar">
-		<div class="title-decoration">
+        <div class="title-decoration">
             <span>Bài viết cùng cùng chủ đề</span>
             <div class="decoration"></div>
         </div>
-		<ul class="blog-list-articles">
+        <ul class="blog-list-articles">
             {% for item in others %}
-			<li class="clearfix">
-				<div class="blog-item-image">
-					<a href="{{ item|link(alias) }}" title="{{ item.title }}">
+            <li class="clearfix">
+                <div class="blog-item-image">
+                    <a href="{{ item|link(alias) }}" title="{{ item.title }}">
                         {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
-					</a>
-				</div>
-				<div class="blog-item-title">
-					<a href="{{ item|link(alias) }}" title="{{ item.title }}">
-						{{ item.title }}
-					</a>
-				</div>
-			</li>
-			{% endfor %}
-		</ul>
-	</div>
+                    </a>
+                </div>
+                <div class="blog-item-title">
+                    <a href="{{ item|link(alias) }}" title="{{ item.title }}">
+                        {{ item.title }}
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endif %}
 
 {% if sidebar.category %}

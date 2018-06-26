@@ -79,28 +79,28 @@
         </div>
         <div class='col-md-3'>
             <div class="box-product">
-			<div class="title title-home-product">
+            <div class="title title-home-product">
                 <a href='{{ 'product/best_selling'|url }}' title='Tất cả sản phẩm bán chạy'>
                     Sản phẩm bán chạy
                 </a>
-			</div>
+            </div>
 
-			<ul>
-				{% for i, item in best_selling_product %}
-				<li class='col-md-12 col-sm-3 col-xs-6'>
-					<a class="product-home-right" href="{{ item|link('product') }}" title="{{ item.title }}">
-						<div class="box-img">
+            <ul>
+                {% for i, item in best_selling_product %}
+                <li class='col-md-12 col-sm-3 col-xs-6'>
+                    <a class="product-home-right" href="{{ item|link('product') }}" title="{{ item.title }}">
+                        <div class="box-img">
                             {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
                             <p class="price price-box">
                                 <span class="curr-price">{{ item.final_price|price }}</span>
                                 {% if item.discount %}
                                 <span class="old-price hidden-xs">{{ item.price|price }}</span>
                                 {% endif %}
-							</p>
-						</div>
-						<span class="prod-name">{{ item.title }}</span>
-					</a>
-				</li>
+                            </p>
+                        </div>
+                        <span class="prod-name">{{ item.title }}</span>
+                    </a>
+                </li>
                 {% endfor %}
             </ul>
         </div>

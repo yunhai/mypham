@@ -5,7 +5,7 @@
                 multiple: true,
                 autoUpload: true,
                 duplicate: true,
-                // maxFiles: 1,
+                //maxFiles: 1,
                 onFileComplete: function (evt, uiEvt) {
                     var result = uiEvt.result;
                     var target = uiEvt.file.$el;

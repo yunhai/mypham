@@ -35,8 +35,6 @@ class Twig
             $option['cache'] = ROOT . "storage/cache/view/{$folder}";
         }
 
-        Twig_Autoloader::register();
-
         $loader = new Twig_Loader_Filesystem($base . 'View' . DS . $folder . DS);
         $template = new Twig_Environment($loader, $option);
 
@@ -60,6 +58,18 @@ class Twig
 
         $this->functionMedia($template); // sap bo
         $this->functionDebug($template); // sap bo
+        $this->functionExecute($template); // sap bo
+
+        return $template;
+    }
+
+    protected function functionExecute($template)
+    {
+        $function = new Twig_SimpleFunction('execute', function ($fn = '') {
+            return $fn();
+        });
+
+        $template->addFunction($function);
 
         return $template;
     }

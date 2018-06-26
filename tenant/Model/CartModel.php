@@ -16,9 +16,10 @@ class CartModel extends Cart
     {
         $this->loadExtension(new \Mp\Model\Extension());
         $this->virtualField([
-            'string_1' => 'title',
+            'string_1' => 'property_id',
             'string_2' => 'property_text',
-            'string_3' => 'property_detail_text',
+            'string_3' => 'title',
+            'text_1' => 'property_log',
         ]);
     }
 }

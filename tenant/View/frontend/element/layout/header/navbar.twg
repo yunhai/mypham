@@ -15,7 +15,7 @@
                         <div class="logo logo-mobile">
                             <a href="{{ request().home }}" title='{{ config('app.title') }}'>
                                 {{ 'logo-mobile.png'|asset({'class': 'img-responsive'}) }}
-    						</a>
+                            </a>
                         </div>
                         <ul class="mobile-menu-icon clearfix">
                             <li id="cart-target" class="cart">

@@ -209,10 +209,11 @@ class OrderController extends Order
         $detail = $cart['detail'];
         $orderId = $this->model()->lastInsertId();
 
-        $cart = $this->model()->cart;
-
+        $model = $this->model()->cart;
+        
         $data = [];
         $lastId = [];
+        $update = [];
         foreach ($detail as $id => $item) {
             $sub_total = $item['price'] * $item['price'];
             $data = [
@@ -222,20 +223,26 @@ class OrderController extends Order
                 'sub_total' => $item['sub_total'],
                 'total' => $item['total'],
                 'title' => $item['title'] ?? '',
+                'property_id' => $item['property_id'] ?? '',
                 'property_text' => $item['property_text'] ?? '',
-                'property_detail_text' => $item['property_detail_text'] ?? ''
+                'property_log' => empty($item['property_log']) ? '' : json_encode($item['property_log']),
             ];
-
-            $cart->save($data);
-
-            $modify = [
+            
+            $this->model()->cart->save($data);
+            array_push($update, [
+                'id' => $this->model()->cart->lastInsertId(),
                 'target_id' => $item['id'],
                 'target_model' => $item['model']
-            ];
-            $this->model()->cart->modifyPk($modify, 'id = ' . $cart->lastInsertId());
+            ]);
+        }
+
+        $this->model()->cart->removeExtension();
+        foreach ($update as $target) {
+            $this->model()->cart->modifyPk($target, 'id = ' . $target['id']);
         }
 
         $code = 'ORD' . (1000 + $orderId);
+        $this->model()->removeExtension();
         $this->model()->modify(compact('code'), 'id = ' . $orderId);
 
         return true;

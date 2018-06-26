@@ -104,13 +104,22 @@
             <section class="vbox cart-list">
                 <header class="header bg-white b-b clearfix cart-header">
                     <div class="row m-t-sm">
+                        {% set status = attribute(target, alias).status %}
                         <div class="col-sm-4 m-b-xs">
+                            {% if status != 0 %}
                             <a href='{{ load('url', 'helper').module('rollback/' ~ attribute(target, alias).id) }}' class="btn btn-default" title='{{ __('3011', 'Xem xét đơn hàng', alias) }}'>{{ __('3012', 'Xem xét', alias) }}</a>
+                            {% endif %}
                         </div>
                         <div class="col-sm-8 m-b-xs text-right">
+                            {% if status != 3 %}
                             <a href='{{ load('url', 'helper').module('reject/' ~ attribute(target, alias).id) }}' class="btn btn-danger" title='{{ __('3013', 'Từ chối đơn hàng', alias) }}'>{{ __('3014', 'Từ chối', alias) }}</a>
+                            {% endif %}
+                            {% if status != 1 %}
                             <a href='{{ load('url', 'helper').module('execute/' ~ attribute(target, alias).id) }}' class="btn btn-primary" title='{{ __('3015', 'Xử lý đơn hàng', alias) }}'>{{ __('3016', 'Xử lý', alias) }}</a>
+                            {% endif %}
+                            {% if status != 2 %}
                             <a href='{{ load('url', 'helper').module('finish/' ~ attribute(target, alias).id) }}' class="btn btn-success" title='{{ __('3017', 'Hoàn tất đơn hàng', alias) }}'>{{ __('3018', 'Hoàn tất', alias) }}</a>
+                            {% endif %}
                         </div>
                     </div>
                 </header>
@@ -130,7 +139,12 @@
                                     {% for item in target.detail %}
                                     <tr>
                                         <td>
-                                            {{ item.title }}
+                                            <a href='{{ load('url', 'helper').full('product/edit/' ~ item.target.id) }}' 
+                                                title='{{ __('1007', 'Chi tiết sản phẩm', alias) }}' 
+                                                class='edit-link'
+                                                target='_blank'>
+                                                {{ item.title }}
+                                            </a>
                                             {% if item.property_text %}
                                                 <br/>
                                                 ({{ item.property_text }}{% if item.property_detail_text %} / {{ item.property_detail_text }} {% endif %})

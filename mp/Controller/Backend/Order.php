@@ -57,7 +57,6 @@ class Order extends Backend
             $fields = [
                 'status' => $status
             ];
-
             $list = $request->data[$alias];
             foreach ($list as $id) {
                 $this->makeHandle($id, $status);
@@ -104,7 +103,7 @@ class Order extends Backend
         $data = $this->paginate($option, true);
         foreach ($data['list'] as $id => &$item) {
             if ($item[$alias]['recipient']) {
-                $item[$alias]['recipient'] = json_decode($item[$alias]['recipient']);
+                $item[$alias]['recipient'] = json_decode($item[$alias]['recipient'], true);
             } else {
                 $item[$alias]['recipient'] = [
                     'address' => ''
@@ -196,6 +195,26 @@ class Order extends Backend
         ];
 
         return $this->render('detail', compact('target', 'option'));
+    }
+    
+    protected function getDetail($id)
+    {
+        $alias = $this->model()->alias();
+        $fields = "{$alias}.id, {$alias}.user_id, {$alias}.code, {$alias}.total, {$alias}.tax, {$alias}.sub_total, {$alias}.status, {$alias}.recipient, {$alias}.note, {$alias}.modified, {$alias}.created";
+
+        $target = $this->model()->findById($id, $fields);
+        if (empty($target)) {
+            abort('NotFoundException');
+        }
+
+        if ($target['order']['recipient']) {
+            $target['order']['recipient'] = json_decode($target['order']['recipient'], true);
+        }
+
+        $this->model()->attactCart();
+        $target['detail'] = $this->model()->cart($id);
+        
+        return $target;
     }
 
     public function delete()

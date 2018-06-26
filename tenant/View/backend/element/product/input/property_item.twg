@@ -1,10 +1,10 @@
 {% set name = '%s[property][%s]'|format(alias, index) %}
-<section id='propery-{{ index }}' class='panel panel-default {{ class }}'>
+<section id='property-{{ index }}' class='panel panel-default {{ class }}'>
     <header class="panel-heading font-bold">
         &nbsp;
         <ul class="nav nav-pills pull-right">
             <li>
-                <a href="#" class="j-removeProperty" data-id='propery-{{ index }}'>
+                <a href="#" class="j-removeProperty" data-id='property-{{ index }}'>
                     Xóa
                 </a>
             </li>
@@ -21,11 +21,19 @@
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label'>
-                        Đơn vị
+                        Lựa chọn 
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                    <br/>
+                    <label class='control-label'>
+                    (Dung tích / Khối lượng / Màu sắc)
                     </label>
                 </th>
                 <td>
-                    <input class='form-control' name='{{ name }}[title]' type='text' value='{{ property.title }}' placeholder="Đơn vị" />
+                    <input type="hidden" name="{{ name }}[id]" value="{{ index }}" />
+                    <input class='form-control' name='{{ name }}[title]' type='text' value='{{ item.title }}' placeholder="Đơn vị" />
                 </td>
             </tr>
             <tr>
@@ -33,9 +41,12 @@
                     <label class='control-label'>
                         Đơn giá
                     </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
                 </th>
                 <td>
-                    <input class='form-control' name='{{ name }}[price]' type='text' value='{{ property.price }}' placeholder="Đơn giá" />
+                    <input class='form-control j-price j-price-{{ index }}' name='{{ name }}[price]' type='text' value='{{ item.price }}' placeholder="Đơn giá" />
                 </td>
             </tr>
             <tr>
@@ -45,52 +56,58 @@
                     </label>
                 </th>
                 <td>
-                    <input class='form-control' name='{{ name }}[price_promote]' type='text' value='{{ property.price_promote }}' placeholder="Giá khuyến mãi" />
+                    <input class='form-control j-promote j-promote-{{ index }}' name='{{ name }}[price_promote]' type='text' value='{{ item.price_promote }}' placeholder="Giá khuyến mãi" />
                 </td>
             </tr>
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label'>
-                        Chi tiết
+                        Tồn kho
+                    </label>
+                    <span class="text-danger pull-right control-label">
+                        {{ __('2001', 'Bắt buộc', 'global') }}
+                    </span>
+                </th>
+                <td>
+                    <input class='form-control j-inventory j-inventory-{{ index }}' name='{{ name }}[inventory]' type='text' value='{{ item.inventory }}' placeholder="Số lượng tồn kho" />
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Chọn làm Mặc định
                     </label>
                 </th>
                 <td>
-                    <div class='text-right'>
-                        <a href='javascript:;' class='j-addPropertyDetail btn btn-primary'
-                           data-target='propery-detail-{{ index }}'>Thêm</a>
-                        <hr/>
+                    <div class='radio-inline i-checks'>
+                        <label class='control-label'>
+                            <input type="radio" value="{{ index }}" name='{{ alias }}[default_mode]' class='j-defaultMode'
+                                {% if index == attribute(target, alias).default_mode %} checked='checked' {% endif %} />
+                                <i></i>
+                        </label>
                     </div>
-
-                    <div id='propery-detail-{{ index }}'>
-                        {% for detail in property.detail %}
-                            {% set detail_index = loop.index %}
-                            {% set unique = '%s_a%s'|format(index, detail_index) %}
-                            {% set collection = collection|merge([unique]) %}
-
-                            {% set detail_name = '%s[detail][a%s]'|format(name, detail_index) %}
-                            {% set detail_class = 'j-productDetail' %}
-                            {% include 'element/product/input/property_detail_item.twg' with {
-                                    'unique': unique,
-                                    'name': detail_name,
-                                    'class': detail_class,
-                                    'detail': detail
-                                }
-                            %}
-                        {% endfor %}
-
-                        {% for detail_index in 1 .. property_detail %}
-                            {% set unique = '%s_b%s'|format(index, detail_index) %}
-                            {% set collection = collection|merge([unique]) %}
-
-                            {% set detail_name = '%s[detail][b%s]'|format(name, detail_index) %}
-                            {% set detail_class = 'j-productDetail init--property-detail' %}
-                            {% include 'element/product/input/property_detail_item.twg' with {
-                                    'unique': unique,
-                                    'name': detail_name,
-                                    'class': detail_class,
-                                }
-                            %}
-                        {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th class='col-sm-3 table-label'>
+                    <label class='control-label'>
+                        Hình ảnh
+                    </label>
+                </th>
+                <td>
+                    <div id='property-detail-{{ index }}'>
+                        {% set unique = '%s'|format(index) %}
+                        {% set collection = collection|merge([unique]) %}
+                        {% set detail_name = '%s'|format(name, index) %}
+                        
+                        {% set detail_class = 'j-productDetail init--property-detail1' %}
+                        {% include 'element/product/input/property_detail_item.twg' with {
+                                'unique': unique,
+                                'name': detail_name,
+                                'class': detail_class,
+                                'file_id': item.file_id
+                            }
+                        %}
                         {% include 'element/product/input/property_fileapi.twg' with {
                                 'collection': collection,
                             }

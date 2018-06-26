@@ -1,164 +1,164 @@
 .btn:active, .btn.active{
-	-webkit-box-shadow: none;
-	box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 .backdrop-login {
-	background: #0aa89e;
-	height: 180px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+    background: #0aa89e;
+    height: 180px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 .section-login {
-	margin-top: 190px;
+    margin-top: 190px;
 }
 .btn-fix-width {
-	width: 30%;
+    width: 30%;
 }
 hr.strikethrough {
-	border-top: 1px solid #cbd5dd;
-	text-align: center;
-	margin-top: 30px;
-	margin-bottom: 30px;
+    border-top: 1px solid #cbd5dd;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 hr.strikethrough:after {
-	content: '\002665';
-	display: inline-block;
-	position: relative;
-	top: -15px;
-	padding: 0 10px;
-	background: #f2f4f8;
-	color: #666;
-	font-size: 18px;
+    content: '\002665';
+    display: inline-block;
+    position: relative;
+    top: -15px;
+    padding: 0 10px;
+    background: #f2f4f8;
+    color: #666;
+    font-size: 18px;
 }
 .error-panel ul li {
-	color: #ff5f5f;
+    color: #ff5f5f;
 }
 .content-wrapper {
-	padding: 0 15px;
+    padding: 0 15px;
 }
 .form-footer{
-	background: #777;
-	margin-bottom: 20px;
-	padding: 20px 10px;
+    background: #777;
+    margin-bottom: 20px;
+    padding: 20px 10px;
 }
 .fa-icon {
-	font-size: 1.2em;
+    font-size: 1.2em;
 }
 .row-input {
-	width: 100%;
-	padding: 0 5px;
+    width: 100%;
+    padding: 0 5px;
 }
 .hbox > .collapse {
-	display: none;
+    display: none;
 }
 .nav-off-screen .hidden-xs {
-	display: block !important;
+    display: block !important;
 }
 .nav-user .user-info {
-	display: block;
-	text-align: center;
-	font-size: 18px;
-	padding-bottom: 10px;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    padding-bottom: 10px;
 }
 
 #sidebar {
-	position: fixed;
-	height: 100%;
-	z-index: 100;
-	right: -240px;
-	top: 0;
-	margin-top: 50px;
-	-webkit-transition: all .5s ease-in-out;
-	-moz-transition: all .5s ease-in-out;
-	-o-transition: all .5s ease-in-out;
-	transition: all .5s ease-in-out;
+    position: fixed;
+    height: 100%;
+    z-index: 100;
+    right: -240px;
+    top: 0;
+    margin-top: 50px;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
 }
 
 .nav-offcanvas {
-	background: #888;
-	color: #fff;
-	padding: 8px;
-	border-radius: 100%;
-	margin-left: 10px;
+    background: #888;
+    color: #fff;
+    padding: 8px;
+    border-radius: 100%;
+    margin-left: 10px;
 }
 
 .page-info {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .img-container {
-	margin-top: 10px;
-	padding: 5px;
-	border: 1px solid #333;
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #333;
 }
 
 .form-horizontal .radio-inline,
 .form-horizontal .checkbox-inline {
-	padding-top: 0;
-	margin-bottom: 5px;
+    padding-top: 0;
+    margin-bottom: 5px;
 }
 
 .sidebar-offcanvas {
-	position: fixed;
-	top:70px;
-	right: 10px;
-	width: 40px;
-	height: 40px;
-	background: #E40A5D;
-	border-radius: 50%;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	color: #fff;
+    position: fixed;
+    top:70px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: #E40A5D;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    color: #fff;
 }
 .sidebar-offcanvas i,
 .sidebar-offcanvas i:hover {
-	color: #fff;
-	font-size: 14px;
-	padding: 12px 15px;
+    color: #fff;
+    font-size: 14px;
+    padding: 12px 15px;
 }
 #map_canvas {
-	margin-top: 10px;
-	width: 100%;
-	height: 300px;
+    margin-top: 10px;
+    width: 100%;
+    height: 300px;
 }
 .map-template {
-	display: none;
+    display: none;
 }
 .cart-list > header ~ section{
-	top: 50px;
+    top: 50px;
 }
 .cart-list .m-b-xs{
-	margin-bottom: 7px;
+    margin-bottom: 7px;
 }
 
 .order-info .detail {
-	padding: 10px;
+    padding: 10px;
 }
 .order-info .info-group {
-	border-bottom: 1px dashed #eae0f1;
-	margin-bottom: 5px;
-	padding-bottom: 5px;
+    border-bottom: 1px dashed #eae0f1;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 .order-info .info-group:last-of-type {
-	border-bottom: 0;
+    border-bottom: 0;
 }
 .order-info .info-group label {
-	font-weight: bold;
-	display: block;
-	margin-bottom: 0;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0;
 }
 /*34AB78*/
 .order-info .header {
-	background: #436789;
-	color: #fff;
+    background: #436789;
+    color: #fff;
 }
 .order-status span {
-	margin: auto;
-	display: block;
-	width: 50%;
+    margin: auto;
+    display: block;
+    width: 50%;
 }
 
 .faq-rating {
@@ -166,11 +166,11 @@ hr.strikethrough:after {
 }
 
 .remark {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .info {
-	display: block;
+    display: block;
 }
 
 .dashed {
@@ -266,18 +266,18 @@ hr.strikethrough:after {
     border-top: 0;
 }
 table .sublist {
-	max-height: 500px;
-	overflow-y: scroll;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .block-item {
-	padding: 10px 0;
-	border-bottom: dash 1px #333;
+    padding: 10px 0;
+    border-bottom: dash 1px #333;
 }
 .card {
-	border: solid 1px #bbb;
+    border: solid 1px #bbb;
     width: 350px;
-	margin-right: 15px;
+    margin-right: 15px;
     margin-bottom: 15px;
     float: left;
     display: block;
@@ -285,24 +285,24 @@ table .sublist {
 
 .card-content,
 .card-image {
-	padding: 10px 10px 0;
+    padding: 10px;
 }
 .card-image .b-upload__dnd {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 .card-image .div-hover {
-	margin: 0;
-	padding: 0;
-	border: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 .card-body .card-content input{
-	width: 100%;
-	margin: auto;
-	padding: 10px;
-	display: block;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    display: block;
 }
 .card-bottom {
-	line-height: 25px;
+    line-height: 25px;
     padding: 10px;
     background: #bbb;
     margin-top: 25px;
@@ -310,7 +310,7 @@ table .sublist {
 }
 .init--property,
 .init--property-detail {
-	display: none;
+    display: none;
 }
 .btn-upload.b-upload-hide {
     display: none !important;

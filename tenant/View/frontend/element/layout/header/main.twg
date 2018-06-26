@@ -1,80 +1,52 @@
 <header class="hidden-xs">
-	<div id="bottom-header" class="bottom-header hidden-xs">
-		<div class="container">
-			<div class="row header-logo">
-				<div class="col-sm-2">
-					<div class="logo logo-pc col-left">
-						<a href="{{ request().home }}" title='{{ config('app.title') }}'>
-							{{ 'logo.png'|asset({'class': 'img-responsive'}) }}
-						</a>
-					</div>
-				</div>
-				<div class="col-sm-7">
-					<div class="col-left label-search">
-						<div class="box-search">
-							<form action="{{ 'product/search'|url }}" method='post'>
-								<div class="box-search">
-									<div class="box-input">
-										<div class="group-collection-search">
-											{% set search_category = search.category|default(0) %}
-											<select data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" name="category" class='select search-category'>
-												<option value='0'>Tất cả</option>
-												{% for item in addon.product_category %}
-				                                    {% set id = item.id %}
-				                                    <option value='{{ id }}'>{{ item.title }}</option>
-				                                    {% if item.children %}
-				                                        {% for item2 in item.children %}
-				                                            {% set id2 = item2.id %}
-				                                            <option value='{{ id2 }}' {% if search_category == id2 %}selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;{{ item2.title }}</option>
-				                                            {% if item2.children %}
-				                                            {% for id3, item3 in item2.children %}
-				                                                {% set id3 = item3.id %}
-				                                                <option value='{{ id3 }}' {% if search_category == id3 %}selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item3.title }}</option>
-				                                            {% endfor %}
-				                                        {% endif %}
-				                                        {% endfor %}
-				                                    {% endif %}
-				                                {% endfor %}
-				                            </select>
-										</div>
-										<div class="input-group-search" style="">
-											<input type="text" name="keyword" placeholder="Tìm kiếm ..." value='{{ search.keyword|default('') }}'/>
-										</div>
-
-										<button type="submit"><i class="fa fa-search"></i></button>
-									</div>
-								</div>
-							</form>
-
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					{% if login().loggedin() %}
-					<div class="col-right box-login">
-						<a href="{{ 'user/me'|url }}" title="Tài khoản">
-							<div class="div-user-control control-2">
-							</div>
-							<div class="info">
-								<span>Tài khoản</span>
-							</div>
-						</a>
-					</div>
-					{% endif %}
-					<div class="col-right box-carts">
-						<div class="cart-info hidden-xs">
-							<a class="cart-link" href="{{ 'cart'|url }}" title='Xem giỏ hàng'>
-								<div class="div-user-control control-4">
-									<span class="cart-number">{{ addon.cart_total|default(0) }}</span>
-								</div>
-								<div class="info">
-									<span>Giỏ hàng</span>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div id="bottom-header" class="bottom-header hidden-xs">
+        <div class="container">
+            <div class="row header-logo">
+                <div class="col-sm-2">
+                    <div class="logo logo-pc col-left">
+                        <a href="{{ request().home }}" title='{{ config('app.title') }}'>
+                            {{ 'logo.png'|asset({'class': 'img-responsive'}) }}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <form action="{{ 'product/search'|url }}" method='post'>
+                        <div class="box-search">
+                            <div class="box-input">
+                                <div class="input-group-search">
+                                    <input type="text" name="keyword" placeholder="Tìm kiếm ..." value='{{ search.keyword|default('') }}'/>
+                                </div>
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-3">
+                    {% if login().loggedin() %}
+                    <div class="col-right box-login">
+                        <a href="{{ 'user/me'|url }}" title="Tài khoản">
+                            <div class="div-user-control control-2">
+                            </div>
+                            <div class="info">
+                                <span>Tài khoản</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endif %}
+                    <div class="col-right box-carts">
+                        <div class="cart-info hidden-xs">
+                            <a class="cart-link" href="{{ 'cart'|url }}" title='Xem giỏ hàng'>
+                                <div class="div-user-control control-4">
+                                    <span class="cart-number">{{ addon.cart_total|default(0) }}</span>
+                                </div>
+                                <div class="info">
+                                    <span>Giỏ hàng</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>

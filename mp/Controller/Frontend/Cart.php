@@ -75,7 +75,6 @@ class Cart extends Frontend
     public function detail($id = 0)
     {
         $cart = Session::read('cart');
-
         $this->render('detail', compact('cart'));
     }
 
@@ -104,6 +103,10 @@ class Cart extends Frontend
     protected function upsertDetail($target = [], &$cart = [])
     {
         $id = $target['id'];
+        if (!empty($target['property_id'])) {
+            $id .= '.' . $target['property_id'];
+        }
+
         if (array_key_exists($id, $cart)) {
             $cart[$id]['amount'] += $target['amount'];
         } else {
@@ -141,6 +144,7 @@ class Cart extends Frontend
         }
 
         $total = $this->cartTotal($detail);
+
         $cart = compact('total', 'detail');
 
         Session::write('cart', $cart);

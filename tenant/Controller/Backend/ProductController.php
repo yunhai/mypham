@@ -360,7 +360,7 @@ class ProductController extends Product
         $page = empty($request->name['page']) ? 1 : $request->name['page'];
 
         $option = [
-            'select' => "{$alias}.id, {$alias}.title, {$alias}.status, {$alias}.price, {$alias}.category_id, {$alias}.modified, {$alias}.created",
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.status, {$alias}.price, {$alias}.category_id, {$alias}.inventory, {$alias}.modified, {$alias}.created",
             'order' => "{$alias}.id desc",
             'page' => $page,
         ];
@@ -489,6 +489,38 @@ class ProductController extends Product
 
         return $result;
     }
+    
+    public function add()
+    {
+        $request = App::mp('request');
+
+        $alias = $this->model()->alias();
+        $target = $this->model()->init();
+        $target[$alias]['code'] = mb_strtoupper(dechex(time()));
+
+        $target = array_merge($target, App::mp('seo')->target());
+        if (!empty($request->data[$alias])) {
+            $error = [];
+
+            $request->data[$alias] = $this->formatData($request->data[$alias]);
+            $flag = $this->save($request->data, $error);
+
+            if ($flag) {
+                $this->flash('edit', __('m0001', 'Your data have been saved.'), 'success');
+
+                return $this->redirect(App::load('url')->module());
+            }
+
+            $this->set('error', $error);
+            $this->flash('edit', __('m0002', 'Please review your data.'), 'error');
+
+            $target = $this->formatPostData($request->data, $alias);
+        }
+
+        $this->attach($target, $alias);
+        $option = $this->form();
+        return $this->render('input', compact('target', 'option'));
+    }
 
     public function edit($id = 0)
     {
@@ -496,7 +528,7 @@ class ProductController extends Product
         $alias = $this->model()->alias();
 
         $id = (int) $id;
-        $fields = "{$alias}.id, {$alias}.title, {$alias}.category_id, {$alias}.idx, {$alias}.price, {$alias}.content, {$alias}.status, {$alias}.seo_id, {$alias}.file_id";
+        $fields = "{$alias}.id, {$alias}.title, {$alias}.category_id, {$alias}.idx, {$alias}.price, {$alias}.content, {$alias}.status, {$alias}.seo_id, {$alias}.file_id, {$alias}.inventory";
 
         $target = $this->model()->findById($id, $fields);
         if (empty($target)) {
@@ -531,34 +563,55 @@ class ProductController extends Product
         }
 
         $this->attach($target, $alias);
-        $option = [
-            'status' => $this->status($alias),
-            'category' => $this->getCategory($alias)
-        ];
+        $option = $this->form();
 
         return $this->render('input', compact('target', 'option'));
+    }
+    
+    public function form()
+    {
+        $alias = $this->model()->alias();
+        $option = [
+            'category' => $this->getCategory($alias),
+            'display_mode' => App::mp('config')->get('product.display_mode'),
+            'skin_mode' => App::mp('config')->get('product.skin_mode'),
+            'state_mode' => App::mp('config')->get('product.state_mode'),
+        ];
+        return $option;
     }
 
     public function formatData($data = [])
     {
         $price = $data['price'];
         $price_promote = $data['promote'];
+
+        $data['default_mode'] = empty($data['default_mode']) ? 0 : $data['default_mode'];
+
         if ($data['property']) {
-            foreach ($data['property'] as $id => &$item) {
-                if (!empty($item['detail'])) {
-                    $item['detail'] = array_filter($item['detail'], function ($target) {
-                        return !empty($target['title']);
-                    });
-                    if (empty($item['price'])) {
-                        $item['price'] = $price;
-                    }
-                }
-            }
             $data['property'] = array_filter($data['property'], function ($target) {
                 return !empty($target['title']);
             });
-        }
+            
+            $data['inventory'] = 0;
+            foreach ($data['property'] as $id => &$item) {
+                $item['inventory'] = $item['inventory'] ?: 0;
+                if (empty($item['price'])) {
+                    $item['price'] = $price;
+                }
 
+                if (!$data['default_mode']) {
+                    $data['default_mode'] = $id;
+                }
+
+                if ($data['default_mode'] == $id) {
+                    $data['price'] = $item['price'];
+                    $data['promote'] = $item['price_promote'];
+                }
+
+                $data['inventory'] += $item['inventory'];
+            }
+        }
+    
         return $data;
     }
 
@@ -566,8 +619,9 @@ class ProductController extends Product
     {
         $files = empty($target[$alias]['file_id']) ? [] : [$target[$alias]['file_id']];
         $property = $target[$alias]['property'] ?? [];
+        
         if ($property) {
-            $tmp = Hash::combine($property, '{s}.detail.{s}.file_id', '{s}.detail.{s}.file_id');
+            $tmp = Hash::combine($property, '{s}.file_id', '{s}.file_id');
             $files = array_merge($files, $tmp);
         }
 
@@ -585,7 +639,6 @@ class ProductController extends Product
             $target[$name] = explode(',', $target[$alias][$field]);
             $files = array_merge($files, $target[$name]);
         }
-
 
         $this->refer(['file' => $files]);
 
@@ -626,10 +679,7 @@ class ProductController extends Product
                 return false;
             }
         }
-        // print_r('<pre>');
-        // print_r($data[$alias]);
-        // print_r('</pre>');
-        // exit;
+
         $this->model()->begin();
         $this->model()->save($data[$alias]);
 
@@ -705,7 +755,7 @@ class ProductController extends Product
                 }
             }
         }
-
+    
         $search = Text::slug($search, ' ');
         $search = preg_replace('/[^a-zA-Z0-9 ]+/', '', mb_strtolower($search));
 

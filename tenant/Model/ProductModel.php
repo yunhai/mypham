@@ -26,10 +26,14 @@ class ProductModel extends Product
             'string_3' => 'manufacturer_id',
             'string_4' => 'promote_start',
             'string_5' => 'promote_end',
+            'string_6' => 'skin_mode',
+            'string_7' => 'state_mode',
+            'string_8' => 'star',
+            'string_9' => 'comment',
             'text_1' => [
-                'point',
                 'property',
-                'property_name',
+                'display_mode',
+                'default_mode',
                 'code',
                 'gallery',
                 'files'
@@ -52,33 +56,62 @@ class ProductModel extends Product
 
     public function promotion(&$target = [])
     {
-        $today = date('Y-m-d');
-
         $target['discount'] = 0;
-        $target['is_promotion'] = false;
+        $target['is_promotion'] = $this->isValidPromotion($target);
 
         $target['final_price'] = $target['price'];
 
-        if ($target['price'] && $target['promote_start'] <= $today && $today <= $target['promote_end']) {
+        if ($target['is_promotion']) {
+            $target['promote'] = empty($target['promote']) ? 0 : $target['promote'];
             $discount = ((int) (($target['promote'] / $target['price']) * 100));
             if ($discount) {
                 $target['discount'] = 100 - $discount;
             }
             $target['final_price'] = $target['promote'];
-            $target['is_promotion'] = true;
         }
 
         if (isset($target['property'])) {
             foreach ($target['property'] as &$property) {
-                $price = $target['final_price'];
-                if ($property['price']) {
-                    $price = $property['price'];
-                    if ($target['is_promotion']) {
-                        $price = $property['price_promote'];
+                $property['discount'] = 0;
+                $property['final_price'] = empty($property['price']) ? 0 : $property['price'];
+                if ($target['is_promotion'] && $property['price_promote']) {
+                    $discount = ((int) (($property['price_promote'] / $property['price']) * 100));
+                    if ($discount) {
+                        $property['discount'] = 100 - $discount;
                     }
+                    $property['final_price'] = $property['price_promote'];
                 }
-                $property['final_price'] = $price;
             }
         }
+    }
+
+    public function isValidPromotion($target)
+    {
+        $today = date('Y-m-d');
+        return $target['promote_start'] <= $today && $today <= $target['promote_end'];
+    }
+
+    public function updateInventory($product_id, $amount, $property_id, $positive = true)
+    {
+        $alias = $this->alias();
+        $fields = "{$alias}.id, {$alias}.inventory";
+
+        $target = $this->findById($product_id, $fields);
+        $target = array_shift($target);
+
+        if ($positive) {
+            if ($amount > $target['inventory'] || $amount > $target['property'][$property_id]['inventory']) {
+                return false;
+            }
+            
+            $target['inventory'] -= $amount;
+            $target['property'][$property_id]['inventory'] -= $amount;
+        } else {
+            $target['inventory'] += $amount;
+            $target['property'][$property_id]['inventory'] += $amount;
+        }
+
+        $this->save($target);
+        return true;
     }
 }

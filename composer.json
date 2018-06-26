@@ -23,7 +23,7 @@
     },
 
     "require": {
-        "twig/twig": "~1.18.2",
+        "twig/twig": "*",
         "phpmailer/phpmailer": "dev-master",
         "league/oauth2-client": "*",
         "league/oauth2-google": "^2.0",

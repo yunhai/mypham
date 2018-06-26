@@ -1,9 +1,5 @@
-{% set file_id = detail.file_id %}
 <div id='card-{{ unique }}' class='card {{ class }}'>
     <div class='card-body'>
-        <div class='card-content'>
-            <input type='text' placeholder='Mã quy cách' name='{{ name }}[title]' value='{{ detail.title }}' />
-        </div>
         <div class='card-image'>
             <div id='product-property-detail-{{ unique }}-image-uploader'
                 class="b-upload"
@@ -49,8 +45,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class='card-bottom'>
-        <a href='#' class='btn btn-default j-removePropertyDetail' data-id='card-{{ unique }}'>Xóa</a>
     </div>
 </div>

@@ -16,14 +16,12 @@
                                 <th class="hidden-xs">Thành tiền</th>
                                 <th></th>
                             </tr>
-                            {% for item in cart.detail %}
+                            {% for unique, item in cart.detail %}
                             {% set product_id = item.id %}
                             {% set target = attribute(product, product_id) %}
                             <tr>
                                 <td class='hidden-xs'>
-                                    <input type='hidden' name='cart[{{ product_id }}][id]' value= '{{ product_id }}' />
-                                    <input type='hidden' class='cart-item-sub_total' value='{{ item.sub_total }}' />
-
+                                    <input type='hidden' name='cart[{{ unique }}][id]' value= '{{ unique }}' />
                                     <a href='{{ target|link('product') }}' title='{{ target.title }}' target='_blank'>
                                         {{ target|media({'class': 'thumbnail-small'}) }}
                                     </a>
@@ -32,12 +30,12 @@
                                     <a href='{{ target|link('product') }}' title='{{ target.title }}' target='_blank'>
                                         <strong>{{ target.title}}</strong>
 
-                                        <span class="variant_title">{{ item.property_text }} {% if item.property_detail_text %} / {{ item.property_detail_text }}{% endif %}</span>
+                                        <span class="variant_title">{{ item.property_text }}</span>
                                     </a>
                                 </td>
                                 <td>{{ (item.price)|price }}</td>
                                 <td class="qty">
-                                    <input type="number" size="4" name="cart[{{ product_id }}][amount]" min="1" value="{{ (item.amount) }}">
+                                    <input type="number" size="4" name="cart[{{ unique }}][amount]" min="1" value="{{ (item.amount) }}">
                                 </td>
                                 <td class="price hidden-xs">{{ (item.total)|price }}</td>
                                 <td class="remove">

@@ -1,5 +1,4 @@
-{% set property = 10 %}
-{% set property_detail = 50 %}
+{% set property_item = 20 %}
 {% set collection = [] %}
 <section class="panel panel-default">
     <header class="panel-heading font-bold">
@@ -18,21 +17,19 @@
             <tr>
                 <th class='col-sm-3 table-label'>
                     <label class='control-label'>
-                        Tên quy cách
+                        Cách hiển thị
                     </label>
                 </th>
                 <td>
-                    <input class='form-control' name='{{ alias }}[property_name][level1]' type='text' value='{{ target.product.property_name.level1 }}' placeholder="Tên quy cách" />
-                </td>
-            </tr>
-            <tr>
-                <th class='col-sm-3 table-label'>
+                {% for value, name in option.display_mode %}
+                <div class='radio-inline i-checks'>
                     <label class='control-label'>
-                        Tên chi tiết quy cách
+                        <input type="radio" value="{{ value }}" name='{{ alias }}[display_mode]' 
+                            {% if value == attribute(target, alias).display_mode %} checked='checked' {% endif %} />
+                        <i></i>{{ name }}
                     </label>
-                </th>
-                <td>
-                    <input class='form-control' name='{{ alias }}[property_name][level2]' type='text' value='{{ target.product.property_name.level2 }}' placeholder="Tên chi tiết quy cách" />
+                </div>
+                {% endfor %}
                 </td>
             </tr>
         </table>
@@ -42,17 +39,23 @@
         </div>
         <div id='property-list'>
             {% for property in target.product.property %}
-                {% set class = 'j-product' %}
                 {% include 'element/product/input/property_item.twg' with {
-                    'index': 'item' ~ loop.index,
-                    'class': class,
-                    'propery': property
+                    'index': property.id,
+                    'class': 'j-product',
+                    'item': property
                     } %}
             {% endfor %}
 
-            {% for index in 1 .. property %}
+            {% for index in 1..property_item %}
                 {% set class = 'j-product init--property' %}
-                {% include 'element/product/input/property_item.twg' with {'index': index, 'class': class} %}
+                {% if index == 1 and (target.product.property)|length == 0 %}
+                    {% set class = 'j-product' %}
+                {% endif %}
+                 
+                {% include 'element/product/input/property_item.twg' with {
+                    'index': execute('uniqid'),
+                    'class': class,
+                    } %}
             {% endfor %}
         </div>
     </div>
