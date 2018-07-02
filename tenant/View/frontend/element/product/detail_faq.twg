@@ -1,20 +1,25 @@
 <div id="product-faq" class="tab-pane fade"><!--tab ct-->
-    <form>
+    <form class="send-comment">
         <h4>Hỏi đáp</h4>
-        <input type="text" class="form-control" placeholder="Bạn có câu hỏi với sản phẩm này. Đặt câu hỏi ngay." required="">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Bạn có câu hỏi với sản phẩm này. Đặt câu hỏi ngay." required="">
+            <span class="input-group-btn">
+            <button class="btn" type="submit">Gửi</button>
+            </span>
+        </div>
     </form>
     <div class="faq">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -25,12 +30,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -44,14 +49,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -62,12 +67,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -81,14 +86,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -99,12 +104,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -118,14 +123,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -136,12 +141,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -155,14 +160,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -173,12 +178,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -192,14 +197,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -210,12 +215,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -229,14 +234,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -247,12 +252,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -266,14 +271,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -284,12 +289,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -303,14 +308,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -321,12 +326,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>
@@ -340,14 +345,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Nhat Linh Nguyen</strong></a>
-                        <span class="date">07/10/2017</span>
-                   </p>
+                    <div class="user-question">
+                        <a class="float-left user-question" href="#"><strong>Nhat Linh Nguyen</strong></a>
+                        <span class="date">- 07/10/2017</span>
+                   </div>
                    <div class="clearfix"></div>
-                    <p>Co mau do cam hay hong cam ko a.</p>
+                    <strong><p>Co mau do cam hay hong cam ko a.</p></strong>
                     <p>
-                        <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                        <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                         -
                         <a href="javascript:void(0)" class="float-right ml-2">Trả lời</a>
                    </p>
@@ -358,12 +363,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>
-                                <a href="https://maniruzzaman-akash.blogspot.com/p/contact.html">{{ 'logo-sm.png'|asset({}) }}</a>
-                                <span class="date">07/10/2017</span>
+                                <a href="#">{{ 'logo-sm.png'|asset({}) }}</a>
+                                <span class="date"> - 07/10/2017</span>
                             </p>
                             <p>Beauty chào bạn! Sản phẩm có màu đỏ cam bạn nhé!</p>
                             <p>
-                                <a href="javascript:void(0)" class="float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
+                                <a href="javascript:void(0)" class="like float-right">Thích <i class="fa fa-thumbs-up"></i> 0 </a>
                                 -
                                 <a href="javascript:void(0)" class="float-rightml-2">Trả lời</a>
                            </p>

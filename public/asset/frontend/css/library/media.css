@@ -106,7 +106,7 @@ float:right;
 		bottom: 6px;
 		text-align: center;
 		line-height: 15px;
-		background: #111;
+		background: #cc0099;
 		color: #fff;
 		padding:0;
 	}
@@ -177,7 +177,7 @@ float:right;
 	background-color: #e60f1e;
 }
 ul.mobile-menu-icon li#cart-target span {
-    color: #e60f1e;
+    color: #cc0099;
 }
 .block-nav-main{background-color: transparent;
     height: auto;}
@@ -231,7 +231,7 @@ ul.mobile-menu-icon li#cart-target span {
 
 	.wrap-tabs.home-focus > div:nth-of-type(even) {
 		padding-left: 10px;
-	}	
+	}
 }
 @media ( min-width: 768px ) {
 
@@ -346,7 +346,7 @@ ul.mobile-menu-icon li#cart-target span {
 	.col-md-206-percent {
 		width: calc(100% - 206px);
 		float: left;
-	}	
+	}
 	.box-section-collection .pd-left-none {
 		padding-left: 0px;
 	}
