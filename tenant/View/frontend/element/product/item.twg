@@ -6,9 +6,6 @@
                     <a href="{{ item|link('product') }}" title="{{ item.title }}">
                         {{ item|media() }}
                     </a>
-                    <a class='add-to-cart' href='{{ ('cart/add/' ~ item.id)|url }}'>
-                        Đặt mua
-                    </a>
                     {% if item.discount %}
                     <div class="field-sale">
                         <span>-{{ item.discount }}%</span>
@@ -24,8 +21,11 @@
                         <span class="curr-price">{{ item.price|price }}</span>
                         {% endif %}
                     </div>
+
                     <a href="{{ item|link('product') }}" title="{{ item.title }}">
+                        <p class="product-manufacturer">NXY</p>
                         {{ item.title }}
+                        <p class="product-name">Total Control Drop Foundation</p>
                     </a>
                 </div>
             </div>

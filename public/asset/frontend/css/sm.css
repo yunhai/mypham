@@ -1,7 +1,7 @@
 @media (min-width: 768px) {
     .block-cate-home .box-item-2,
     .block-cate-home .box-item-6 {
-        border-right: 1px solid #e7e7e7;
+
     }
     .article-list-item--image {
         height: 100px;
@@ -10,5 +10,5 @@
     	width: 20%;
     	float:left;
     }
-    
+
 }

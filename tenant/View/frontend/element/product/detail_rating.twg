@@ -1,57 +1,264 @@
-<div id="product-rating" class="tab-pane fade"><!--tab ct-->
-    <div>
-        <label>Bạn đã sử dụng sản phẩm này chưa?</label>
-        <p>Nếu bạn đã từng sử dụng sản phẩm này, bạn có thể gởi lời nhận xét sản phẩm.</p>
-    </div>
-    <hr  />
-    <div class='row'>
-        <div class="col-sm-12 col-md-4">
-            <div id='vote-callback'>
-                <span>Cám ơn quý khách đã nhận xét về sản phẩm.</span>
-                <hr  />
-            </div>
-            <form id="product-vote-form" method='post' data-action='{{ ('product/vote/' ~ item.id)|url }}'>
-                <input type='hidden' value='{{ item.id }}' name='target' />
-                <div class="form-group">
-                    <label>Đánh giá</label>
-                    <div>
-                        <span class='product-rating-criteria'>Giá</span>
-                        <select name="price" class='form-control'>
-                            {% for i in 5..1 %}
-                            <option value="{{ i }}">{{ i }} sao</option>
-                            {% endfor %}
-                        </select>
-                        <span class='product-rating-criteria'>Chất lượng</span>
-                        <select name="quantity" class='form-control'>
-                            {% for i in 5..1 %}
-                            <option value="{{ i }}">{{ i }} sao</option>
-                            {% endfor %}
-                        </select>
-                        <span class='product-rating-criteria'>Chuyển hàng</span>
-                        <select name="shipping" class='form-control'>
-                            {% for i in 5..1 %}
-                            <option value="{{ i }}">{{ i }} sao</option>
-                            {% endfor %}
-                        </select>
+<div id="product-rating" class="tab-pane fade">
+<!--tab ct-->
+    <div class="row">
+        <div class="col-sm-5">
+            <h4>Khách hàng nhận xét</h4>
+            <div class="pull-left">
+                <div class="pull-left" style="width:35px">
+                    <div>5 sao</div>
+                </div>
+                <div class="pull-left" style="width:180px;">
+                    <div class="progress">
+                        <div class="" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
+                            <span class="sr-only">80% Complete (danger)</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="fullname">Họ tên</label>
-                    <input name='fullname' id="fullname" class='form-control'>
+                <div class="pull-right start-result">1 <span> Rất hài lòng</span></div>
+            </div>
+            <div class="pull-left">
+                <div class="pull-left" style="width:35px">
+                    <div>4 sao</div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name='email' id="email" class='form-control'>
+                <div class="pull-left" style="width:180px;">
+                    <div class="progress">
+                        <div class="" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
+                            <span class="sr-only">80% Complete (danger)</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="content">Nội Dung</label>
-                    <textarea name="content" id='content' class='form-control' rows='10'></textarea>
+                <div class="pull-right start-result">1 <span> Hài lòng</span></div>
+            </div>
+            <div class="pull-left">
+                <div class="pull-left" style="width:35px">
+                    <div>3 sao</div>
                 </div>
-                <button type="submit" class="btn btn-submit">Gửi câu hỏi</button>
-            </form>
-            <div class="clearfix"></div>
+                <div class="pull-left" style="width:180px;">
+                    <div class="progress">
+                        <div class="" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
+                            <span class="sr-only">80% Complete (danger)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right start-result">1 <span> Bình thường</div>
+            </div>
+            <div class="pull-left">
+                <div class="pull-left" style="width:35px">
+                    <div>2 sao</div>
+                </div>
+                <div class="pull-left" style="width:180px;">
+                    <div class="progress">
+                        <div class="" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
+                            <span class="sr-only">80% Complete (danger)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right start-result">0 <span> Dưới bình thường</span></div>
+            </div>
+            <div class="pull-left">
+                <div class="pull-left" style="width:35px">
+                    <div>1 sao</div>
+                </div>
+                <div class="pull-left" style="width:180px;">
+                    <div class="progress">
+                        <div class="" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
+                            <span class="sr-only">80% Complete (danger)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right start-result">0 <span> Thất vọng<span></div>
+            </div>
         </div>
-        <div class="col-sm-12 col-md-8" id='vote-list' data-url='{{ ('product/rating/' ~ item.id)|url }}'></div>
+        <div class="col-sm-6">
+            <div class="rating-block">
+                <h4>Chia sẽ nhận xét của bạn về sản phẩm này</h4>
+                <button type="button" class="btn btn-default btn-comment btn-sm">
+                Viết bình luận
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="rating-write-comment">
+        <div>
+            <h4>Đánh giá sản phẩm này *</h4>
+            <div id="stars-existing" class="starrr" data-rating='4'></div>
+        </div>
+        <form>
+            <div class="form-group">
+                <label>Tiêu đề nhận xét</label>
+                <input type="email" class="form-control" name="InputEmail" placeholder="Nhập tiêu đề nhận xét tại đây" required  >
+            </div>
+            <div class="form-group">
+                <label>Mô tả nhận xét *</label>
+                <textarea name="InputMessage" class="form-control" rows="2" placeholder="Nhập mô tả tại đây" required></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="review-block">
+                <div class="row">
+                    <h5>0 bình luận cho sản phẩm này</h5>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08 <span class="verify-order">Đã mua</span></div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08</div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08</div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08</div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08</div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08</div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08</div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="review-block-title">hoakimpt08</div>
+                        <div class="review-block-rate">
+                            <a><span class="fa fa-star active" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                            <a><span class="fa fa-star" aria-hidden="true"></span></a>
+                        </div>
+                        <div class="review-block-rate-date">10:26:34, 15/03/2018</div>
+                        <div class="review-block-description clearFix">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <nav id="paging">
+                        <ul class="pagination pagination-sm">
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&rsaquo;</span>
+                                <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

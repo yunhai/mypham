@@ -1,30 +1,527 @@
 {% extends "layout/default.twg" %}
-
 {% block content %}
-    <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            <div class="box-title-collection clearfix">
-                <h1>{{ option.page_title }}</h1>
-            </div>
-            <div id='list-product' class="row">
-                {% if data.list is empty %}
-                    <div class='col-md-12 product-notification'>
-                        <span>Hiện thời chưa có sản phẩm.</span><br/>
-                        <span>Quý khách vui lòng quay lại sau, hoặc tìm kiếm với từ khóa khác</span>
-                    </div>
-                {% else %}
-                    {% for item in data.list %}
-                        {% embed 'element/product/item.twg' with {item: item} %}{% endembed %}
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div class='clearfix'></div>
-            {% if option.page.current < option.page.total %}
-                <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-product'>Xem thêm</a>
-            {% endif %}
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 sidebar">
+        <div class="row menu-category">
+            <h4>SỨC KHỎE - LÀM ĐẸP</h4>
+            <ul>
+                <li class="active"><a href="#">Trang Điểm (3661)</a></li>
+                <li><a href="#">Chăm Sóc Da Mặt<span>(2115)</span></a></li>
+                <li><a href="#">Chăm Sóc Cơ Thể<span>(2115)</span></a></li>
+                <li><a href="#">Chăm Sóc Vùng Da Mắt<span>(2115)</span></a></li>
+                <li><a href="#">Chăm Sóc Cho Bé<span>(2115)</span></a></li>
+                <li><a href="#">Chăm Sóc Tóc<span>(2115)</span></a></li>
+                <li><a href="#">Chăm Sóc Cho Nam<span>(2115)</span></a></li>
+                <li><a href="#">Chăm Sóc Hoa<span>(2115)</span></a></li>
+                <li><a href="#">Chăm Sóc Dầu - Spa<span>(2115)</span></a></li>
+                <li><a href="#">Thực Phẩm Chức Năng<span>(2115)</span></a></li>
+                <li><a href="#">Phụ Kiện Làm Đẹp<span>(2115)</span></a></li>
+            </ul>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 sidebar">
-            {% include 'element/product/sidebar.twg' with {category_id: option.category_id} %}
+        <div class="row">
+            <h4>THƯƠNG HIỆU</h4>
+            <ul class="menu-scroll">
+                <li><input type="checkbox" name="" value="">Lanopearl</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Secret key</li>
+                <li><input type="checkbox" name="" value="">Wishtrend</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Lanopearl</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Secret key</li>
+                <li><input type="checkbox" name="" value="">Wishtrend</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Lanopearl</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Secret key</li>
+                <li><input type="checkbox" name="" value="">Wishtrend</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Lanopearl</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Secret key</li>
+                <li><input type="checkbox" name="" value="">Wishtrend</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Lanopearl</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+                <li><input type="checkbox" name="" value="">Secret key</li>
+                <li><input type="checkbox" name="" value="">Wishtrend</li>
+                <li><input type="checkbox" name="" value="">Ohui</li>
+            </ul>
+        </div>
+        <div class="row">
+            <h4>GIÁ</h4>
+            <ul>
+                <li><a href="">0đ - 750,000đ<span>(5264)</span></a></li>
+                <li><a href="">750,000đ - 1,500,000đ<span>(5264)</span></a></li>
+                <li><a href="">1,500,000đ - 2,250,000đ<span>(5264)</span></a></li>
+                <li><a href="">2,250,000đ - 3,750,000đ<span>(5264)</span></a></li>
+                <li><a href="">3,750,000đ - 4,500,000đ<span>(5264)</span></a></li>
+                <li><a href="">4,500,000đ - 5,250,000đ<span>(5264)</span></a></li>
+                <li><a href="">5,250,000đ - 6,000,000đ<span>(5264)</span></a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <h4>QUAN TÂM</h4>
+            <ul class="menu-scroll">
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa (432)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
+                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
+                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
+            </ul>
+        </div>
+        <div class="row">
+            <h4>THỂ LOẠI</h4>
+            <ul class="menu-scroll">
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+                <li><a href="#">Dạng Lỏng (350)</a></li>
+                <li><a href="#">Dạng Kem<span>(41)</span></a></li>
+                <li><a href="#">Dạng Cây<span>(13)</span></a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <h4>LOẠI DA</h4>
+            <ul class="menu-scroll">
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+                <li><a href="#">Da Dầu (350)</a></li>
+                <li><a href="#">Da Khô<span>(41)</span></a></li>
+                <li><a href="#">Da Hỗn Hợp<span>(13)</span></a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <h4>XUẤT XỨ</h4>
+            <ul class="menu-scroll">
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+                <li><a href="#">Malaysia (350)</a></li>
+                <li><a href="#">Thụy Sĩ<span>(41)</span></a></li>
+                <li><a href="#">Đài Loan<span>(13)</span></a></li>
+            </ul>
         </div>
     </div>
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="accordian">
+                    <ul>
+                        <li>
+                            <a href="#">
+                            <img src="http://thecodeplayer.com/uploads/media/3yiC6Yq.jpg"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                            <img src="http://thecodeplayer.com/uploads/media/40Ly3VB.jpg"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                            <img src="http://thecodeplayer.com/uploads/media/00kih8g.jpg"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                            <img src="http://thecodeplayer.com/uploads/media/00kih8g.jpg"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-left:0">
+                <div class="intro-seller">
+                    <h4>NHÀ BÁN HÀNG UY TÍN</h4>
+                    <ul>
+                        <li>
+                            MỸ PHẨM 100% CHÍNH HÃNG
+                            <p>Chất lượng sản phẩm luôn được quan tâm hàng đầu của chúng tôi</p>
+                        </li>
+                        <li>
+                            LUÔN ĐƯỢC TÍCH ĐIỂM
+                            <p>Đơn hàng 100k-1 điểm 10 điểm nhận voucher 100K</p>
+                        </li>
+                        <li>
+                            MIỄN PHÍ GIAO HÀNG
+                            <p>Đơn hàng trên 100k nội thành HCM</p>
+                        </li>
+                        <li>
+                            TRI ÂN KHÁCH HÀNG
+                            <p>Với các chương trình khuyến mãi, các sự kiện & quà tặng đặc biệt vô cùng hấp dẫn</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id='list-product' class="row">
+            <h3 class="title">Sức Khỏe - Làm Đẹp <span>(5734 sản phẩm)</span></h3>
+            <div class="form-group order-select">
+                <label for="sel1">Sắp xếp theo</label>
+                <select>
+                    <option>Bán chạy</option>
+                    <option>Phổ biến</option>
+                </select>
+            </div>
+            {% if data.list is empty %}
+            <div class='col-md-12 product-notification'>
+                <span>Hiện thời chưa có sản phẩm.</span><br/>
+                <span>Quý khách vui lòng quay lại sau, hoặc tìm kiếm với từ khóa khác</span>
+            </div>
+            {% else %}
+            {% for item in data.list %}
+            {% embed 'element/product/item.twg' with {item: item} %}{% endembed %}
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class='clearfix'></div>
+        {% if option.page.current < option.page.total %}
+        <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-product'>XEM THÊM <span>5724</span> SẢN PHẨM</a>
+        {% endif %}
+    </div>
+</div>
+<div class='row suggestion-for-you'>
+<h4>Gợi ý dành riêng cho bạn</h4>
+<div class='col-md-12'>
+    <div class="carousel slide media-carousel" id="media">
+        <div class="carousel-inner">
+            <div class="item  active">
+                <div class="row">
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="row">
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="row">
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                    <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
+                        <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
+                        </a>
+                        <p class="product-price-box">
+                            <span class="curr-price">269,000đ</span>
+                        </p>
+                        <span class="product-manufacturer">NXY</span>
+                        <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
+                        <span class="product-name">Total Control Drop Foundation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
+    </div>
+</div>
 {% endblock %}

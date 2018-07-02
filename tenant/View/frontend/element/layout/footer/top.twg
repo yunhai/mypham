@@ -1,25 +1,117 @@
 <div class="footer-info">
-    <div class="container">
+    <div class="container-fluid">
         <div class="footer_info_top">
             <div class="row">
-                <div class="col-md-4" id="company_info">
-                    <h4 class="small-title">{{ config('app.title') }}</h4>
-                    <p class="mst">&nbsp;</p>
+                <!-- row -->
+                <div class="col-lg-3 col-md-3 col-sm-3 about-info">
+                    <!-- widgets column left -->
+                    <ul class="list-unstyled clear-margins">
+                        <!-- widgets -->
+                        <li class="widget-container widget_nav_menu">
+                            <!-- widgets list -->
+                            <h4 class="title-widget">CHĂM SÓC KHÁCH HÀNG</h4>
+                            <ul>
+                                <li><a  href="#">Trung tâm hỗ trợ</a></li>
+                                <li><a  href="#">Thanh toán</a></li>
+                                <li><a  href="#">Hướng dẫn đặt hàng</a></li>
+                                <li><a  href="#">Giao hàng & nhận hàng</a></li>
+                                <li><a  href="#">Hướng dẫn đổi trả hàng</a></li>
+                            </ul>
+                            <hr>
+                            <ul>
+                                <li>HCM (028) 66.808.220</li>
+                                <li>HN (024) 66.808.220</li>
+                                <li>Thứ 2 - thứ 6: 7h - 20h</li>
+                                <li>Thứ 7: 7h - 18h</li>
+                                <li>CN & ngày lễ: 8h - 17h</li>
+                                <li>Hoặc gửi yêu cầu <a href="#">tại đây</a></li>
+                                <li>Thông báo hàng giả (028) 66.808.220</li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-md-4" id="social_links">
-                    <h4 class="small-title">Kết nối chúng tôi qua </h4>
-                    <div>
-                        <a href="{{ config('facebook') }}" target="_blank">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                    </div>
+                <!-- widgets column left end -->
+                <div class="col-lg-5 col-md-5 col-sm-5">
+                    <!-- widgets column left -->
+                    <ul class="list-unstyled clear-margins">
+                        <!-- widgets -->
+                        <li class="widget-container widget_nav_menu">
+                            <!-- widgets list -->
+                            <h4 class="title-widget">ĐĂNG KÝ NHẬN TIN</h4>
+                            <section class="home-newsletter">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="single">
+                                            <p>Đăng ký nhận tin từ Mỹ phẩm và Làm đẹp, cơ hội nhận quyền lợi giảm giá đặc biệt.</p>
+                                            <p>Email: </p>
+                                            <div class="input-group">
+                                                <input type="email" class="form-control" placeholder="Enter your email">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-theme" type="submit">GỬI</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <h4>KẾT NỐI MẠNG XÃ HỘI</h4>
+                            <div id="fb-root"></div>
+                                <script>(function(d, s, id) {
+                                  var js, fjs = d.getElementsByTagName(s)[0];
+                                  if (d.getElementById(id)) return;
+                                  js = d.createElement(s); js.id = id;
+                                  js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.0&appId=225418101341444&autoLogAppEvents=1';
+                                  fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));</script>
+                            <div class="fb-page"
+                              data-href="https://www.facebook.com/chuyentrangphunu/" 
+                              data-width="500"
+                              data-hide-cover="false"
+                              data-show-facepile="true">
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-md-4" id="hotline">
-                    <h4 class="small-title">HOTLINE HỖ TRỢ</h4>
-                    <div class="phone">
-                        {{ 'icon_call.png'|asset() }}
-                        <a href="tel:{{ config('hotline') }}">{{ config('hotline') }}</a>
-                    </div>
+                <!-- widgets column left end -->
+                <div class="col-lg-4 col-md-4 col-sm-4 pay-info">
+                    <!-- widgets column left -->
+                    <ul class="list-unstyled clear-margins">
+                        <!-- widgets -->
+                        <li class="widget-container widget_nav_menu">
+                            <!-- widgets list -->
+                            <h4 class="title-widget">CÁCH THỨC MUA HÀNG - THANH TOÁN</h4>
+                            <ul class="buy-info clearFix">
+                                <li><a href="#">{{ 'icon-faq.png'|asset({}) }}<span>Q&A</span></a></li>
+                                <li><a href="#">{{ 'icon-buy.png'|asset({}) }}<span>MUA HÀNG</span></a></li>
+                                <li><a href="#">{{ 'icon-.png'|asset({}) }}<span>ĐIỂN<br>TÍCH LŨY</span></a></li>
+                            </ul>
+                            <hr class="clearFix">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {{ 'icon-money.png'|asset({}) }}
+                                </div>
+                                <div class="col-md-8">
+                                    <h4 class="name-company">CÔNG TY TNHH TM DV CAO NHẤT</h4>
+                                    <ul>
+                                        <li>* Vietcombank: <b>0501000067878</b></li>
+                                        <li>* Agribank: <b>6130201009002</b></li>
+                                        <li>* Techcombank: <b>11620640615011</b></li>
+                                        <li>* ACB: </li>
+                                        <li>* Đông Á: </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row clearFix hot-line">
+                                <div class="col-md-4">
+                                    {{ 'icon-hotline.jpg'|asset({}) }}<span>Hotline</span>
+                                </div>
+                                <div class="col-md-8 phone-number">
+                                    0909 42 5885
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

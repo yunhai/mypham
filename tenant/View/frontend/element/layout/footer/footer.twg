@@ -1,5 +1,3 @@
 <footer id="footer">
     {% include 'element/layout/footer/top.twg' %}
-    {% include 'element/layout/footer/subcribe.twg' %}
-    {% include 'element/layout/footer/bottom.twg' %}
 </footer>

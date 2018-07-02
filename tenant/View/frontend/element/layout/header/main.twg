@@ -1,6 +1,6 @@
 <header class="hidden-xs">
     <div id="bottom-header" class="bottom-header hidden-xs">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row header-logo">
                 <div class="col-sm-2">
                     <div class="logo logo-pc col-left">
@@ -9,41 +9,41 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-sm-7">
-                    <form action="{{ 'product/search'|url }}" method='post'>
-                        <div class="box-search">
-                            <div class="box-input">
-                                <div class="input-group-search">
-                                    <input type="text" name="keyword" placeholder="Tìm kiếm ..." value='{{ search.keyword|default('') }}'/>
+                <div class="header-right">
+                    <div class="col-md-5 col-sm-5">
+                        <form action="{{ 'product/search'|url }}" method='post'>
+                            <div id="custom-search-input box-search">
+                                <div class="input-group col-md-12 input-group-search">
+                                    <input class="form-control" type="text" name="keyword" placeholder="Tìm kiếm ..." value='{{ search.keyword|default('') }}'/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <button type="submit"><i class="fa fa-search"></i></button>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-3">
-                    {% if login().loggedin() %}
-                    <div class="col-right box-login">
-                        <a href="{{ 'user/me'|url }}" title="Tài khoản">
-                            <div class="div-user-control control-2">
-                            </div>
-                            <div class="info">
-                                <span>Tài khoản</span>
-                            </div>
-                        </a>
+                        </form>
                     </div>
-                    {% endif %}
-                    <div class="col-right box-carts">
-                        <div class="cart-info hidden-xs">
-                            <a class="cart-link" href="{{ 'cart'|url }}" title='Xem giỏ hàng'>
-                                <div class="div-user-control control-4">
-                                    <span class="cart-number">{{ addon.cart_total|default(0) }}</span>
-                                </div>
-                                <div class="info">
-                                    <span>Giỏ hàng</span>
-                                </div>
-                            </a>
-                        </div>
+                    <div class="col-md-5 col-sm-5 hidden-sm">
+                        <ul class="info-list">
+                            <li class="user pull-right">
+                                <a href="#">Đăng ký</a><br>
+                                <a href="#">Đăng nhập</a>
+                            </li>
+                            <li class="delivery pull-right">
+                                <a href="#">
+                                    <p>Giao hàng</p>
+                                    <p>toàn quốc</p>
+                                </a>
+                            </li>
+                            <li class="cart pull-right">
+                                <span class="cart-number">{{ addon.cart_total|default(0) }}</span>
+                                <a href="#">
+                                    <p>Giỏ</p>
+                                    <p>hàng</p>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

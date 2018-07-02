@@ -19,7 +19,7 @@
         {% embed 'element/layout/header/header.twg' %}{% endembed %}
         <div class="container-wrap">
             <div id="content">
-                <main class='container'>
+                <main class='container-fluid'>
                     {% block content %}{% endblock %}
                 </main>
             </div>

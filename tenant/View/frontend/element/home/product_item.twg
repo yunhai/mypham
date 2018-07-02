@@ -1,17 +1,15 @@
-<div class="box col-md-3 col-sm-3 col-xs-6 {{ class }}">
+<div class="box col-md-2 col-sm-2 col-xs-6 {{ class }}">
     <a class="product-view" href="{{ target|link('product') }}" title="{{ target.title }}">
-        {{ target|media({'class': 'img-responsive', 'height': '178px'}) }}
-        <a class='add-to-cart' href='{{ ('cart/add/' ~ target.id)|url }}'>
-            Đặt mua
-        </a>
-        <p class="product-price-box">
-            {% if target.discount %}
-                <span class="curr-price">{{ target.promote|price }}</span>
-                <span class="old-price hidden-sm hidden-xs">{{ target.price|price }}</span>
-            {% else %}
-                <span class="curr-price">{{ target.price|price }}</span>
-            {% endif %}
-        </p>
-        <span class="product-name">{{ target.title }}</span>
-    </a>
+        {{ target|media({'class': 'img-responsive', 'height': '178px'}) }}</a>
+    <p class="product-price-box">
+        {% if target.discount %}
+            <span class="curr-price">{{ target.promote|price }}</span>
+            <span class="old-price hidden-sm hidden-xs">{{ target.price|price }}</span>
+        {% else %}
+            <span class="curr-price">{{ target.price|price }}</span>
+        {% endif %}
+    </p>
+    <span class="product-manufacturer">NXY</span>
+    <span class="product-name">{{ target.title }}</span>
+    <span class="product-name">Total Control Drop Foundation</span>
 </div>

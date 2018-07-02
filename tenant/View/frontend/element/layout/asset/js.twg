@@ -24,4 +24,4 @@
 
 {{ html.js(js, 'js/library') }}
 {{ html.js(['category', 'app']) }}
-{{ html.js(['product', 'order']) }}
+{{ html.js(['product', 'order', 'star-rating']) }}

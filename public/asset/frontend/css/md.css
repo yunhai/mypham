@@ -1,12 +1,15 @@
 @media (min-width: 992px) {
     #hot-product-slide {
         display: block;
-        height: 403px !important;
+        height: 390px !important;
         overflow: hidden;
     }
     .home--top_panel {
-        height: 403px;
+        height: 390px;
         overflow: hidden;
+    }
+    .home--top_panel img {
+        width: 100%;
     }
     .home--top_panel--slider {
         padding-right: 0;
@@ -37,5 +40,10 @@
         border-top: 0;
         margin-top: 0;
         padding-top: 0;
+    }
+}
+@media (min-width: 768px) {
+    .home--top_panel--slider, .home--top_panel--promotion {
+        padding: 0;
     }
 }

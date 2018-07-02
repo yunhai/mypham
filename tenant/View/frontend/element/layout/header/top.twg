@@ -23,50 +23,13 @@
 %}
 
 <div id="top-header" class="hidden-xs">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="top-header  col-sm-6 paddr0 fix-header">
                 <div class="top-info-phone col-left">
-                    <i class="fa fa-phone-square fa-lg"></i>
-                    {{ config('hotline') }}
+                    {{ 'icon-24h.png'|asset({}) }}
+                    <span>{{ config('hotline') }}</span>
                 </div>
-            </div>
-
-            <div class="top-header float-right col-sm-6 fix-header">
-                <ul class="info-top">
-                    <li class="policy-link">
-                        <a href="javascript:;" title="Chăm sóc khách hàng">
-                            <span>Chăm sóc khách hàng</span><i class="i-view-more"></i>
-                        </a>
-                        <div class="policy-info">
-                            {% for item in top_menu %}
-                            <span>
-                                <a href="{{ item.url }}" title="{{ item.title }}">
-                                    {{ item.title }}
-                                </a>
-                            </span>
-                            {% endfor %}
-                        </div>
-                    </li>
-                    <li>
-                        <a href="{{ 'contact'|url }}" title="Liên hệ">
-                            <span>Liên hệ</span>
-                        </a>
-                    </li>
-                    {% if login().loggedin() %}
-                    <li>
-                        <a href="{{ 'user/logout'|url }}" title="Logout">
-                            <span>Logout</span>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <a href="{{ 'user/login'|url }}" title="Đăng nhập">
-                            <span>Đăng nhập</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
             </div>
         </div>
     </div>
