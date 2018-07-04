@@ -3,16 +3,20 @@
 <div class="row product-detail">
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-12">
                 {% if target.gallery %}
                 {% embed 'element/product/detail_slider.twg' with {'items': target.gallery} %}{% endembed %}
                 {% else %}
-                <div>
-                    {{ target|media({'class': '' }) }}
+                <div class="detail-img">
+                    {{ target|media({'class': 'detail-img' }) }}
                 </div>
                 {% endif %}
+                <div class="btn-social">
+                    <div class="fb-save pull-right" data-uri="https://www.facebook.com/chuyentrangphunu/" data-size="small"></div>
+                    <div class="fb-like pull-right" data-href="https://www.facebook.com/chuyentrangphunu/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+                </div>
             </div>
-            <div class="details col-md-6">
+            <div class="details col-md-6 col-xs-12">
                 <h4>L.A.Girl</h4>
                 <h3 class="product-title">Son Lì Dưỡng Môi Lâu Trôi 808</h3>
                 <h4>Matte Flat Velvet Lipstick 808</h4>
@@ -126,31 +130,45 @@
                 <div class="quality">
                     Số lượng: <input type="number" value=''>
                 </div>
+                <div class="group-cart">
+                    <a href="#" class="btn"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
+                    <a href="#" class="btn"> <i class="fa fa-check"></i>MUA NGAY</a>
+                </div>
+                <div class="giff">
+                    <h5>Quà tặng cho đơn hàng</h5>
+                    <div class="col-md-2 col-sm-2 col-xs-3 nopadding">
+                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/24145-20171024074439.Jpeg">
+                    </div>
+                    <div class="col-md-10 col-sm-10 col-xs-9">
+                        <p>Professional Eyebrow Brush </p>
+                        <p>CHO ĐƠN HÀNG TỪ 1 TRIỆU</p>
+                        <p>Và có ít nhất 1 sản phẩm GIAO NHANH hoặc HÀNG NHẬP HÀN QUỐC</p>
+                        <p>Khong áp dụng cho các mã giảm giá đặc biệt khác</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row product-description">
-            <div class="col-md-12">
-                <div class="nav-tabs-responsive">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#product-detail" aria-controls="product-detail" role="tab" data-toggle="tab">CHI TIẾT SẢN PHẨM</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#product-rating" aria-controls="product-rating" role="tab" data-toggle="tab">ĐÁNH GIÁ</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#product-faq" aria-controls="product-faq" role="tab" data-toggle="tab">HỎI ĐÁP</a>
-                        </li>
-                    </ul>
+            <div class="nav-tabs-responsive">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#product-detail" aria-controls="product-detail" role="tab" data-toggle="tab">CHI TIẾT SẢN PHẨM</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#product-rating" aria-controls="product-rating" role="tab" data-toggle="tab">ĐÁNH GIÁ</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#product-faq" aria-controls="product-faq" role="tab" data-toggle="tab">HỎI ĐÁP</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="product-detail">
+                    {{ target.content }}
                 </div>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="product-detail">
-                        {{ target.content }}
-                    </div>
-                    {% embed 'element/product/detail_rating.twg' with {'item': target} %}{% endembed %}
-                    {% embed 'element/product/detail_faq.twg' with {'item': target} %}{% endembed %}
-                </div>
+                {% embed 'element/product/detail_rating.twg' with {'item': target} %}{% endembed %}
+                {% embed 'element/product/detail_faq.twg' with {'item': target} %}{% endembed %}
             </div>
         </div>
     </div>

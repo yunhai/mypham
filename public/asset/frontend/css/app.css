@@ -524,7 +524,13 @@ body.toggled {
 .logo-mobile {
     padding-top: 8px;
 }
-
+.product-detail .detail-img {
+    text-align: center;
+}
+.product-detail .detail-img img{
+    height: 400px;
+    max-width: 100%;
+}
 .product-detail .code span {
     color: #c00979;
     font-weight: bold;
@@ -544,6 +550,9 @@ body.toggled {
     font-size: 18px;
     text-align: left;
     margin-top: 20px;
+}
+.btn-social {
+    margin-top: 60px;
 }
 .product-detail .fs-origin-price {
     font-size: 14px;
@@ -576,6 +585,25 @@ body.toggled {
     border: 1px solid #eaeaea;
     margin-top: 20px;
     border-radius: 3px;
+}
+.product-detail .group-cart {
+    margin-top: 20px;
+}
+.product-detail .group-cart a.btn {
+    border-radius: 0;
+    background: #e50f43;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+}
+.product-detail .group-cart a:last-child{
+    background: #0056af;
+    margin-left: 10px;
+}
+.product-detail .group-cart a.btn i {
+    font-size: 20px;
+    font-weight: normal;
+    margin-right: 5px;
 }
 .product-description {
     margin-top: 50px;
@@ -712,8 +740,8 @@ body.toggled {
     font-weight: normal;
 }
 .product-detail .color-info img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 .product-detail .quality input {
     width: 50px;
@@ -722,6 +750,17 @@ body.toggled {
     border: 1px solid #eaeaea;
     margin-top: 20px;
     border-radius: 3px;
+}
+.product-detail .giff {
+    margin-top: 20px;
+}
+.product-detail .giff .col-md-2 img {
+    border: 1px solid #f0f0f0;
+    padding: 1px;
+    width: 100%;
+}
+.product-detail .giff div {
+    color: #623e3e;
 }
 .product-description {
     margin-top: 50px;
@@ -857,12 +896,12 @@ body.toggled {
     margin-right: 0px;
 }
 .intro-seller ul {
-    padding: 0 10px 0 10px;
+    padding: 10px 10px 15px 10px;
 }
 .intro-seller li {
     color: #cc0066;
     font-weight: 700;
-    padding: 0px 0 26px 30px;
+    padding: 0px 0 30px 30px;
 }
 .intro-seller li:nth-child(1) {
     background: url(../img/seller-1.jpg) top left no-repeat;
