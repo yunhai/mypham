@@ -1,6 +1,6 @@
 {% extends "layout/home.twg" %}
 {% block content %}
-<div class='row home--top_panel'>
+<div class='home--top_panel'>
     <div class='col-md-8 col-sm-8 home--top_panel--slider nopadding'>
         {% embed 'element/home/slider.twg' with {item_list: top_banner} %}{% endembed %}
     </div>
@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<div id="manufacturer-slide" class="row carousel slide hidden-sm hidden-xs nopadding" data-ride="carousel">
+<div id="manufacturer-slide" class="carousel slide hidden-sm hidden-xs" data-ride="carousel">
     <div class="carousel-inner">
         {% for item_list in manufacturer %}
         <div class="item {% if loop.index == 1 %} active {% endif %}">

@@ -2700,7 +2700,6 @@ transition: all .3s ease;
 }
 .categories-main-left .categories-content-title {
     display: block;
-    padding: 0 10px;
     color: #fff;
     text-transform: uppercase;
     cursor: pointer;
@@ -2740,8 +2739,11 @@ overflow: hidden;
     border-top:none;
     z-index: 10;
     display: none;
-    height: 404px;
+    height: 419px;
     background: #fff;
+}
+#home-page .categories-main-left .categories-list-box {
+    height: 386px;
 }
 .categories-main-left .categories-list-box.for-home {
     display: block;
@@ -2810,10 +2812,13 @@ overflow: hidden;
     width: 730px;
     background-color: #fff;
     border: 1px solid #c9141b;
-    height: 405px;
+    height: 420px;
     padding: 10px 10px 10px 20px;
     position: relative;
     overflow: scroll;
+}
+#home-page .sub-cate .sub-cate-inner {
+    height: 387px;
 }
 .sub-cate .sub-cate-inner > ul {
     float: left;

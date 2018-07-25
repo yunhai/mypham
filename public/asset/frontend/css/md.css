@@ -1,11 +1,12 @@
 @media (min-width: 992px) {
     #hot-product-slide {
         display: block;
-        height: 390px !important;
+        height: 385px !important;
         overflow: hidden;
     }
     .home--top_panel {
-        height: 390px;
+        height: 385px;
+        width: 100%;
         overflow: hidden;
     }
     .home--top_panel img {
@@ -13,6 +14,10 @@
     }
     .home--top_panel--slider {
         padding-right: 0;
+    }
+    .home--top_panel--slider img {
+        height: 385px !important;
+        width: 100%;
     }
     .home--top_panel--promotion {
         padding-left: 0;
@@ -40,10 +45,5 @@
         border-top: 0;
         margin-top: 0;
         padding-top: 0;
-    }
-}
-@media (min-width: 768px) {
-    .home--top_panel--slider, .home--top_panel--promotion {
-        padding: 0;
     }
 }
