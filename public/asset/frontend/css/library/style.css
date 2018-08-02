@@ -2815,6 +2815,9 @@ overflow: hidden;
     height: 420px;
     padding: 10px 10px 10px 20px;
     position: relative;
+    overflow: none;
+}
+.sub-cate .sub-cate-inner:hover {
     overflow: scroll;
 }
 #home-page .sub-cate .sub-cate-inner {
