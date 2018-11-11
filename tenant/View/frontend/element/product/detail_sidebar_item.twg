@@ -1,0 +1,25 @@
+<li class="product_item clearFix">
+<div class="product_image">
+    <a href="{{ item|link('product') }}" title="{{ item.title }}">
+        {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
+    </a>
+</div>
+<div class="product_values">
+    <p class="product-price-box">
+        <span class="curr-price">{{ item.final_price|price }}</span>
+        {% if item.discount %}
+        <p class="fs-origin-price">
+            {{ item.price|price }}
+        </p>
+        {% endif %}
+    </p>
+    <a class='product--manufacturer product-detail__sidebar--manufacturer' href="{{ (item.manufacturer)|link('manufacturer') }}" title="{{ item.manufacturer.title }}">
+        {{ item.manufacturer.title }}
+    </a>
+    <span class="product-name">
+        <a href="{{ item|link('product') }}" title="{{ item.title }}">
+            {{ item.title }}
+        </a>
+    </span>
+</div>
+</li>

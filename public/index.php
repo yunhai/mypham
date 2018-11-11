@@ -34,6 +34,9 @@ try {
 
     App::invoke();
 } catch (Exception $e) {
+    print_r("<pre>");
+    print_r($e);
+    print_r("</pre>");
     App::log(print_r($e, true), 'error');
 
     try {

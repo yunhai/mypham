@@ -3,7 +3,6 @@
 use Mp\App;
 use Mp\Lib\Utility\Hash;
 use Mp\Lib\Utility\Text;
-use Mp\Lib\Helper\Security;
 use Mp\Core\Controller\Frontend;
 
 class ProductController extends Frontend
@@ -19,7 +18,6 @@ class ProductController extends Frontend
     public function navigator()
     {
         $request = App::mp('request');
-
         switch ($request->query['action']) {
             case 'faq':
                 $this->faq($request->query[2]);
@@ -50,6 +48,9 @@ class ProductController extends Frontend
                 break;
             case 'search':
                 $this->search();
+                break;
+            case 'filter':
+                $this->filter();
                 break;
             default:
                 parent::navigator();
@@ -84,7 +85,7 @@ class ProductController extends Frontend
             $target['gallery'] = array_map(function ($item) {
                 return [
                     'id' => $item,
-                    'file_id' => $item
+                    'file_id' => $item,
                 ];
             }, explode(',', $target['gallery']));
             $this->associate($target['gallery']);
@@ -103,7 +104,7 @@ class ProductController extends Frontend
 
         $breadcrumb = [
             $category,
-            $target
+            $target,
         ];
         $this->set('breadcrumb', $breadcrumb);
 
@@ -125,7 +126,13 @@ class ProductController extends Frontend
             $detail_files = Hash::combine($target['property'], '{s}.detail.{s}.file_id', '{s}.detail.{s}.file_id');
             $this->refer(['file' => $detail_files]);
         }
-
+        $target['star'] = 2;
+        $target['rating_count'] = 22;
+        $target['faq_count'] = 34;
+        // print_r('<pre>');
+        // print_r($target);
+        // print_r('</pre>');
+        // exit;
         $this->sideBar('detail', $target['category_id']);
 
         $this->render('detail', compact('target', 'option', 'manufacturer'));
@@ -150,9 +157,9 @@ class ProductController extends Frontend
         $cats = implode(',', $category_id_list);
 
         $option = [
-            'where' => "{$alias}.category_id IN (" . $cats . ')'
+            'where' => "{$alias}.category_id IN (".$cats.')',
         ];
-        $data = $this->filter($option);
+        $data = $this->makeFilter($option);
 
         if ($this->isAjax()) {
             return $this->loadAjax($data);
@@ -161,7 +168,7 @@ class ProductController extends Frontend
         $category = array_shift($categories);
 
         $breadcrumb = [
-            $category
+            $category,
         ];
         $this->set('breadcrumb', $breadcrumb);
 
@@ -170,7 +177,7 @@ class ProductController extends Frontend
             'category' => $category,
             'category_id' => $category['id'],
             'page' => $data['page'],
-            'current_url' => App::load('url')->current()
+            'current_url' => App::load('url')->current(),
         ];
 
         $this->sideBar('category', $category['id']);
@@ -189,7 +196,7 @@ class ProductController extends Frontend
         return $this->renderJson($data);
     }
 
-    private function filter($option = [])
+    private function makeFilter($option = [])
     {
         $request = App::mp('request');
         $model = $this->model();
@@ -199,12 +206,12 @@ class ProductController extends Frontend
 
         $default = [
             'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
-            'order' => $alias . '.id desc',
+            'order' => $alias.'.id desc',
             'page' => $page,
             'limit' => $option['limit'] ?? 20,
             'paginator' => [
-                'navigator' => false
-            ]
+                'navigator' => false,
+            ],
         ];
 
         $default = array_merge($default, $option);
@@ -250,7 +257,7 @@ class ProductController extends Frontend
 
             $token = '';
             foreach ($tmp as $value) {
-                if (mb_strpos($value, 'token:') === 0) {
+                if (0 === mb_strpos($value, 'token:')) {
                     $token = str_replace('token:', '', $value);
                     break;
                 }
@@ -284,8 +291,8 @@ class ProductController extends Frontend
             $match = "keyword LIKE '%{$keyword}%'";
             $option = [
                 'select' => 'id, target_id',
-                'where' => $match . ' AND target_model = "' . $alias . '"',
-                'limit' => '1000'
+                'where' => $match.' AND target_model = "'.$alias.'"',
+                'limit' => '1000',
             ];
 
             $data = [];
@@ -297,13 +304,13 @@ class ProductController extends Frontend
 
                 $id = implode(',', array_keys($tmp));
                 $option = [
-                    'where' => "{$alias}.status > 0 AND {$alias}.id IN (" . $id . ") AND {$alias}.category_id IN ({$category})",
+                    'where' => "{$alias}.status > 0 AND {$alias}.id IN (".$id.") AND {$alias}.category_id IN ({$category})",
                 ];
-                $data = $this->filter($option);
+                $data = $this->makeFilter($option);
             }
             $search = [
                 'category' => $category,
-                'keyword' => $keyword
+                'keyword' => $keyword,
             ];
 
             $page = $data['page'] ?? 1;
@@ -314,7 +321,7 @@ class ProductController extends Frontend
         }
 
         $breadcrumb = [
-            ['title' => 'Tìm kiếm']
+            ['title' => 'Tìm kiếm'],
         ];
         $this->set('breadcrumb', $breadcrumb);
         $this->set('search', $request->data);
@@ -323,7 +330,93 @@ class ProductController extends Frontend
             'page_title' => "Tìm kiếm [{$keyword}]",
             'search' => $search,
             'page' => $page,
-            'current_url' => App::load('url')->current() . '/token:' . $token
+            'current_url' => App::load('url')->current().'/token:'.$token,
+        ];
+
+        $this->sideBar('search');
+        $this->render('index', compact('data', 'option'));
+    }
+
+    public function filter()
+    {
+        $request = App::mp('request');
+        $param = $request->param;
+
+        $map_list = App::mp('config')->get('product.filter');
+
+        $map_field = [
+            'price' => 'price',
+            'state' => 'string_7',
+            'skin' => 'string_6',
+        ];
+
+        $condition = array_intersect_key($param, $map_field);
+
+        if (!$condition) {
+            exit;
+        }
+
+        $alias = $this->model()->alias();
+
+        $subcondition = [];
+        foreach ($condition as $key => $value) {
+            if ('price' === $key) {
+                $field = "{$alias}.{$map_field[$key]}";
+                $range = $map_list[$key][$value];
+                switch ($value) {
+                    case 'nho-hon-100000':
+                        $string = "{$field} < {$range}";
+                        break;
+                    case 'lon-hon-500000':
+                        $string = "{$field} > {$range}";
+                        break;
+                    default:
+                        list($min, $max) = explode('-', $range);
+                        --$max;
+                        $string = "{$field} BETWEEN ({$min} AND {$max})";
+                        break;
+                }
+            } else {
+                $field = "extension.{$map_field[$key]}";
+                $value = $map_list[$key][$value];
+                $string = "{$field} = {$value}";
+            }
+
+            array_push($subcondition, $string);
+        }
+        $option = [
+            'where' => "{$alias}.status > 0 AND ".implode(' AND ', $subcondition),
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = '.$alias.'.id AND extension.target_model ="'.$alias.'"',
+                ],
+            ],
+        ];
+
+        $search = [
+            'keyword' => 'pandog',
+            'param' => $param,
+        ];
+
+        $page = $data['page'] ?? 1;
+
+        $data = $this->makeFilter($option);
+        if ($this->isAjax()) {
+            return $this->loadAjax($data);
+        }
+
+        $breadcrumb = [
+            ['title' => 'Tìm kiếm'],
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        $option = [
+            'page_title' => 'Tìm kiếm',
+            'search' => $search,
+            'page' => $page,
         ];
 
         $this->sideBar('search');
@@ -340,7 +433,7 @@ class ProductController extends Frontend
         $service = App::category();
         $tmp = $service->extract($category);
 
-        if (empty($tmp) === false) {
+        if (false === empty($tmp)) {
             $category = implode(',', array_keys($tmp));
         }
 
@@ -351,7 +444,7 @@ class ProductController extends Frontend
 
         $others = $this->model()->find(compact('select', 'where', 'limit', 'order'));
 
-        $others = Hash::combine($others, '{n}.' . $alias . '.id', '{n}.' . $alias);
+        $others = Hash::combine($others, '{n}.'.$alias.'.id', '{n}.'.$alias);
         $this->associate($others);
         $this->model()->checkPromotion($others);
 
@@ -370,25 +463,24 @@ class ProductController extends Frontend
                     'table' => 'extension',
                     'alias' => 'extension',
                     'type' => 'INNER',
-                    'condition' => 'extension.target_id = ' . $alias . '.id AND extension.target_model ="' . $alias . '"'
+                    'condition' => 'extension.target_id = '.$alias.'.id AND extension.target_model ="'.$alias.'"',
                 ],
             ],
         ];
-        $data = $this->filter($option);
+        $data = $this->makeFilter($option);
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
 
         $breadcrumb = [
-            ['title' => 'Khuyến mãi']
+            ['title' => 'Khuyến mãi'],
         ];
         $this->set('breadcrumb', $breadcrumb);
 
         $option = [
             'page_title' => 'Khuyến mãi',
-
             'page' => $data['page'],
-            'current_url' => App::load('url')->current()
+            'current_url' => App::load('url')->current(),
         ];
 
         $this->sideBar();
@@ -403,13 +495,13 @@ class ProductController extends Frontend
         $option = [
             'where' => "{$alias}.status = 2",
         ];
-        $data = $this->filter($option);
+        $data = $this->makeFilter($option);
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
 
         $breadcrumb = [
-            ['title' => 'Sản phẩm bán chạy']
+            ['title' => 'Sản phẩm bán chạy'],
         ];
         $this->set('breadcrumb', $breadcrumb);
 
@@ -417,7 +509,7 @@ class ProductController extends Frontend
             'page_title' => 'Sản phẩm bán chạy',
 
             'page' => $data['page'],
-            'current_url' => App::load('url')->current()
+            'current_url' => App::load('url')->current(),
         ];
 
         $this->sideBar('best_selling');
@@ -427,32 +519,52 @@ class ProductController extends Frontend
     private function sideBar($current = '', $category_id = 0)
     {
         $service = App::load('product', 'service');
-
-        if ($current == 'best_selling') {
+        
+        if ('best_selling' == $current) {
             $sidebar_product = $service->promote(4);
-            $sidebar_product_block = 'Sản phẩm khuyến mãi';
+            $sidebar_product_block_name = 'Sản phẩm khuyến mãi';
         } else {
             $sidebar_product = $service->bestSelling(4);
-            $sidebar_product_block = 'Sản phẩm bán chạy';
+            $sidebar_product_block_name = 'Sản phẩm bán chạy';
         }
 
         if (!$sidebar_product) {
             $sidebar_product = $service->lastest(4);
-            $sidebar_product_block = 'Sản phẩm mới nhất';
+            $sidebar_product_block_name = 'Sản phẩm mới nhất';
         }
-
+        
+        $manumanufacturer_id_list = Hash::combine($sidebar_product, '{n}.manufacturer_id', '{n}.manufacturer_id');
+        $manumanufacturers = $this->getManufacturerList($manumanufacturer_id_list);
+        $this->associate($manumanufacturers);
+        foreach ($sidebar_product as &$item) {
+            $item['manufacturer'] = $manumanufacturers[$item['manufacturer_id']];
+        }
+        
         if (!$category_id) {
             $category_id = $this->model()->category();
             $category_id = array_shift($category_id);
         }
-
+    
         $sidebar = [
             'product' => $sidebar_product,
-            'product_block' => $sidebar_product_block,
-            'category_id' => $category_id
+            'sidebar_product_block_name' => $sidebar_product_block_name,
+            'category_id' => $category_id,
         ];
 
         $this->set('sidebar', $sidebar);
+    }
+    
+    private function getManufacturerList(array $id_list = [])
+    {
+        $manufacturer_id = implode(',', $id_list);
+        $model = App::load('manufacturer', 'model');
+        $model->category(App::category()->flat('manufacturer'));
+
+        $select = 'manufacturer.id, manufacturer.title, manufacturer.seo_id';
+        $where = "manufacturer.id IN ({$manufacturer_id}) AND manufacturer.status > 0";
+
+        $manufacturer = $model->find(compact('select', 'where'), 'all');
+        return Hash::combine($manufacturer, '{n}.manufacturer.id', '{n}.manufacturer');
     }
 
     public function manufacturer($manufacturer_id = '')
@@ -464,23 +576,23 @@ class ProductController extends Frontend
         $manufacturer_id = array_pop($manufacturer_id);
 
         $option = [
-            'where' => "{$alias}.status > 0 AND extension.string_3 = " . $manufacturer_id,
+            'where' => "{$alias}.status > 0 AND extension.string_3 = ".$manufacturer_id,
             'join' => [
                 [
                     'table' => 'extension',
                     'alias' => 'extension',
                     'type' => 'INNER',
-                    'condition' => 'extension.target_id = ' . $alias . '.id AND extension.target_model ="' . $alias . '"'
+                    'condition' => 'extension.target_id = '.$alias.'.id AND extension.target_model ="'.$alias.'"',
                 ],
             ],
         ];
-        $data = $this->filter($option);
+        $data = $this->makeFilter($option);
 
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
 
-        $data = $this->filter($option);
+        $data = $this->makeFilter($option);
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
@@ -489,17 +601,17 @@ class ProductController extends Frontend
         $manufacturer = $service->getById($manufacturer_id);
         $manufacturer = current($manufacturer);
 
-        $manufacturer = 'Nhãn hàng ' . ($manufacturer['title'] ?? '');
+        $manufacturer = 'Nhãn hàng '.($manufacturer['title'] ?? '');
 
         $breadcrumb = [
-            ['title' => $manufacturer]
+            ['title' => $manufacturer],
         ];
         $this->set('breadcrumb', $breadcrumb);
 
         $option = [
             'page_title' => $manufacturer,
             'page' => $data['page'],
-            'current_url' => App::load('url')->current()
+            'current_url' => App::load('url')->current(),
         ];
 
         $this->sideBar();
@@ -518,7 +630,7 @@ class ProductController extends Frontend
             'select' => 'id, created',
             'where' => 'string_5 = 1',
             'order' => 'id desc',
-            'limit' => 50
+            'limit' => 50,
         ];
 
         $list = App::load('extension', 'service')->get($id, $model, $option);
@@ -560,7 +672,7 @@ class ProductController extends Frontend
             'question' => $request->data['question'],
             'status' => 0,
             'target_id' => $request->data['target'],
-            'target_model' => 'product-faq'
+            'target_model' => 'product-faq',
         ];
 
         $service = App::load('extension', 'service', ['productFaq', 'extension', 'faq']);
@@ -582,7 +694,7 @@ class ProductController extends Frontend
             'select' => 'id, created',
             'where' => 'string_4 = 0 AND string_5 = 1',
             'order' => 'id desc',
-            'limit' => 200
+            'limit' => 200,
         ];
 
         $list = App::load('extension', 'service')->get($id, $model, $option);

@@ -147,7 +147,7 @@ class ProductService extends Product
             'select' => 'id, title, price, file_id, seo_id',
             'where' => 'status = 2',
             'order' => 'id desc',
-            'limit' => $limit
+            'limit' => $limit,
         ];
 
         $alias = $this->model()->alias();

@@ -1,0 +1,70 @@
+<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+    <div class="intro-seller">
+        <h4>NHÀ BÁN HÀNG UY TÍN</h4>
+        <ul>
+            <li>
+                MỸ PHẨM 100% CHÍNH HÃNG
+                <p>Chất lượng sản phẩm luôn được quan tâm hàng đầu của chúng tôi</p>
+            </li>
+            <li>
+                LUÔN ĐƯỢC TÍCH ĐIỂM
+                <p>Đơn hàng 100k-1 điểm 10 điểm nhận voucher 100K</p>
+            </li>
+            <li>
+                MIỄN PHÍ GIAO HÀNG
+                <p>Đơn hàng trên 100k nội thành HCM</p>
+            </li>
+            <li>
+                TRI ÂN KHÁCH HÀNG
+                <p>Với các chương trình khuyến mãi, các sự kiện & quà tặng đặc biệt vô cùng hấp dẫn</p>
+            </li>
+        </ul>
+    </div>
+    <div class="product-other">
+        <h4>SẢN PHẨM CÙNG THƯƠNG HIỆU</h4>
+        <ul>
+            {% for i in 1..5 %}
+            <li class="product_item clearFix">
+                <div class="product_image">
+                    <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
+                </div>
+                <div class="product_values">
+                    <p class="product-price-box">
+                        <span class="curr-price">269,000đ</span>
+                    <p class="fs-origin-price">1,900,000đ</p>
+                    </p>
+                    <span class="product-manufacturer">NA. GIRLS</span>
+                    <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
+                    <span class="product-name">EyesShadows</span>
+                </div>
+            </li>
+            {% endfor %}
+            <li class="view-more">Xem thêm ></li>
+        </ul>
+        <div class="clearFix"></div>
+    </div>
+    <div class="product-other">
+        <h4>SẢN PHẨM BÁN CHẠY</h4>
+        <ul>
+            {% for i, item in sidebar.product %}
+                {% embed 'element/product/detail_sidebar_item.twg' with {'item': item} %}{% endembed %}
+            {% endfor %}
+            <li class="product_item clearFix">
+                <div class="product_image">
+                    <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
+                </div>
+                <div class="product_values">
+                    <p class="product-price-box">
+                        <span class="curr-price">269,000đ</span>
+                    <p class="fs-origin-price">1,900,000đ</p>
+                    </p>
+                    <span class="product-manufacturer">NA. GIRLS</span>
+                    <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
+                    <span class="product-name">EyesShadows</span>
+                </div>
+            </li>
+            <li class="view-more">Xem thêm ></li>
+        </ul>
+        <div class="clearFix"></div>
+    </div>
+</div>

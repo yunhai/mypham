@@ -17,123 +17,68 @@
                 </div>
             </div>
             <div class="details col-md-6 col-xs-12">
-                <h4>L.A.Girl</h4>
-                <h3 class="product-title">Son Lì Dưỡng Môi Lâu Trôi 808</h3>
-                <h4>Matte Flat Velvet Lipstick 808</h4>
+                <h3 class="product-title">{{ target.title }}</h3>
+                <a class='product--manufacturer' href="{{ (target.manufacturer_target)|link('manufacturer') }}" title="{{ target.manufacturer_target.title }}">
+                    <h4>{{ target.manufacturer_target.title }}</h4>
+                </a>
                 <div class="rating clearFix">
-                    <div class="code">Mã SP: <span>SM01030504</span></div>
+                    <div class="code">Mã SP: <span>{{ target.code }}</span></div>
                     <div class="stars">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        {% for i in 1..5 %}
+                        <span class="fa fa-star {% if i <= target.star %}product-detail--rate-checked{% endif %}"></span>
+                        {% endfor %}
                     </div>
                     <div>
-                        <span class="review-no"> 8 đánh giá</span>
-                        <span class="review-no"> | 36 Hỏi đáp</span>
+                        <span class="review-no"> {{ target.rating_count }} đánh giá</span>
+                        <span class="review-no"> | {{ target.faq_count }} Hỏi đáp</span>
                     </div>
                 </div>
                 <div class="price">
                     <div class="fs-card-origin-price">
-                        <span>1,300,000đ</span>
-                        <span class="fs-origin-price">1,900,000đ</span>
-                        <span class="fs-discount">-32%</span>
+                        <span>{{ target.final_price|price }}</span>
+                        {% if target.discount %}
+                            <span class='fs-origin-price'>{{ target.price|price }}</span>
+                            <span class='fs-discount'>{{ target.discount }}%</span>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="color-info">
-                    <div class="row">
-                        <label class="col-sm-2 control-label">Màu sắc</label>
-                        <div class="col-sm-10">
-                            <div id="property-detail-item1" class="j-propertyDetailContainer">
+                <form action='{{ ("cart/add/#{target.id}")|url }}' method='post' id='product-detail--form' 
+                    class='form-horizontal product-detail--form'>
+                    <div class="form-group">
+                        <label class='col-md-3 control-label'>
+                            Tùy chọn {{target.display_mode}}
+                        </label>
+                        <div class="col-md-9">
+                            <div id="property-detail-item1">
+                                {% if target.display_mode == 2 %}
+                                    {% for level1_id, level1 in target.property %}
+                                    <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %}" data-id="{{level1_id}}">
+                                        <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput">
+                                        {{ level1.title }}
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                {% for i in 1..10 %}
                                 <div class="property-item_detail j-propertyDetail" data-id="a1">
                                     <input id="j-propertyDetailInputa1" type="hidden" value="a1" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
+                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="product-detail-img">
                                 </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a2">
-                                    <input id="j-propertyDetailInputa2" type="hidden" value="a2" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a3">
-                                    <input id="j-propertyDetailInputa3" type="hidden" value="a3" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a4">
-                                    <input id="j-propertyDetailInputa4" type="hidden" value="a4" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a5">
-                                    <input id="j-propertyDetailInputa5" type="hidden" value="a5" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a6">
-                                    <input id="j-propertyDetailInputa6" type="hidden" value="a6" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a7">
-                                    <input id="j-propertyDetailInputa7" type="hidden" value="a7" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a1">
-                                    <input id="j-propertyDetailInputa1" type="hidden" value="a1" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a2">
-                                    <input id="j-propertyDetailInputa2" type="hidden" value="a2" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a3">
-                                    <input id="j-propertyDetailInputa3" type="hidden" value="a3" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a4">
-                                    <input id="j-propertyDetailInputa4" type="hidden" value="a4" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a5">
-                                    <input id="j-propertyDetailInputa5" type="hidden" value="a5" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a6">
-                                    <input id="j-propertyDetailInputa6" type="hidden" value="a6" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a7">
-                                    <input id="j-propertyDetailInputa7" type="hidden" value="a7" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a1">
-                                    <input id="j-propertyDetailInputa1" type="hidden" value="a1" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a2">
-                                    <input id="j-propertyDetailInputa2" type="hidden" value="a2" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a3">
-                                    <input id="j-propertyDetailInputa3" type="hidden" value="a3" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a4">
-                                    <input id="j-propertyDetailInputa4" type="hidden" value="a4" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
-                                <div class="property-item_detail j-propertyDetail" data-id="a5">
-                                    <input id="j-propertyDetailInputa5" type="hidden" value="a5" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="">
-                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
-                </div>
-                <div class="quality">
-                    Số lượng: <input type="number" value=''>
-                </div>
-                <div class="group-cart">
-                    <a href="#" class="btn"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
-                    <a href="#" class="btn"> <i class="fa fa-check"></i>MUA NGAY</a>
-                </div>
+                    <div class="form-group">
+                        <label for="amount" class='col-md-3 control-label'>Số lượng</label>
+                        <div class="col-md-9">
+                            <input id='amount' type="number" name="amount" required value='1' class='form-control'/>
+                        </div>
+                    </div>
+                    <div class="group-cart">
+                        <a href="#" class="btn"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
+                        <a href="#" class="btn"> <i class="fa fa-check"></i>MUA NGAY</a>
+                    </div>
+                </form>
                 <div class="giff">
                     <h5>Quà tặng cho đơn hàng</h5>
                     <div class="col-md-2 col-sm-2 col-xs-3 nopadding">
@@ -172,377 +117,11 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-        <div class="intro-seller">
-            <h4>NHÀ BÁN HÀNG UY TÍN</h4>
-            <ul>
-                <li>
-                    MỸ PHẨM 100% CHÍNH HÃNG
-                    <p>Chất lượng sản phẩm luôn được quan tâm hàng đầu của chúng tôi</p>
-                </li>
-                <li>
-                    LUÔN ĐƯỢC TÍCH ĐIỂM
-                    <p>Đơn hàng 100k-1 điểm 10 điểm nhận voucher 100K</p>
-                </li>
-                <li>
-                    MIỄN PHÍ GIAO HÀNG
-                    <p>Đơn hàng trên 100k nội thành HCM</p>
-                </li>
-                <li>
-                    TRI ÂN KHÁCH HÀNG
-                    <p>Với các chương trình khuyến mãi, các sự kiện & quà tặng đặc biệt vô cùng hấp dẫn</p>
-                </li>
-            </ul>
-        </div>
-        <div class="product-other">
-            <h4>SẢN PHẨM CÙNG THƯƠNG HIỆU</h4>
-            <ul>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="view-more">Xem thêm ></li>
-            </ul>
-            <div class="clearFix"></div>
-        </div>
-        <div class="product-other">
-            <h4>SẢN PHẨM BÁN CHẠY</h4>
-            <ul>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="product_item clearFix">
-                    <div class="product_image">
-                        <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                    </div>
-                    <div class="product_values">
-                        <p class="product-price-box">
-                            <span class="curr-price">269,000đ</span>
-                        <p class="fs-origin-price">1,900,000đ</p>
-                        </p>
-                        <span class="product-manufacturer">NA. GIRLS</span>
-                        <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                        <span class="product-name">EyesShadows</span>
-                    </div>
-                </li>
-                <li class="view-more">Xem thêm ></li>
-            </ul>
-            <div class="clearFix"></div>
-        </div>
-    </div>
+    {% embed 'element/product/detail_sidebar.twg' with {'item': target} %}{% endembed %}
 </div>
-<div class='row suggestion-for-you'>
-    <h4>Gợi ý dành riêng cho bạn</h4>
-    <div class='col-md-12'>
-        <div class="carousel slide media-carousel" id="media">
-            <div class="carousel-inner">
-                <div class="item  active">
-                    <div class="row">
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="row">
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="row">
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                        <div class="box col-md-2 col-sm-2 col-xs-6 box-item-1">
-                            <a class="product-view" href="http://mp.local/duong-toc/hairx-advanced-neoforce-hair-ampli" title="HairX Advanced NeoForce Hair Ampli">
-                            <img src="http://sandbox.myphamvalamdep.net/media/san-pham/28969-20171023072103.jpeg" class="img-responsive" height="230px">
-                            </a>
-                            <p class="product-price-box">
-                                <span class="curr-price">269,000đ</span>
-                            </p>
-                            <span class="product-manufacturer">NXY</span>
-                            <span class="product-name">HairX Advanced NeoForce Hair Ampli</span>
-                            <span class="product-name">Total Control Drop Foundation</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
-        </div>
-    </div>
-</div>
+{% embed 'element/product/detail_suggestion.twg' with {'item': target} %}{% endembed %}
 {% endblock %}
+
 {% set html = load('html', 'helper') %}
 {% block bottom %}
 {{ html.js(['product']) }}

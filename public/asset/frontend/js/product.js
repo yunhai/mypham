@@ -22,6 +22,7 @@ $('#j-addToCart').click(function() {
 $(document).ready(function() {
     get($('#vote-list'));
     get($('#faq-list'));
+    // $(".mCustomScrollbar").mCustomScrollbar({axis:"x"});
 });
 
 function get(target) {
