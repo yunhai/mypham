@@ -70,13 +70,13 @@
                     </div>
                     <div class="form-group">
                         <label for="amount" class='col-md-3 control-label'>Số lượng</label>
-                        <div class="col-md-9">
+                        <div class="col-md-2">
                             <input id='amount' type="number" name="amount" required value='1' class='form-control'/>
                         </div>
                     </div>
                     <div class="group-cart">
-                        <a href="#" class="btn"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
-                        <a href="#" class="btn"> <i class="fa fa-check"></i>MUA NGAY</a>
+                        <a href="#" id='j-addToCart' class="btn btn btn--addToCart"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
+                        <a href="#" id='j-buyNow' class="btn btn--buynow"> <i class="fa fa-check"></i>MUA NGAY</a>
                     </div>
                 </form>
                 <div class="giff">
@@ -88,7 +88,7 @@
                         <p>Professional Eyebrow Brush </p>
                         <p>CHO ĐƠN HÀNG TỪ 1 TRIỆU</p>
                         <p>Và có ít nhất 1 sản phẩm GIAO NHANH hoặc HÀNG NHẬP HÀN QUỐC</p>
-                        <p>Khong áp dụng cho các mã giảm giá đặc biệt khác</p>
+                        <p>Không áp dụng cho các mã giảm giá đặc biệt khác</p>
                     </div>
                 </div>
             </div>

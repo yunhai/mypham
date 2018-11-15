@@ -47,6 +47,7 @@ class ProductService extends Product
         $model = $this->model();
         $alias = $model->alias();
         $categoryService = App::category();
+        $bannerModel = App::load('banner', 'model');
         $root = $categoryService->root('product');
         $option = [
             'where' => 'status > 0',
@@ -91,6 +92,18 @@ class ProductService extends Product
             $query = $default;
             $query['where'] .= ' AND category_id IN (' . implode(',', $id_list) . ')';
             $product_list = $model->find($query);
+            $banner = $bannerModel->find([
+                'select' => 'id, category_id, title, content as url, file_id',
+                'where' => 'status > 0',
+                'order' => 'category_id, idx desc'
+            ]);
+
+            foreach ($product_list as $k => $product) {
+                if (empty($product['product']['id'])) {
+                    unset($product_list[$k]);
+                }
+            }
+            
             if ($product_list) {
                 $product_list = Hash::combine($product_list, '{n}.product.id', '{n}.product');
                 $model->checkPromotion($product_list);
@@ -100,7 +113,8 @@ class ProductService extends Product
                 unset($tmp['children']);
                 $result[$id] = [
                     'category' => $tmp,
-                    'product' => $product_list
+                    'product' => $product_list,
+                    'banner' => $banner
                 ];
             }
         }
