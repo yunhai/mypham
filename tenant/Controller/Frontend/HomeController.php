@@ -29,7 +29,7 @@ class HomeController extends Frontend
 
         $top_banner = $this->banner();
         $home_product = $service->home();
-        
+
         $promote_product = $service->promote(7); // san pham khuyen mai
         $best_selling_product = $service->bestSelling(10); // san pham ban chay
 
@@ -55,7 +55,6 @@ class HomeController extends Frontend
         $banner = $model->find($option);
 
         $banner = Hash::combine($banner, '{n}.banner.id', '{n}.banner');
-
         App::associate($banner);
 
         return $banner;

@@ -84,17 +84,44 @@ class ProductService extends Product
             'limit' => 8
         ];
 
+        $option = [
+            'where' => 'status > 0',
+            'select' => 'id, parent_id, slug'
+        ];
+        $bannerCategoryId = 0;
+        $bannerCategory = $categoryService->tree('banner', $option);
+        foreach($bannerCategory as $id => $item) {
+            if ($item['slug'] === 'san-pham') {
+                $bannerCategoryId = $id;
+                break;
+            }
+        }
+
+        $bannerModel->category($bannerCategory);
         $result = [];
         foreach ($category as $id => $id_list) {
             if (empty($id_list)) {
                 continue;
             }
+            $category_id_string = implode(',', $id_list);
+
             $query = $default;
-            $query['where'] .= ' AND category_id IN (' . implode(',', $id_list) . ')';
+            $query['where'] .= ' AND category_id IN (' . $category_id_string . ')';
             $product_list = $model->find($query);
+
             $banner = $bannerModel->find([
-                'select' => 'id, category_id, title, content as url, file_id',
-                'where' => 'status > 0',
+                'select' => 'banner.id, banner.category_id, banner.title, banner.content as url, banner.file_id',
+                'join' => [
+                    [
+                        'table' => 'extension',
+                        'alias' => 'extension',
+                        'type' => 'INNER',
+                        'condition' => 'extension.target_model = "banner"'
+                    ],
+                ],
+                'where' => 'status > 0 AND category_id = ' . $bannerCategoryId . ' AND extension.string_1 IN (' .
+                                            $category_id_string .
+                                        ')',
                 'order' => 'category_id, idx desc'
             ]);
 
@@ -103,7 +130,7 @@ class ProductService extends Product
                     unset($product_list[$k]);
                 }
             }
-            
+
             if ($product_list) {
                 $product_list = Hash::combine($product_list, '{n}.product.id', '{n}.product');
                 $model->checkPromotion($product_list);
@@ -111,11 +138,15 @@ class ProductService extends Product
 
                 $tmp = $product_category[$id];
                 unset($tmp['children']);
+
+                $banner = Hash::combine($banner, '{n}.banner.id', '{n}.banner');
                 $result[$id] = [
                     'category' => $tmp,
                     'product' => $product_list,
                     'banner' => $banner
                 ];
+
+                App::associate($banner);
             }
         }
 

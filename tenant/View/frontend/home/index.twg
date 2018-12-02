@@ -100,7 +100,7 @@
                                     <div class="carousel-inner">
                                         {% for item in banners %}
                                         <div class="item {% if loop.index == 1 %} active {% endif %}">
-                                            {{ item.banner|media({'class': 'img-responsive', 'alt': item.banner.title}) }}
+                                            {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
                                             <div class="carousel-caption">
                                             </div>
                                         </div>
