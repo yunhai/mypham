@@ -27,36 +27,24 @@ class HomeController extends Frontend
     {
         $service = App::load('product', 'service');
 
-        $top_banner = $this->banner();
+        $banners = $this->banner();
+        $slider_banner = $banners['slider'] ?? [];
+        $header_banner = $banners['header'] ?? [];
+
         $home_product = $service->home();
 
-        $promote_product = $service->promote(7); // san pham khuyen mai
+        // $promote_product = $service->promote(7); // san pham khuyen mai
         $best_selling_product = $service->bestSelling(10); // san pham ban chay
 
-        $this->render('index', compact('top_banner', 'home_product', 'promote_product', 'best_selling_product'));
+        $this->render('index', compact('slider_banner', 'header_banner', 'home_product', 'promote_product', 'best_selling_product'));
     }
 
     private function banner()
     {
-        $model = App::load('banner', 'model');
-        $option = [
-            'select' => 'id, slug',
-            'where' => 'slug = "home-slideshow"'
-        ];
-        $category = App::category()->flat($model->alias(), true, 'slug', '', $option);
+        $service = App::load('banner', 'service');
+        $slider = $service->getByCategorySlug('home-slideshow');
+        $header = $service->getByCategorySlug('home-header');
 
-        $model->category($category);
-
-        $option = [
-            'select' => 'id, category_id, title, content as url, file_id',
-            'where' => 'status > 0',
-            'order' => 'category_id, idx desc'
-        ];
-        $banner = $model->find($option);
-
-        $banner = Hash::combine($banner, '{n}.banner.id', '{n}.banner');
-        App::associate($banner);
-
-        return $banner;
+        return compact('slider', 'header');
     }
 }

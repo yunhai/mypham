@@ -2,12 +2,13 @@
 {% block content %}
 <div class='home--top_panel'>
     <div class='col-md-8 col-sm-8 home--top_panel--slider nopadding'>
-        {% embed 'element/home/slider.twg' with {item_list: top_banner} %}{% endembed %}
+        {% embed 'element/home/slider.twg' with {item_list: slider_banner} %}{% endembed %}
     </div>
     <div class='col-md-4 col-sm-4 home--top_panel--promotion nopadding'>
         <div class="banner-adv">
-            {{ 'banner-adv-1.jpg'|asset({'class': 'img-responsive'}) }}
-            {{ 'banner-adv-2.jpg'|asset({'class': 'img-responsive'}) }}
+            {% for item in header_banner %}
+                {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
+            {% endfor %}
         </div>
     </div>
 </div>

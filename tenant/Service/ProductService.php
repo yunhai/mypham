@@ -91,11 +91,29 @@ class ProductService extends Product
         $bannerCategoryId = 0;
         $bannerCategory = $categoryService->tree('banner', $option);
         foreach($bannerCategory as $id => $item) {
-            if ($item['slug'] === 'san-pham') {
+            if ($item['slug'] === 'home-product') {
                 $bannerCategoryId = $id;
                 break;
             }
         }
+        $bannerModel->category($bannerCategory);
+        $home_banner = $bannerModel->find([
+            'select' => 'banner.id, banner.category_id, banner.title, banner.content as url, banner.file_id, extension.string_1 as sub_category',
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'left',
+                    'condition' => 'extension.target_model = "banner"'
+                ],
+            ],
+            'where' => 'status > 0 AND category_id = ' . $bannerCategoryId,
+            'order' => 'category_id, idx desc'
+        ]);
+
+        $home_banner = Hash::combine($home_banner, '{n}.banner.id', '{n}.banner');
+        App::associate($home_banner);
+        $home_banner = Hash::combine($home_banner, '{n}.id', '{n}', '{n}.sub_category_id');
 
         $bannerModel->category($bannerCategory);
         $result = [];
@@ -108,22 +126,6 @@ class ProductService extends Product
             $query = $default;
             $query['where'] .= ' AND category_id IN (' . $category_id_string . ')';
             $product_list = $model->find($query);
-
-            $banner = $bannerModel->find([
-                'select' => 'banner.id, banner.category_id, banner.title, banner.content as url, banner.file_id',
-                'join' => [
-                    [
-                        'table' => 'extension',
-                        'alias' => 'extension',
-                        'type' => 'INNER',
-                        'condition' => 'extension.target_model = "banner"'
-                    ],
-                ],
-                'where' => 'status > 0 AND category_id = ' . $bannerCategoryId . ' AND extension.string_1 IN (' .
-                                            $category_id_string .
-                                        ')',
-                'order' => 'category_id, idx desc'
-            ]);
 
             foreach ($product_list as $k => $product) {
                 if (empty($product['product']['id'])) {
@@ -139,14 +141,18 @@ class ProductService extends Product
                 $tmp = $product_category[$id];
                 unset($tmp['children']);
 
-                $banner = Hash::combine($banner, '{n}.banner.id', '{n}.banner');
+                $banner = [];
+                foreach($home_banner as $category_id => $item) {
+                    if (in_array($category_id, $id_list)) {
+                        $banner = array_merge($banner, $item);
+                    }
+                }
+
                 $result[$id] = [
                     'category' => $tmp,
                     'product' => $product_list,
                     'banner' => $banner
                 ];
-
-                App::associate($banner);
             }
         }
 
