@@ -178,4 +178,34 @@ class Extension extends Service {
 
         return true;
     }
+
+    public function count($target = 0, $model = [], $option = []) {
+        $default = [
+            'select' => 'count(id) as count',
+        ];
+
+        $option = array_merge($default, $option);
+
+
+        $targetModel = '';
+        foreach($model as $key => $f) {
+            $targetModel .= ",'{$key}'";
+        }
+        $targetModel = trim($targetModel, ',');
+
+        if ($target) {
+            $where = "target_id IN ({$target}) AND target_model IN ({$targetModel})";
+        } else {
+            $where = "target_model IN ({$targetModel})";
+        }
+
+        if (empty($option['where'])) {
+            $option['where'] = $where;
+        } else {
+            $option['where'] = $where . ' AND ' . $option['where'];
+        }
+
+        $m = current($model);
+        return $m->find($option);
+    }
 }

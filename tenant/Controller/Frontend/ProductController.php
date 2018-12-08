@@ -126,17 +126,84 @@ class ProductController extends Frontend
             $detail_files = Hash::combine($target['property'], '{s}.detail.{s}.file_id', '{s}.detail.{s}.file_id');
             $this->refer(['file' => $detail_files]);
         }
-        $target['star'] = 2;
-        $target['rating_count'] = 22;
-        $target['faq_count'] = 34;
-        // print_r('<pre>');
-        // print_r($target);
-        // print_r('</pre>');
-        // exit;
+
+        $target['faq_count'] = $this->countFaq($id);
+        $target = array_merge($target, $this->countRating($id));
+        
+/*
+    [display_mode] => 2
+    [default_mode] => 5c0b0631b94f2
+
+    'display_mode' => [
+        '1' => 'Hình ảnh',
+        '2' => 'Textbox'
+    ], 
+
+    if display_mode == 1: display like PRODUCT-Detail-Mỹ phẩm
+    if display_mode == 1: display like PRODUCT-Detail-THỜI TRANG - dropdown list
+
+    default_mode -> active property child item.
+*/
+
+        print_r('<pre>');
+        print_r($target);
+        print_r('</pre>');
+        exit;
         $this->sideBar('detail', $target['category_id']);
 
         $this->render('detail', compact('target', 'option', 'manufacturer'));
     }
+
+    protected function countFaq($id)
+    {
+        $pf = App::load('productFaq', 'model');
+        $pf->init($pf->field());
+        $model = [
+            'product-faq' => $pf,
+        ];
+
+        $option = [
+            'where' => 'string_4 = 0 AND string_5 = 1',
+            'order' => 'id desc',
+        ];
+
+        $faq = App::load('extension', 'service')->count($id, $model, $option);
+
+        return $faq[0][0]['count'] ?? 0;
+    }
+
+    protected function countRating($id)
+    {
+        $pf = App::load('productRating', 'model');
+        $pf->init($pf->field());
+        $model = [
+            'product-rating' => $pf,
+        ];
+
+        $option = [
+            'select' => 'id',
+            'where' => 'string_5 = 1',
+            'order' => 'id desc',
+            'limit' => 1000,
+        ];
+
+        $rating = App::load('extension', 'service')->get($id, $model, $option);
+
+        $rating_count = 0;
+        $rating_point = 0;
+        if ($rating) {
+            foreach ($rating as $item) {
+                $rating_point += $item['price'] ?? 0;
+                $rating_point += $item['quantity'] ?? 0;
+                $rating_point += $item['shipping'] ?? 0; 
+                $rating_count++;
+            }
+            $rating_point = ceil($rating_point / ($rating_count * 3));
+        }
+       
+        return compact('rating_count', 'rating_point');
+    }
+
 
     public function category($category = 0)
     {
