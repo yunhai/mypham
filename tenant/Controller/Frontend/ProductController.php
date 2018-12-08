@@ -2,6 +2,7 @@
 
 use Mp\App;
 use Mp\Lib\Utility\Hash;
+use Mp\Lib\Session;
 use Mp\Lib\Utility\Text;
 use Mp\Core\Controller\Frontend;
 
@@ -76,6 +77,10 @@ class ProductController extends Frontend
             abort('NotFoundException');
         }
 
+        $product_history = Session::read('product_history');
+        $product_history[$id] = $id;
+        Session::write('product_history', $product_history);
+
         $target = $target[$alias];
 
         $this->model->checkPromotion($target, false);
@@ -129,7 +134,11 @@ class ProductController extends Frontend
 
         $target['faq_count'] = $this->countFaq($id);
         $target = array_merge($target, $this->countRating($id));
-        
+
+        $target['start'] = $target['rating_point'];
+        $target['comment'] = $target['faq_count'];
+
+
 /*
     [display_mode] => 2
     [default_mode] => 5c0b0631b94f2
@@ -144,14 +153,10 @@ class ProductController extends Frontend
 
     default_mode -> active property child item.
 */
+        $this->detailSideBar($target);
+        $last_view_product = $this->getByIdList($product_history);
 
-        print_r('<pre>');
-        print_r($target);
-        print_r('</pre>');
-        exit;
-        $this->sideBar('detail', $target['category_id']);
-
-        $this->render('detail', compact('target', 'option', 'manufacturer'));
+        $this->render('detail', compact('target', 'option', 'manufacturer', 'last_view_product'));
     }
 
     protected function countFaq($id)
@@ -204,6 +209,79 @@ class ProductController extends Frontend
         return compact('rating_count', 'rating_point');
     }
 
+    private function detailSideBar($target)
+    {
+        $service = App::load('product', 'service');
+        $manufacturer_id = $target['manufacturer_id'];
+
+        $promotion_list = $service->promote(4);
+        $best_selling_list = $service->bestSelling(4);
+        $same_manufacturer_list = $this->byManufacturer($manufacturer_id);
+
+        $this->set('sidebar', compact('same_manufacturer_list', 'promotion_list', 'best_selling_list'));
+    }
+
+    private function byManufacturer(int $manufacturer_id, $limit = 8)
+    {
+        $alias = $this->model()->alias();
+
+        $query = [
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
+            'where' => 'extension.string_3 = ' . $manufacturer_id,
+            'order' => 'extension.string_3 desc',
+            'limit' => $limit,
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = ' . $alias . '.id  AND extension.target_model = "' . $alias . '"'
+                ],
+            ]
+        ];
+
+        $result = [];
+        $result = $this->model()->find($query);
+
+        $result = Hash::combine($result, '{n}.product.id', '{n}.product');
+
+        $this->model()->checkPromotion($result);
+        $this->associate($result);
+
+        return $result;
+    }
+
+    private function getByIdList($id_list) {
+        if (empty($id_list)) {
+            return [];
+        }
+
+        $alias = $this->model()->alias();
+
+        $query = [
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
+            'where' => "{$alias}.id IN (" . implode(',', $id_list) . ')',
+            'order' => 'extension.string_4 desc',
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = ' . $alias . '.id  AND extension.target_model = "' . $alias . '"'
+                ],
+            ]
+        ];
+
+        $result = [];
+        $result = $this->model()->find($query);
+
+        $result = Hash::combine($result, '{n}.product.id', '{n}.product');
+        $this->model()->checkPromotion($result);
+        $this->associate($result);
+
+        return $result;
+    }
+//////////////////
 
     public function category($category = 0)
     {
