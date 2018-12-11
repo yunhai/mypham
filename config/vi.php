@@ -136,7 +136,7 @@
                 ],
                 'state' => [
                     'dang-long' => 1,
-                    'daang-kem' => 2,
+                    'dang-kem' => 2,
                     'dang-cay' => 3,
                     'dang-gel' => 4,
                     'dang-lotion' => 5,

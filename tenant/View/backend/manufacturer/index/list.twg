@@ -11,6 +11,7 @@
                     <th class='col-sm-1'></th>
                     <th>{{ __('1002', 'Tiêu đề', alias) }}</th>
                     <th class='col-sm-2'>{{ __('1002', 'Nước sản xuất', alias) }}</th>
+                    <th class='col-sm-2'>{{ __('1003', 'Danh mục', alias) }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,9 @@
                         </a>
                     </td>
                     <td>{{ item.origin }}</td>
+                    <td>
+                        {{ attribute(data.category, item.category_id) }}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

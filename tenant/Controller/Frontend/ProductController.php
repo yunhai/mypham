@@ -281,7 +281,40 @@ class ProductController extends Frontend
 
         return $result;
     }
-//////////////////
+
+    private function generateFilterBar($category = 0) {
+        $filter = App::mp('config')->get('product.filter');
+        
+
+        $model = App::load('manufacturer', 'model');
+        $model->category(App::category()->flat('manufacturer'));
+
+        $fashion_category = $this->getFashionCategoryId();
+        
+        $tmp = NON_FASHION_BRANCH;
+        if (in_array($category, $fashion_category)) {
+            $tmp = FASHION_BRANCH;
+            unset($filter['skin']);
+            unset($filter['state']);
+        }
+
+        $select = 'manufacturer.id, manufacturer.title, manufacturer.category_id';
+        $where = 'manufacturer.status > 0 AND category_id = ' . $tmp;
+        $manufacturer = $model->find(compact('select', 'where'));
+        $manufacturer = Hash::combine($manufacturer, '{n}.manufacturer.id', '{n}.manufacturer.title', '{n}.manufacturer.category_id');
+
+        $filter['manufacturer'] = $manufacturer ? current($manufacturer) : [];
+
+        return $filter;
+    }
+
+    private function getFashionCategoryId() {
+        $option = [
+            'select' => 'id, title',
+        ];
+        $categories = App::category()->extract(PRODUCT_CATEGORY_FASHION, false, 'title', '', $option);
+        return Hash::combine($categories, '{n}.category.id', '{n}.category.id');
+    }
 
     public function category($category = 0)
     {
@@ -295,6 +328,8 @@ class ProductController extends Frontend
         if (empty($categories)) {
             abort('NotFoundException');
         }
+
+        $filter = $this->generateFilterBar($category);
 
         $categories = Hash::combine($categories, '{n}.category.id', '{n}.category');
 
@@ -325,9 +360,9 @@ class ProductController extends Frontend
             'current_url' => App::load('url')->current(),
         ];
 
-        $this->sideBar('category', $category['id']);
         $this->render('index', compact('data', 'option'));
     }
+//////////////////
 
     private function loadAjax($data = [])
     {
@@ -434,6 +469,7 @@ class ProductController extends Frontend
             $keywordArray = explode(' ', $keyword);
 
             $match = "keyword LIKE '%{$keyword}%'";
+            $match  = 1;
             $option = [
                 'select' => 'id, target_id',
                 'where' => $match.' AND target_model = "'.$alias.'"',
