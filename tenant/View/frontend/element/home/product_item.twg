@@ -9,7 +9,7 @@
             <span class="curr-price">{{ target.price|price }}</span>
         {% endif %}
     </p>
-    <span class="product-manufacturer">NXY</span>
+    <span class="product-manufacturer">{{ manufacturer[target.manufacturer_id] }}</span>
     <span class="product-name">{{ target.title }}</span>
     <span class="product-name">Total Control Drop Foundation</span>
 </div>

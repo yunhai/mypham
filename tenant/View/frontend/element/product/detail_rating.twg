@@ -98,7 +98,7 @@
         <div class="col-sm-12">
             <div class="review-block">
                 <div class="row">
-                    <h5>0 bình luận cho sản phẩm này</h5>
+                    <h5>{{ target.faq_count }} bình luận cho sản phẩm này</h5>
                 </div>
                 <div class="row">
                     <div class="col-sm-2">

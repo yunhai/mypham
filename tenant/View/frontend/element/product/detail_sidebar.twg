@@ -23,7 +23,7 @@
     <div class="product-other">
         <h4>SẢN PHẨM CÙNG THƯƠNG HIỆU</h4>
         <ul>
-            {% for i in 1..5 %}
+            {% for product in filter['manufacturer'] %}
             <li class="product_item clearFix">
                 <div class="product_image">
                     <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>

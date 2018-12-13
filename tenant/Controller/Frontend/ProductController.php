@@ -62,7 +62,7 @@ class ProductController extends Frontend
     public function index()
     {
         $category = $this->model()->category();
-        $category_id = current(array_keys($category));
+        $category_id = current(array_keys($category)); 
         $this->category($category_id);
     }
 
@@ -106,7 +106,7 @@ class ProductController extends Frontend
         $option['category'] = Hash::combine($category, '{n}.id', '{n}.title');
 
         $category = $category[$target['category_id']];
-
+        $filter = $this->generateFilterBar($category);
         $breadcrumb = [
             $category,
             $target,
@@ -155,8 +155,9 @@ class ProductController extends Frontend
 */
         $this->detailSideBar($target);
         $last_view_product = $this->getByIdList($product_history);
-
-        $this->render('detail', compact('target', 'option', 'manufacturer', 'last_view_product'));
+// echo '<pre>';
+// var_dump($last_view_product);exit;
+        $this->render('detail', compact('target', 'option', 'manufacturer', 'last_view_product', 'filter'));
     }
 
     protected function countFaq($id)
@@ -252,6 +253,8 @@ class ProductController extends Frontend
     }
 
     private function getByIdList($id_list) {
+        $id_list = array_filter($id_list);
+
         if (empty($id_list)) {
             return [];
         }
@@ -360,7 +363,19 @@ class ProductController extends Frontend
             'current_url' => App::load('url')->current(),
         ];
 
-        $this->render('index', compact('data', 'option'));
+        $model = App::load('manufacturer', 'model');
+        $model->category(App::category()->flat('manufacturer'));
+
+        $select = 'manufacturer.id, manufacturer.title, manufacturer.category_id';
+        $where = 'manufacturer.status > 0';
+
+        $manufacturer = $model->find(compact('select', 'where'));
+        $manufacturer = Hash::combine($manufacturer, '{n}.manufacturer.id', '{n}.manufacturer.title', '{n}.manufacturer.category_id');
+
+        $product_history = Session::read('product_history');
+        $last_view_product = $this->getByIdList($product_history);
+
+        $this->render('index', compact('data', 'option', 'filter', 'manufacturer', 'last_view_product'));
     }
 //////////////////
 

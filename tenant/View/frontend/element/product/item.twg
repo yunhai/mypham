@@ -23,7 +23,7 @@
                     </div>
 
                     <a href="{{ item|link('product') }}" title="{{ item.title }}">
-                        <p class="product-manufacturer">NXY</p>
+                        <p class="product-manufacturer">{{ manufacturer[item.manufacturer_id] }}</p>
                         {{ item.title }}
                         <p class="product-name">Total Control Drop Foundation</p>
                     </a>
