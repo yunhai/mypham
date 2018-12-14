@@ -1,31 +1,8 @@
 {% extends "layout/default.twg" %}
 {% block content %}
 <div class="row">
-    <div class="col-md-9 col-sm-12 col-xs-12 home--top_panel--slider">
-        <div id="hot-product-slide" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <a class="item active" href="http://www.myphamvalamdep.net/cham-soc-ca-nhan/giordani-gold-man-anti-perspirant-roll-on-deodorant" title="GIORDANI GOLD MAN ANTI-PERSPIRANT ROLL-ON DEODORANT">
-                <img src="http://mp.local:8082/media/banner/slider-item-2-image-20171029230233.jpg" class="home--slider--item img-responsive" alt="GIORDANI GOLD MAN ANTI-PERSPIRANT ROLL-ON DEODORANT">
-                </a>
-                <a class="item" href="http://mp.local/" title="Bảo vệ da trước tác nhân gây lão hoá">
-                <img src="http://mp.local:8082/media/banner/a3-novage-ecollagen-light-set-20171002024418.jpg" class="home--slider--item img-responsive" alt="Bảo vệ da trước tác nhân gây lão hoá">
-                </a>
-                <a class="item" href="http://www.myphamvalamdep.net/oriflame/love-potion-secrets-eau-de-parfum" title="Love Potion Secrets Eau de Parfum">
-                <img src="http://mp.local:8082/media/banner/slider-item-1-image-20171029230138.jpg" class="home--slider--item img-responsive" alt="Love Potion Secrets Eau de Parfum">
-                </a>
-                <a class="item" href="http://mp.local/" title="NovAge Bright Sublime Set">
-                <img src="http://mp.local:8082/media/banner/a3-novage-bright-sublime-asia-20170927093417.jpg" class="home--slider--item img-responsive" alt="NovAge Bright Sublime Set">
-                </a>
-            </div>
-            <a class="left carousel-control" href="#hot-product-slide" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left fa fa-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#hot-product-slide" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-left fa fa-chevron-right"></span>
-            <span class="sr-only">Next</span>
-            </a>
-        </div>
+    <div class="col-md-9 col-sm-9 col-xs-12 home--top_panel--slider">
+        {% embed 'element/home/slider.twg' with {item_list: slider_banner} %}{% endembed %}
     </div>
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
         <div class="intro-seller">
@@ -53,78 +30,26 @@
 </div>
 <div class="row">
     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 sidebar hidden-sm hidden-xs">
-        <div class="row">
-            <h4>THƯƠNG HIỆU</h4>
-            <ul class="menu-scroll">
-                {% for id,manufacturer in filter['manufacturer'] %}
-                    <li><input type="checkbox" name="" value="{{ id }}">{{ manufacturer }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="row">
-            <h4>GIÁ</h4>
-            <ul>
-                {% for key,price in filter['price'] %}
-                    <li><a href="">{{ price }}<span>(5264)</span></a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="row">
-            <h4>QUAN TÂM</h4>
-            <ul class="menu-scroll">
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa (432)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-                <li><input type="checkbox" name="" value="">Tái Tạo, Phục Hồi Da (132)</li>
-                <li><input type="checkbox" name="" value="">Chống Lão Hóa  (132)</li>
-                <li><input type="checkbox" name="" value="">Làm Dịu Da (153)</li>
-            </ul>
-        </div>
-        <div class="row">
-            <h4>THỂ LOẠI</h4>
-            <ul class="menu-scroll">
-                {% for key,state in filter['state'] %}
-                    <li><a href="#">{{ key }} ({{ state }})</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="row">
-            <h4>LOẠI DA</h4>
-            <ul class="menu-scroll">
-                {% for key,skin in filter['skin'] %}
-                    <li><a href="#">{{ key }} ({{ skin }})</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="row">
-            <h4>XUẤT XỨ</h4>
-            <ul class="menu-scroll">
-                {% for key,state in filter['state'] %}
-                    <li><a href="#">{{ key }} ({{ state }})</a></li>
-                {% endfor %}
-            </ul>
-        </div>
+        {% set map = {
+                'manufacturer': 'THƯƠNG HIỆU',
+                'price': 'GIÁ',
+                'state': 'THỂ LOẠI',
+                'skin': 'LOẠI DA',
+            }
+        %}
+
+        {% for group, name in map %}
+            {% if attribute(filter, group) %}
+            <div class="row">
+                <h4>{{ name }}</h4>
+                <ul class="menu-scroll">
+                    {% for key, value in attribute(filter, group) %}
+                        <li><a href="{{ 'product/filter'|url("?#{group}=#{key}&category=#{category.slug}-#{category.id}") }}">{{ value }}<span></span></a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
         <div id='list-product' class="row">
@@ -153,5 +78,8 @@
         {% endif %}
     </div>
 </div>
-{% embed 'element/product/detail_suggestion.twg' with {'item': target} %}{% endembed %}
+{% if last_view_product %}
+{% embed 'element/product/detail_suggestion.twg' with {'items': last_view_product} %}{% endembed %}
+{% endif %}
+
 {% endblock %}

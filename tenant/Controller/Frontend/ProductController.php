@@ -286,9 +286,8 @@ class ProductController extends Frontend
     }
 
     private function generateFilterBar($category = 0) {
-        $filter = App::mp('config')->get('product.filter');
+        $filter = App::mp('config')->get('product.filter_mode');
         
-
         $model = App::load('manufacturer', 'model');
         $model->category(App::category()->flat('manufacturer'));
 
@@ -325,14 +324,12 @@ class ProductController extends Frontend
         $model = $this->model();
         $alias = $model->alias();
 
-        $option['select'] = 'id, title, seo_id, parent_id';
+        $option['select'] = 'id, title, seo_id, parent_id, slug';
         $categories = App::category()->extract($category, false, 'title', '', $option);
 
         if (empty($categories)) {
             abort('NotFoundException');
         }
-
-        $filter = $this->generateFilterBar($category);
 
         $categories = Hash::combine($categories, '{n}.category.id', '{n}.category');
 
@@ -348,7 +345,9 @@ class ProductController extends Frontend
             return $this->loadAjax($data);
         }
 
+        $filter = $this->generateFilterBar($category);
         $category = array_shift($categories);
+
 
         $breadcrumb = [
             $category,
@@ -363,19 +362,134 @@ class ProductController extends Frontend
             'current_url' => App::load('url')->current(),
         ];
 
-        $model = App::load('manufacturer', 'model');
-        $model->category(App::category()->flat('manufacturer'));
-
-        $select = 'manufacturer.id, manufacturer.title, manufacturer.category_id';
-        $where = 'manufacturer.status > 0';
-
-        $manufacturer = $model->find(compact('select', 'where'));
-        $manufacturer = Hash::combine($manufacturer, '{n}.manufacturer.id', '{n}.manufacturer.title', '{n}.manufacturer.category_id');
-
         $product_history = Session::read('product_history');
-        $last_view_product = $this->getByIdList($product_history);
+        $last_view_product = $product_history ? $this->getByIdList($product_history) : [];
 
-        $this->render('index', compact('data', 'option', 'filter', 'manufacturer', 'last_view_product'));
+        $this->render('index', compact('data', 'option', 'filter', 'last_view_product', 'category'));
+    }
+
+    private function banner()
+    {
+        $service = App::load('banner', 'service');
+        $slider = $service->getByCategorySlug('home-slideshow');
+
+        return compact('slider', 'header');
+    }
+
+    public function filter()
+    {
+        $request = App::mp('request');
+        $param = $request->param;
+
+        $category = 0;
+        if (!empty($param['category'])) {
+            $tmp = explode('-', $param['category']);
+            $category = array_pop($tmp);
+        }
+
+        $map_list = App::mp('config')->get('product.filter');
+
+        $map_field = [
+            'price' => 'price',
+            'state' => 'string_7',
+            'skin' => 'string_6',
+            'manufacturer' => 'string_3'
+        ];
+
+        $condition = array_intersect_key($param, $map_field);
+
+        $alias = $this->model()->alias();
+        $subwhere = '';
+        if ($condition) {            
+            $subcondition = [];
+            foreach ($condition as $key => $value) {
+                switch ($key) {
+                    case 'price':
+                        $field = "{$alias}.{$map_field[$key]}";
+                        $range = $map_list[$key][$value];
+                        switch ($value) {
+                            case 'nho-hon-100000':
+                                $string = "{$field} < {$range}";
+                                break;
+                            case 'lon-hon-500000':
+                                $string = "{$field} > {$range}";
+                                break;
+                            default:
+                                list($min, $max) = explode('-', $range);
+                                --$max;
+                                $string = "{$field} BETWEEN ({$min} AND {$max})";
+                                break;
+                        }
+                        break;
+                    default:
+                        $field = "extension.{$map_field[$key]}";
+                        $value = $map_list[$key][$value] ?? $value;
+                        $string = "{$field} = {$value}";
+                        break;
+                }
+                
+
+                array_push($subcondition, $string);
+            }
+            $subwhere = ' AND ' . implode(' AND ', $subcondition);
+        }
+
+        $option = [
+            'where' => "{$alias}.status > 0 {$subwhere} ",
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = '.$alias.'.id AND extension.target_model ="'.$alias.'"',
+                ],
+            ],
+        ];
+
+        $search = [
+            'keyword' => '',
+            'param' => $param,
+        ];
+
+        $page = $data['page'] ?? 1;
+
+        $data = $this->makeFilter($option);
+        if ($this->isAjax()) {
+            return $this->loadAjax($data);
+        }
+
+        $filter = $this->generateFilterBar($category);
+
+        $option = [
+            'select' => 'category.id, title, seo_id, parent_id, slug'
+        ];
+        $categories = App::category()->extract($category, false, 'title', '', $option);
+
+        if (empty($categories)) {
+            abort('NotFoundException');
+        }
+
+        $categories = Hash::combine($categories, '{n}.category.id', '{n}.category');
+
+        $category = array_shift($categories);
+        $product_history = Session::read('product_history');
+        $last_view_product = $product_history ? $this->getByIdList($product_history) : [];
+
+        $breadcrumb = [
+            ['title' => 'Tìm kiếm'],
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        $option = [
+            'page_title' => 'Tìm kiếm',
+            'search' => $search,
+            'page' => $page,
+        ];
+
+        $banner = $this->banner();
+        $slider_banner = $banners['slider'] ?? [];
+
+        $this->render('index', compact('data', 'option', 'filter', 'last_view_product', 'category', 'slider_banner'));
     }
 //////////////////
 
@@ -401,7 +515,7 @@ class ProductController extends Frontend
 
         $default = [
             'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
-            'order' => $alias.'.id desc',
+            'order' => $alias . '.id desc',
             'page' => $page,
             'limit' => $option['limit'] ?? 20,
             'paginator' => [
@@ -531,93 +645,7 @@ class ProductController extends Frontend
 
         $this->sideBar('search');
         $this->render('index', compact('data', 'option'));
-    }
-
-    public function filter()
-    {
-        $request = App::mp('request');
-        $param = $request->param;
-
-        $map_list = App::mp('config')->get('product.filter');
-
-        $map_field = [
-            'price' => 'price',
-            'state' => 'string_7',
-            'skin' => 'string_6',
-        ];
-
-        $condition = array_intersect_key($param, $map_field);
-
-        if (!$condition) {
-            exit;
-        }
-
-        $alias = $this->model()->alias();
-
-        $subcondition = [];
-        foreach ($condition as $key => $value) {
-            if ('price' === $key) {
-                $field = "{$alias}.{$map_field[$key]}";
-                $range = $map_list[$key][$value];
-                switch ($value) {
-                    case 'nho-hon-100000':
-                        $string = "{$field} < {$range}";
-                        break;
-                    case 'lon-hon-500000':
-                        $string = "{$field} > {$range}";
-                        break;
-                    default:
-                        list($min, $max) = explode('-', $range);
-                        --$max;
-                        $string = "{$field} BETWEEN ({$min} AND {$max})";
-                        break;
-                }
-            } else {
-                $field = "extension.{$map_field[$key]}";
-                $value = $map_list[$key][$value];
-                $string = "{$field} = {$value}";
-            }
-
-            array_push($subcondition, $string);
-        }
-        $option = [
-            'where' => "{$alias}.status > 0 AND ".implode(' AND ', $subcondition),
-            'join' => [
-                [
-                    'table' => 'extension',
-                    'alias' => 'extension',
-                    'type' => 'INNER',
-                    'condition' => 'extension.target_id = '.$alias.'.id AND extension.target_model ="'.$alias.'"',
-                ],
-            ],
-        ];
-
-        $search = [
-            'keyword' => 'pandog',
-            'param' => $param,
-        ];
-
-        $page = $data['page'] ?? 1;
-
-        $data = $this->makeFilter($option);
-        if ($this->isAjax()) {
-            return $this->loadAjax($data);
-        }
-
-        $breadcrumb = [
-            ['title' => 'Tìm kiếm'],
-        ];
-        $this->set('breadcrumb', $breadcrumb);
-
-        $option = [
-            'page_title' => 'Tìm kiếm',
-            'search' => $search,
-            'page' => $page,
-        ];
-
-        $this->sideBar('search');
-        $this->render('index', compact('data', 'option'));
-    }
+    }    
 
     protected function other($target, $option = [])
     {

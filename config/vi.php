@@ -142,6 +142,31 @@
                     'dang-lotion' => 5,
                     'dang-cushion' => 6,
                 ],
+            ],
+            'filter_mode' => [
+                'skin' => [
+                    'moi-loai-da' => 'Mọi loại da',
+                    'da-dau' => 'Da dầu',
+                    'da-kho' => 'Da khô',
+                    'da-hon-hop' => 'Da hỗn hợp',
+                    'da-nhay-cam' => 'Da nhạy cảm',
+                    'da-lao-hoa' => 'Da lão hóa',
+                    'da-mun' => 'Da mụn',
+                ],
+                'state' => [
+                    'dang-long' => 'Dạng lỏng',
+                    'dang-kem' => 'Dạng kem',
+                    'dang-cay' => 'Dạng cây',
+                    'dang-gel' => 'Dạng gel',
+                    'dang-lotion' => 'Dạng lotion',
+                    'dang-cushion' => 'Dạng Cushion',
+                ],
+                'price' => [
+                    'nho-hon-100000' => 'Nhỏ hơn 100.000',
+                    '100000-200000' => '100.000 - 200.000',
+                    '200000-500000' => '200.000 - 500.000',
+                    'lon-hon-500000' => 'Lớn hơn 500.000',
+                ],
             ]
         ]
     ];
