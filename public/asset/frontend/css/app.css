@@ -416,7 +416,7 @@ select {
     display: block
 }
 .manufacturer-item img {
-    height: 100px;
+    height: 100px !important;
 }
 .product-view {
     display: block;
@@ -813,7 +813,7 @@ body.toggled {
     width: 10px;
 }
 .menu-scroll {
-    height: 190px;
+    max-height: 190px;
     overflow: auto;
 }
 

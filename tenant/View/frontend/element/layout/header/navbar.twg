@@ -17,9 +17,9 @@
                                 {{ 'logo-mobile.png'|asset({'class': 'img-responsive'}) }}
                             </a>
                         </div>
-                        <ul class="mobile-menu-icon clearfix">
+                        <ul class="mobile-menu-icon hidden-xs clearfix">
                             <li id="cart-target" class="cart">
-                                <a href="{{ 'cart'|url }}" class="cart" title="Giỏ hàng">
+                               <a href="{{ 'cart'|url }}" class="cart" title="Giỏ hàng">
                                     <span class="fa fa-shopping-cart"></span>
                                     <span id="cart-count">{{ addon.cart_total|default(0) }}</span>
                                 </a>
@@ -27,7 +27,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="categories-main-left categories-main nb-col-md-3 hidden-xs">
                     <div class="categories-content-title">
                         <i class="fa fa-bars"></i>
@@ -45,6 +44,7 @@
                                 </a>
                             </li>
                         {% endfor %}
+
                     </ul>
                     <ul class="nav navbar-nav pull-right">
                         <li><a href="{{ 'order/history'|url }}" title="Tra cứu đơn hàng">{{ 'icon-search-nav.png'|asset({}) }} TRA CỨU ĐƠN HÀNG</a></li>

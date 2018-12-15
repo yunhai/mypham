@@ -2815,7 +2815,7 @@ overflow: hidden;
     height: 420px;
     padding: 10px 10px 10px 20px;
     position: relative;
-    overflow: none;
+    overflow: hidden;
 }
 .sub-cate .sub-cate-inner:hover {
     overflow: scroll;
@@ -2979,6 +2979,12 @@ overflow: hidden;
 }
 .nav-main > .menuItem:last-child {
     border-bottom: none;
+}
+.banner-adv img {
+    height: 50%;
+}
+.manufacturer-item img {
+    height: 100px !important;
 }
 /** menu**/
 .nav-marg220 .navbar-nav a {
@@ -3325,6 +3331,12 @@ svg:not(:root) {
     text-overflow: ellipsis;
     white-space: nowrap;
     margin: 0
+}
+.ellipsis {
+    overflow: hidden;
+    height: 45px;
+    line-height: 25px;
+    margin: 15px 0 10px 0;
 }
 /** TOP RIGHT HOME NEWS **/
 .news-item {

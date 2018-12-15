@@ -10,6 +10,6 @@
         {% endif %}
     </p>
     <span class="product-manufacturer">{{ manufacturer[target.manufacturer_id] }}</span>
-    <span class="product-name">{{ target.title }}</span>
+    <span class="product-name ellipsis">{{ target.title }}</span>
     <span class="product-name">Total Control Drop Foundation</span>
 </div>
