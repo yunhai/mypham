@@ -24,6 +24,7 @@ class BannerService extends Post {
             'where' => 'status > 0 AND category_id IN (' . implode(',', array_keys($category)) . ')',
             'order' => 'category_id, idx desc'
         ];
+
         $banner = $this->model->find($option);
 
         $banner = Hash::combine($banner, '{n}.banner.id', '{n}.banner');

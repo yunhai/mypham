@@ -38,6 +38,17 @@ function get(target) {
     });
 }
 
+$(".j-productOrderBy").change(function(e) {
+    var url = (window.location.href)
+            .replace('&order_by=', '')
+            .replace('&order_by=gia-tang-dan', '')
+            .replace('&order_by=gia-giam-dan', '')
+            .replace('&order_by=thong-thuong', '');
+    
+    url = url + '&order_by=' + $(e.currentTarget).val();
+    window.location.href = url;
+});
+
 $("#product-vote-form").submit(function(e) {
     $.ajax({
         type: "post",

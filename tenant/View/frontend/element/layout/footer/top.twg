@@ -1,3 +1,26 @@
+{% set footer_pages = [
+    {
+        'url': 'trung-tam-ho-tro'|url,
+        'title': 'Trung tâm hỗ trợ'
+    },
+    {
+        'url': 'thanh-toan'|url,
+        'title': 'Thanh toán'
+    },
+    {
+        'url': 'huong-dan-dat-hang'|url,
+        'title': 'Hướng dẫn đặt hàng'
+    },
+    {
+        'url': 'giao-nhan-hang'|url,
+        'title': 'Nhận hàng & Giao hàng'
+    },
+    {
+        'url': 'huong-dan-doi-tra-hang'|url,
+        'title': 'Hướng dẫn đổi trả hàng'
+    },
+]
+%}
 <div class="footer-info">
     <div class="container-fluid">
         <div class="footer_info_top">
@@ -11,11 +34,13 @@
                             <!-- widgets list -->
                             <h4 class="title-widget">CHĂM SÓC KHÁCH HÀNG</h4>
                             <ul>
-                                <li><a  href="#">Trung tâm hỗ trợ</a></li>
-                                <li><a  href="#">Thanh toán</a></li>
-                                <li><a  href="#">Hướng dẫn đặt hàng</a></li>
-                                <li><a  href="#">Giao hàng & nhận hàng</a></li>
-                                <li><a  href="#">Hướng dẫn đổi trả hàng</a></li>
+                                {% for item in footer_pages %}
+                                <li>
+                                    <a href="{{ item.url }}" title="{{ item.title }}">
+                                        {{ item.title }}
+                                    </a>
+                                </li>
+                                {% endfor %}
                             </ul>
                             <hr>
                             <ul>

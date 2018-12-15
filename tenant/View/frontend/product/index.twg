@@ -44,7 +44,11 @@
                 <h4>{{ name }}</h4>
                 <ul class="menu-scroll">
                     {% for key, value in attribute(filter, group) %}
-                        <li><a href="{{ 'product/filter'|url("?#{group}=#{key}&category=#{category.slug}-#{category.id}") }}">{{ value }}<span></span></a></li>
+                        {% set banners = target.banner %}
+                        {% if category.id is not empty %}
+                            {% set category_path = "&category=#{category.slug}-#{category.id}" %}
+                        {% endif %}
+                        <li><a href="{{ 'product/filter'|url("?#{group}=#{key}#{category_path}") }}">{{ value }}<span></span></a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -53,12 +57,13 @@
     </div>
     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
         <div id='list-product' class="row">
-            <h3 class="title">Sức Khỏe - Làm Đẹp <span>(5734 sản phẩm)</span></h3>
+            <h3 class="title">{{ option.page_title }} <span>({{ data.page.count_record }} sản phẩm)</span></h3>
             <div class="form-group order-select">
                 <label for="sel1">Sắp xếp theo</label>
-                <select>
-                    <option>Bán chạy</option>
-                    <option>Phổ biến</option>
+                <select class='j-productOrderBy'>
+                    {% for id, name in order_mode %}
+                        <option {% if id == order_by %} selected {% endif %} value='{{ id }}'>{{ name }}</option>
+                    {% endfor %}
                 </select>
             </div>
             {% if data.list is empty %}
@@ -68,16 +73,17 @@
             </div>
             {% else %}
             {% for item in data.list %}
-            {% embed 'element/product/item.twg' with {item: item, manufacturer: manufacturer} %}{% endembed %}
+                {% embed 'element/product/item.twg' with {item: item, manufacturer: manufacturer} %}{% endembed %}
             {% endfor %}
             {% endif %}
         </div>
         <div class='clearfix'></div>
         {% if option.page.current < option.page.total %}
-        <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-product'>XEM THÊM <span>5724</span> SẢN PHẨM</a>
+        <a href="javascript:" class="j-loadmore btn-loading" data-url='{{ option.current_url }}' data-page='1' data-target='#list-product'>XEM THÊM</a>
         {% endif %}
     </div>
 </div>
+
 {% if last_view_product %}
 {% embed 'element/product/detail_suggestion.twg' with {'items': last_view_product} %}{% endembed %}
 {% endif %}

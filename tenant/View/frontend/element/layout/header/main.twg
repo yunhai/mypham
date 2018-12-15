@@ -26,19 +26,56 @@
                     </div>
                     <div class="col-md-5 col-sm-5 hidden-sm">
                         <ul class="info-list">
-                            <li class="user pull-right">
-                                <a href="#">Đăng ký</a><br>
-                                <a href="#">Đăng nhập</a>
-                            </li>
+                            {% if 1 or login().loggedin() %}
+                                <li class="user pull-right">
+                                    <a href="#">pandog</a><br>
+
+<!--
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        Tài khoản <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        <li>
+            <a class='user--link' href='{{ 'user/update-password'|url }}' title='Đổi mật khẩu'>
+                Đổi mật khẩu
+            </a>
+        </li>
+        <li>
+            <a class='user--link' href='{{ 'user/balance'|url }}' title='Thông tin điểm thưởng'>
+                Thông tin điểm thưởng
+            </a>
+        </li>
+        <li>
+            <a class='user--link' href='{{ 'order/history'|url }}' title='Lịch sử giao dịch'>
+                Lịch sử giao dịch
+            </a>
+        </li>
+    </ul>
+</li>
+-->
+
+                                    <a href="{{ 'user/logout'|url }}" title="Logout">
+                                        <span>Logout</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="user pull-right">
+                                    <a href="{{ 'user/sign-up'|url }}">Đăng ký</a><br>
+                                    <a href="{{ 'user/login'|url }}" title="Đăng nhập">Đăng nhập</a>
+                                </li>
+                                
+                            {% endif %}
+
                             <li class="delivery pull-right">
-                                <a href="#">
+                                <a href="{{ 'giao-nhan-hang'|url }}" title="Giao nhận hàng">
                                     <p>Giao hàng</p>
                                     <p>toàn quốc</p>
                                 </a>
                             </li>
                             <li class="cart pull-right">
                                 <span class="cart-number">{{ addon.cart_total|default(0) }}</span>
-                                <a href="#">
+                                <a href="{{ 'cart'|url }}" title="Giỏ hàng">
                                     <p>Giỏ</p>
                                     <p>hàng</p>
                                 </a>

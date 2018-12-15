@@ -17,7 +17,7 @@
         {% for item_list in manufacturer %}
         <div class="item {% if loop.index == 1 %} active {% endif %}">
             {% for item in item_list %}
-            <a class="col-md-2 manufacturer-item" href='{{ ('product/manufacturer/%s'|format(item.slug))|url }}' title='{{ item.title }}'>
+            <a class="col-md-2 manufacturer-item" href='{{ ('product/manufacturer'|url)~'/%s'|format(item.slug) }}' title='{{ item.title }}'>
             {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
             <div class="carousel-caption">
                 <h3>{{ item.title }}</h3>
@@ -35,9 +35,9 @@
                 <div class="panel-heading">
                     <h4>
                         {{ 'icon-top-deal.png'|asset({}) }}
-                        <a class="category-title" href="http://mp.local/san-pham/nail-va-toc" title="TOP DEALS">
+                        <a class="category-title" href="{{ 'product/best_selling'|url }}" title="TOP DEALS">
                             TOP DEALS
-                            <a href="#" class="btn-view-more pull-right">Xem thêm</a>
+                            <a href="{{ 'product/best_selling'|url }}" class="btn-view-more pull-right" rel='nofollow'>Xem thêm</a>
                         </a>
                     </h4>
                 </div>
@@ -83,34 +83,41 @@
                         </div>
                         <div class="panel-body">
                             {% for target in item_list %}
-                            {% if loop.index <= 4 %}
-                            {% set class = 'box-item-' ~ loop.index %}
-                            {% if loop.index is divisible by(2) %}
-                            {% set class = class ~ ' box-item-odd' %}
-                            {% endif %}
-                            {% if loop.index is divisible by(3) %}
-                            <div class="box col-md-4 col-sm-4 col-xs-12 {{ class }}">
-                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel--{{ category.id }}">
-                                    <!-- Indicators -->
-                                    <ol class="carousel-indicators">
-                                        {% for item in banners %}
-                                            <li data-target="#carousel-example-generic" data-slide-to="{{ loop.index }}" class="{% if loop.index == 1 %} active {% endif %}"></li>
-                                        {% endfor %}
-                                    </ol>
-                                    <!-- Wrapper for slides -->
-                                    <div class="carousel-inner">
-                                        {% for item in banners %}
-                                        <div class="item {% if loop.index == 1 %} active {% endif %}">
-                                            {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
-                                            <div class="carousel-caption">
+                           
+                            {% if banners is empty %}
+                                {% embed 'element/home/product_item.twg' with {target: target, class: class} %}{% endembed %}
+                            {% else %}
+                                {% if loop.index <= 4 %}
+                                    {% set class = 'box-item-' ~ loop.index %}
+                                    {% if loop.index is divisible by(2) %}
+                                        {% set class = class ~ ' box-item-odd' %}
+                                    {% endif %}
+                                    
+                                    {% if loop.index == 3 %}
+                                        <div class="box col-md-4 col-sm-4 col-xs-12 {{ class }}">
+                                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel--{{ category.id }}">
+                                                <!-- Indicators -->
+                                                <ol class="carousel-indicators">
+                                                    {% for item in banners %}
+                                                        <li data-target="#carousel-example-generic" data-slide-to="{{ loop.index }}" class="{% if loop.index == 1 %} active {% endif %}"></li>
+                                                    {% endfor %}
+                                                </ol>
+                                                <!-- Wrapper for slides -->
+                                                <div class="carousel-inner">
+                                                    {% for item in banners %}
+                                                    <div class="item {% if loop.index == 1 %} active {% endif %}">
+                                                        {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
+                                                        <div class="carousel-caption">
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
                                             </div>
                                         </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% embed 'element/home/product_item.twg' with {target: target, class: class} %}{% endembed %}
+                                    {% endif %}
+
+                                    {% embed 'element/home/product_item.twg' with {target: target, class: class} %}{% endembed %}
+                                {% endif %}
                             {% endif %}
                             {% endfor %}
                         </div>

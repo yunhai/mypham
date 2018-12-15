@@ -49,7 +49,8 @@ class Paginator
 
         $pageInfo = [
             'current' => $page,
-            'total' => $pageCount
+            'total' => $pageCount,
+            'count_record' => $count
         ];
 
         return $return;

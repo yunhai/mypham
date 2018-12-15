@@ -81,7 +81,7 @@ class ProductService extends Product
             'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
             'where' => "{$alias}.status > 0",
             'order' => "{$alias}.id desc",
-            'limit' => 8
+            'limit' => 6
         ];
 
         $option = [
@@ -113,8 +113,8 @@ class ProductService extends Product
 
         $home_banner = Hash::combine($home_banner, '{n}.banner.id', '{n}.banner');
         App::associate($home_banner);
+        
         $home_banner = Hash::combine($home_banner, '{n}.id', '{n}', '{n}.sub_category_id');
-
         $bannerModel->category($bannerCategory);
         $result = [];
         foreach ($category as $id => $id_list) {
@@ -159,39 +159,6 @@ class ProductService extends Product
         return $result;
     }
 
-    public function promote($limit = 20)
-    {
-        $alias = $this->model()->alias();
-
-        $query = [
-            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
-            'where' => 'CURDATE() BETWEEN extension.string_4 AND extension.string_5',
-            'order' => 'extension.string_4 desc',
-            'limit' => $limit,
-            'join' => [
-                [
-                    'table' => 'extension',
-                    'alias' => 'extension',
-                    'type' => 'INNER',
-                    'condition' => 'extension.target_id = ' . $alias . '.id  AND extension.target_model = "' . $alias . '"'
-                ],
-            ]
-        ];
-
-        $result = [];
-        $result = $this->model()->find($query);
-
-        $result = Hash::combine($result, '{n}.product.id', '{n}.product');
-        $this->model()->checkPromotion($result);
-        $this->associate($result);
-
-        usort($result, function ($a, $b) {
-            return ($a['discount'] > $b['discount']) ? -1 : 1;
-        });
-
-        return $result;
-    }
-
     public function bestSelling($limit = 8)
     {
         $query = [
@@ -199,26 +166,6 @@ class ProductService extends Product
             'where' => 'status = 2',
             'order' => 'id desc',
             'limit' => $limit,
-        ];
-
-        $alias = $this->model()->alias();
-
-        $result = $this->model()->find($query);
-        $result = Hash::combine($result, "{n}.{$alias}.id", "{n}.{$alias}");
-
-        $this->model()->checkPromotion($result);
-        $this->associate($result);
-
-        return $result;
-    }
-
-    public function lastest($limit = 8)
-    {
-        $query = [
-            'select' => 'id, title, price, file_id, seo_id',
-            'where' => 'status > 0',
-            'order' => 'id desc',
-            'limit' => $limit
         ];
 
         $alias = $this->model()->alias();

@@ -58,7 +58,7 @@
                 0 => 'Chờ duyệt'
             ],
             'product' => [
-                3 => 'Hot',
+                // 3 => 'Hot',
                 2 => 'Bán chạy',
                 1 => 'Hiển thị',
                 0 => 'Ẩn'
@@ -167,6 +167,11 @@
                     '200000-500000' => '200.000 - 500.000',
                     'lon-hon-500000' => 'Lớn hơn 500.000',
                 ],
+            ],
+            'order_mode' => [
+                'thong-thuong' => 'Thông thường',
+                'gia-tang-dan' => 'Giá tăng dần',
+                'gia-giam-dan' => 'Giá giảm dần',
             ]
         ]
     ];
