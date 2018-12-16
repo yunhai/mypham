@@ -33,7 +33,6 @@
                     <td>
                         {{ item.question|nl2br }}
                         <span class='info dashed'>{{ item.fullname }} | {{ item.email }} | {{ item.created|date('h:i d/m/Y') }}</span>
-                        <span class='info remark'>{{ item.private ? 'Khóa không cho thành viên khác xem nội dung' : '' }}</span>
                     </td>
                     <td>
                         {% set target = attribute(attribute(option.origin, item.target_model), item.target_id) %}

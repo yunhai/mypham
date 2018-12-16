@@ -178,4 +178,37 @@ class ProductService extends Product
 
         return $result;
     }
+
+    public function promote($limit = 20)
+    {
+        $alias = $this->model()->alias();
+
+        $query = [
+            'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
+            'where' => 'CURDATE() BETWEEN extension.string_4 AND extension.string_5',
+            'order' => 'extension.string_4 desc',
+            'limit' => $limit,
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = ' . $alias . '.id  AND extension.target_model = "' . $alias . '"'
+                ],
+            ]
+        ];
+
+        $result = [];
+        $result = $this->model()->find($query);
+
+        $result = Hash::combine($result, '{n}.product.id', '{n}.product');
+        $this->model()->checkPromotion($result);
+        $this->associate($result);
+
+        usort($result, function ($a, $b) {
+            return ($a['discount'] > $b['discount']) ? -1 : 1;
+        });
+
+        return $result;
+    }
 }

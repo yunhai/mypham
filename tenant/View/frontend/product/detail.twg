@@ -126,9 +126,6 @@
 {% endblock %}
 
 
-
-
-
 {% set html = load('html', 'helper') %}
 {% block bottom %}
 {{ html.js(['product']) }}

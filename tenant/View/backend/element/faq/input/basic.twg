@@ -43,28 +43,6 @@
 
             <tr>
                 <th class='col-sm-3 table-label'>
-                    <label class='control-label' for="private">{{ __('2104', 'Hiển thị trên web', 'faq') }}</label>
-                </th>
-                <td>
-                    <div class='inline'>{{ option.private ? 'Công khai' : 'Cá nhân' }}</div>
-                </td>
-            </tr>
-
-            <tr>
-                <th class='col-sm-3 table-label'>
-                    <label class='control-label' for="{{ alias }}-category">{{ __('2105', 'Danh mục', 'faq') }}</label>
-                </th>
-                <td>
-                    <select class="form-control" name='{{ alias }}[category]' id='{{ alias }}-category'>
-                        {% for key, value in option.category %}
-                        <option value="{{ key }}" {% if key == target.category %} selected='selected' {% endif %}>{{ value }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <th class='col-sm-3 table-label'>
                     <label class='control-label' for="status">{{ __('2106', 'Trạng thái', 'faq') }}</label>
                 </th>
                 <td>

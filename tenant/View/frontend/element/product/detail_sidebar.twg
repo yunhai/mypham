@@ -20,6 +20,8 @@
             </li>
         </ul>
     </div>
+
+    {% if sidebar.same_manufacturer_list is not empty %}
     <div class="product-other">
         <h4>SẢN PHẨM CÙNG THƯƠNG HIỆU</h4>
         <ul>
@@ -34,7 +36,9 @@
         </ul>
         <div class="clearFix"></div>
     </div>
+    {% endif %}
 
+    {% if sidebar.best_selling_list is not empty %}
     <div class="product-other">
         <h4>SẢN PHẨM BÁN CHẠY</h4>
         <ul>
@@ -48,4 +52,21 @@
         </ul>
         <div class="clearFix"></div>
     </div>
+    {% endif %}
+
+    {% if sidebar.promotion_list is not empty %}
+    <div class="product-other">
+        <h4>SẢN PHẨM KHUYẾN MÃI</h4>
+        <ul>
+            {% for i, item in sidebar.promotion_list %}
+                {% embed 'element/product/detail_sidebar_item.twg' with {'item': item} %}
+                {% endembed %}
+            {% endfor %}            
+            <li class="view-more">
+                <a href='{{ 'product/promote'|url }}' title='Sản phẩm khuyến mãi'>Xem thêm ></a>
+            </li>
+        </ul>
+        <div class="clearFix"></div>
+    </div>
+    {% endif %}
 </div>

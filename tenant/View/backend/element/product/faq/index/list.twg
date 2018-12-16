@@ -12,7 +12,6 @@
                     <th class='col-sm-1'></th>
                     <th class='col-sm-2'>{{ __('1002', 'Trả lời', 'faq') }}</th>
                     <th>{{ __('1003', 'Câu hỏi', 'faq') }}</th>
-                    <th class='col-sm-2'>{{ __('1004', 'Danh mục', 'faq') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,10 +31,6 @@
                     <td>
                         {{ item.question|nl2br }}
                         <span class='info dashed'>{{ item.fullname }} | {{ item.email }} | {{ item.created|date('h:i d/m/Y') }}</span>
-                        <span class='info remark'>{{ item.private ? 'Khóa không cho thành viên khác xem nội dung' : '' }}</span>
-                    </td>
-                    <td>
-                        {{ attribute(option.category, item.category) }}
                     </td>
                 </tr>
                 {% endfor %}
