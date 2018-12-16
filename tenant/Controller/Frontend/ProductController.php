@@ -141,6 +141,21 @@ class ProductController extends Frontend
         $manufacturer_id = $target['manufacturer_id'];
         $current_manufacturer = $manufacturer_list[$manufacturer_id] ?? [];
         $target['manufacturer_target'] = $current_manufacturer;
+/*
+    [display_mode] => 2
+    [default_mode] => 5c0b0631b94f2
+
+    'display_mode' => [
+        '1' => 'Hình ảnh',
+        '2' => 'Textbox'
+    ], 
+
+    if display_mode == 1: display like PRODUCT-Detail-Mỹ phẩm
+    if display_mode == 1: display like PRODUCT-Detail-THỜI TRANG - dropdown list
+
+    default_mode -> active property child item.
+*/
+    App::associate($target['property'], ['file' => 'file_id']);
 
         $this->render('detail', compact('target', 'option', 'current_manufacturer', 'manufacturer_list', 'last_view_product', 'filter', 'promotion_post'));
     }

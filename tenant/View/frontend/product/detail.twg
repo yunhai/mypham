@@ -11,10 +11,12 @@
                     {{ target|media({'class': 'detail-img' }) }}
                 </div>
                 {% endif %}
+                <!--
                 <div class="btn-social">
                     <div class="fb-save pull-right" data-uri="https://www.facebook.com/chuyentrangphunu/" data-size="small"></div>
                     <div class="fb-like pull-right" data-href="https://www.facebook.com/chuyentrangphunu/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
                 </div>
+                -->
             </div>
             <div class="details col-md-6 col-xs-12">
                 <h3 class="product-title">{{ target.title }}</h3>
@@ -46,7 +48,7 @@
                     class='form-horizontal product-detail--form'>
                     <div class="form-group">
                         <label class='col-md-3 control-label'>
-                            Tùy chọn {{ target.display_mode }}
+                            Tùy chọn
                         </label>
                         <div class="col-md-9">
                             <div id="property-detail-item1">
@@ -58,12 +60,20 @@
                                     </div>
                                     {% endfor %}
                                 {% else %}
-                                {% for i in 1..10 %}
-                                <div class="property-item_detail j-propertyDetail" data-id="a1">
-                                    <input id="j-propertyDetailInputa1" type="hidden" value="a1" name="property_detail" class="j-propertyDetailInput">
-                                    <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="product-detail-img">
-                                </div>
-                                {% endfor %}
+                                {% if 0 %}
+                                    {% for level1_id, level1 in target.property %}
+                                        <div class="property-item_detail j-propertyDetail" data-id="{{ level1.id }}">
+                                            <input id="j-propertyDetailInputa1" type="hidden" value="{{ level1.id }}" name="property_detail" class="j-propertyDetailInput">
+                                            {{ level1|media({'class': 'product-item_detail', 'alt': level1.title}) }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                    {% for i in 1..10 %}
+                                    <div class="property-item_detail j-propertyDetail" data-id="a1">
+                                        <input id="j-propertyDetailInputa1" type="hidden" value="a1" name="property_detail" class="j-propertyDetailInput">
+                                        <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="product-detail-img">
+                                    </div>
+                                    {% endfor %}
                                 {% endif %}
                             </div>
                         </div>
