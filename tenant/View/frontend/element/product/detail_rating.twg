@@ -31,15 +31,18 @@
             {% endfor %}
         </div>
     </div>
+
     <div class="rating-write-comment">
          <div id='vote-callback'>
             <span>Cám ơn quý khách đã nhận xét về sản phẩm.</span>
             <hr  />
         </div>
+        {% if login().loggedin() %}
         <div>
             <h4>Đánh giá sản phẩm này *</h4>
             <div id="stars-existing" class="starrr" data-rating='4'></div>
         </div>
+
         <form id="product-vote-form" method='post' data-action='{{ ('product/vote/' ~ item.id)|url }}'>
             <input type='hidden' value='{{ item.id }}' name='target' />
             <input type='hidden' value='2' name='rating' id='rating_value' />
@@ -59,8 +62,12 @@
                 </button>
             </div>
         </form>
+        {% else %}
+            <span style='font-weight: bold;'>Quí khách vui lòng <a class='user-question' href="{{ 'user/login'|url }}" title="đăng nhập">đăng nhập</a> để nhận xét về sản phẩm này.</span>
+            <hr  />
+        {% endif %}
     </div>
     <div class="row">
-    <div class="col-sm-12 col-md-12" id='vote-list' data-url='{{ ('product/rating/' ~ item.id)|url }}'></div>
+        <div class="col-sm-12 col-md-12" id='vote-list' data-url='{{ ('product/rating/' ~ item.id)|url }}'></div>
     </div>
 </div>
