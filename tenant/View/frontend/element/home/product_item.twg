@@ -1,6 +1,7 @@
 <div class="box col-md-2 col-sm-2 col-xs-6 {{ class }}">
     <a class="product-view" href="{{ target|link('product') }}" title="{{ target.title }}">
-        {{ target|media({'class': 'img-responsive', 'height': '178px'}) }}</a>
+        {{ target|media({'class': 'img-responsive', 'height': '178px'}) }}
+    </a>
     <p class="product-price-box">
         {% if target.discount %}
             <span class="curr-price">{{ target.promote|price }}</span>
@@ -11,5 +12,4 @@
     </p>
     <span class="product-manufacturer">{{ manufacturer[target.manufacturer_id] }}</span>
     <span class="product-name ellipsis">{{ target.title }}</span>
-    <span class="product-name">Total Control Drop Foundation</span>
 </div>

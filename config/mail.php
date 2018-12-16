@@ -12,7 +12,7 @@
             'deliver' => 'phpmailer',
             'transport' => '',
             'host' => '',
-            'port' => ,
+            'port' => '',
             'username' => '',
             'password' => '',
             'protocol' => '',

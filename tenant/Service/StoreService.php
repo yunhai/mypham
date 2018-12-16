@@ -6,7 +6,7 @@ use Mp\Service\Post;
 class StoreService extends Post {
     public function __construct($model = 'store', $table = 'post', $alias = 'store') {
         $this->model(App::load($model, 'model', compact('table', 'alias')));
-        $this->model()->category(App::category()->flat('store'));
+        $this->model()->category(App::category()->flat($alias, false, 'id', '', ['where' => 'status > 0']));
     }
 
     public function getById($id = 0) {

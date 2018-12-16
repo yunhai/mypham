@@ -13,7 +13,8 @@
                 'page' => 'trang-tinh',
                 'banner' => 'banner',
                 'contact' => 'lien-he',
-                'manufacturer' => 'thuong-hieu'
+                'manufacturer' => 'thuong-hieu',
+                'promotion' => 'khuyen-mai'
         ],
         'seo' => [
             'prefix' => [
@@ -44,6 +45,9 @@
                 'manufacturer' => [
                     'detail' => 'thuong-hieu'
                 ],
+                'promotion' => [
+                    'detail' => 'khuyen-mai'
+                ]
             ]
         ],
         'status' => [
@@ -78,7 +82,11 @@
                 2 => 'Hoàn tất',
                 1 => 'Phản hồi',
                 0 => 'Chờ duyệt'
-            ]
+            ],
+            'user' => [
+                1 => 'Đang hoạt động',
+                0 => 'Ngưng hoạt động'
+            ],
         ],
         'channel' => [
             1 => 'Thông thường',

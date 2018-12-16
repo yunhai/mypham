@@ -13,8 +13,8 @@
         </p>
         {% endif %}
     </p>
-    <a class='product--manufacturer product-detail__sidebar--manufacturer' href="{{ (item.manufacturer)|link('manufacturer') }}" title="{{ item.manufacturer.title }}">
-        {{ item.manufacturer.title }}
+    <a class='product--manufacturer product-detail__sidebar--manufacturer' href="{{ 'product/manufacturer/%s'|format(manufacturer.slug)|url }}" title="{{ manufacturer.title }}" rel='nofollow'>
+        {{ manufacturer.title }}
     </a>
     <span class="product-name">
         <a href="{{ item|link('product') }}" title="{{ item.title }}">

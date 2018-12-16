@@ -70,7 +70,6 @@ class ProductController extends Frontend
     public function detail($id = 0)
     {
         $alias = $this->model()->alias();
-
         $where = "{$alias}.id = {$id} AND {$alias}.status > 0";
 
         $target = $this->model()->find(compact('where'), 'first');
@@ -98,7 +97,6 @@ class ProductController extends Frontend
         }
 
         $option = [];
-        $option['others'] = $this->other($target);
 
         $service = App::category();
         $category = $service->tree('product', ['select' => 'id, title, seo_id', 'where' => 'status > 0']);
@@ -114,18 +112,6 @@ class ProductController extends Frontend
         ];
         $this->set('breadcrumb', $breadcrumb);
 
-        $manufacturer_id = $target['manufacturer_id'];
-        $model = App::load('manufacturer', 'model');
-        $model->category(App::category()->flat('manufacturer'));
-
-        $select = 'manufacturer.id, manufacturer.title, manufacturer.seo_id';
-        $where = "manufacturer.id = {$manufacturer_id} AND manufacturer.status > 0";
-
-        $manufacturer = $model->find(compact('select', 'where'), 'first');
-        $manufacturer = current($manufacturer);
-
-        $target['manufacturer_target'] = $manufacturer;
-        $this->associate($manufacturer);
         $this->associate([$target]);
 
         if (isset($target['property'])) {
@@ -139,24 +125,32 @@ class ProductController extends Frontend
         $target['start'] = $target['rating_point'];
         $target['comment'] = $target['faq_count'];
 
-        /*
-            [display_mode] => 2
-            [default_mode] => 5c0b0631b94f2
-
-            'display_mode' => [
-                '1' => 'Hình ảnh',
-                '2' => 'Textbox'
-            ], 
-
-            if display_mode == 1: display like PRODUCT-Detail-Mỹ phẩm
-            if display_mode == 1: display like PRODUCT-Detail-THỜI TRANG - dropdown list
-
-            default_mode -> active property child item.
-        */
         $this->detailSideBar($target);
         $last_view_product = $this->getByIdList($product_history);
 
-        $this->render('detail', compact('target', 'option', 'manufacturer', 'last_view_product', 'filter'));
+        $promotion_post = $this->getPromotionPost();
+        $this->getPromotionPost();
+
+        $service = App::load('manufacturer', 'service');
+        $manufacturer_list = $service->all();
+
+        foreach($manufacturer_list as &$item) {
+            $item['slug'] = Text::slug($item['title']) . '-' . $item['id'];
+        }
+
+        $manufacturer_id = $target['manufacturer_id'];
+        $current_manufacturer = $manufacturer_list[$manufacturer_id] ?? [];
+        $target['manufacturer_target'] = $current_manufacturer;
+
+        $this->render('detail', compact('target', 'option', 'current_manufacturer', 'manufacturer_list', 'last_view_product', 'filter', 'promotion_post'));
+    }
+
+    protected function getPromotionPost() {
+        $service = App::load('promotion', 'service');
+
+        $result = $service->first();
+        $this->associate($result);
+        return current($result);
     }
 
     protected function countFaq($id)
@@ -205,7 +199,7 @@ class ProductController extends Frontend
             }
             $rating_point = ceil($rating_point / ($rating_count * 3));
         }
-       
+
         return compact('rating_count', 'rating_point');
     }
 
@@ -215,8 +209,10 @@ class ProductController extends Frontend
         $manufacturer_id = $target['manufacturer_id'];
 
         $best_selling_list = $service->bestSelling(4);
-        $same_manufacturer_list = $this->byManufacturer($manufacturer_id);
+        $same_manufacturer_list = $this->byManufacturer($manufacturer_id, 4);
 
+        $this->associate($same_manufacturer_list);
+        $this->associate($best_selling_list);
         $this->set('sidebar', compact('same_manufacturer_list', 'promotion_list', 'best_selling_list'));
     }
 
@@ -309,7 +305,6 @@ class ProductController extends Frontend
         $where = 'manufacturer.status > 0 AND ' . $subwhere;
         $manufacturer = $model->find(compact('select', 'where'));
         
-
         foreach($manufacturer as &$item) {
             $item['manufacturer']['slug'] = Text::slug($item['manufacturer']['title']) . '-' . $item['manufacturer']['id'];
         }

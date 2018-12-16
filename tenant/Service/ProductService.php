@@ -9,7 +9,7 @@ class ProductService extends Product
     public function __construct($model = 'product', $table = 'product', $alias = 'product')
     {
         $this->model(App::load($model, 'model', compact('table', 'alias')));
-        $this->model()->category(App::category()->flat($alias, false, 'id', '', ['where' => 'status > 0']));
+        $this->model()->category(App::category()->flat($alias, false, 'title', '', ['where' => 'status > 0']));
     }
 
     public function get($option = [], $extend = [], $association = [])

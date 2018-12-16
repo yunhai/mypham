@@ -26,9 +26,9 @@
                     </div>
                     <div class="col-md-5 col-sm-5 hidden-sm">
                         <ul class="info-list">
-                            {% if 1 or login().loggedin() %}
+                            {% if login().loggedin() %}
                                 <li class="user pull-right">
-                                    <a href="#">pandog</a><br>
+                                    <a href="javascript:;">{{ login().user().fullname }}</a><br>
 
 <!--
 <li class="dropdown">

@@ -7,7 +7,7 @@ use Mp\Lib\Utility\Hash;
 class MakeupService extends Service {
     public function __construct($model = 'makeup', $table = 'post', $alias = 'makeup') {
         $this->model(App::load($model, 'model', compact('table', 'alias')));
-        $this->model()->category(App::category()->flat($alias));
+        $this->model()->category(App::category()->flat($alias, false, 'title', '', ['where' => 'status > 0']));
     }
 
     public function lastest() {

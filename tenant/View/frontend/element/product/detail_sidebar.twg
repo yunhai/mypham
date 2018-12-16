@@ -23,47 +23,28 @@
     <div class="product-other">
         <h4>SẢN PHẨM CÙNG THƯƠNG HIỆU</h4>
         <ul>
-            {% for product in filter['manufacturer'] %}
-            <li class="product_item clearFix">
-                <div class="product_image">
-                    <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                </div>
-                <div class="product_values">
-                    <p class="product-price-box">
-                        <span class="curr-price">269,000đ</span>
-                    <p class="fs-origin-price">1,900,000đ</p>
-                    </p>
-                    <span class="product-manufacturer">NA. GIRLS</span>
-                    <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                    <span class="product-name">EyesShadows</span>
-                </div>
-            </li>
+            {% for item in sidebar.same_manufacturer_list %}
+                {% embed 'element/product/detail_sidebar_item.twg' with 
+                    { 'item': item, 'manufacturer': manufacturer } %}
+                {% endembed %}
             {% endfor %}
-            <li class="view-more">Xem thêm ></li>
+            <li class="view-more">
+                <a href='{{ 'product/manufacturer/%s'|format(manufacturer.slug)|url }}' title='Sản phẩm cùng thương hiệu'>Xem thêm ></a>
+            </li>
         </ul>
         <div class="clearFix"></div>
     </div>
+
     <div class="product-other">
         <h4>SẢN PHẨM BÁN CHẠY</h4>
         <ul>
-            {% for i, item in sidebar.product %}
-                {% embed 'element/product/detail_sidebar_item.twg' with {'item': item} %}{% endembed %}
-            {% endfor %}
-            <li class="product_item clearFix">
-                <div class="product_image">
-                    <a href="#"><img src="http://sandbox.myphamvalamdep.net/media/san-pham/30717-20171011091843.Jpeg" alt=""></a>
-                </div>
-                <div class="product_values">
-                    <p class="product-price-box">
-                        <span class="curr-price">269,000đ</span>
-                    <p class="fs-origin-price">1,900,000đ</p>
-                    </p>
-                    <span class="product-manufacturer">NA. GIRLS</span>
-                    <span class="product-name">Bảng Màu Phấn Mắt Nudes</span>
-                    <span class="product-name">EyesShadows</span>
-                </div>
+            {% for i, item in sidebar.best_selling_list %}
+                {% embed 'element/product/detail_sidebar_item.twg' with {'item': item} %}
+                {% endembed %}
+            {% endfor %}            
+            <li class="view-more">
+                <a href='{{ 'product/best_selling'|url }}' title='Sản phẩm bán chạy'>Xem thêm ></a>
             </li>
-            <li class="view-more">Xem thêm ></li>
         </ul>
         <div class="clearFix"></div>
     </div>

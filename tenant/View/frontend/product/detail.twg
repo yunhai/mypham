@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 {% if target.gallery %}
-                {% embed 'element/product/detail_slider.twg' with {'items': target.gallery} %}{% endembed %}
+                    {% embed 'element/product/detail_slider.twg' with {'items': target.gallery} %}{% endembed %}
                 {% else %}
                 <div class="detail-img">
                     {{ target|media({'class': 'detail-img' }) }}
@@ -79,18 +79,17 @@
                         <a href="#" id='j-buyNow' class="btn btn--buynow"> <i class="fa fa-check"></i>MUA NGAY</a>
                     </div>
                 </form>
+                {% if promotion_post.id is not empty%}
                 <div class="giff">
-                    <h5>Quà tặng cho đơn hàng</h5>
+                    <h5>{{ promotion_post.title }}</h5>
                     <div class="col-md-2 col-sm-2 col-xs-3 nopadding">
-                        <img src="http://sandbox.myphamvalamdep.net/media/san-pham/24145-20171024074439.Jpeg">
+                        {{ promotion_post|media({'class': 'img-responsive', 'height': '178px'}) }}
                     </div>
                     <div class="col-md-10 col-sm-10 col-xs-9">
-                        <p>Professional Eyebrow Brush </p>
-                        <p>CHO ĐƠN HÀNG TỪ 1 TRIỆU</p>
-                        <p>Và có ít nhất 1 sản phẩm GIAO NHANH hoặc HÀNG NHẬP HÀN QUỐC</p>
-                        <p>Không áp dụng cho các mã giảm giá đặc biệt khác</p>
+                        {{ promotion_post.content }}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="row product-description">
@@ -117,10 +116,18 @@
             </div>
         </div>
     </div>
-    {% embed 'element/product/detail_sidebar.twg' with {'item': target} %}{% endembed %}
+    {% embed 'element/product/detail_sidebar.twg' with { 'sidebar': sidebar, 'manufacturer': current_manufacturer } %}{% endembed %}
 </div>
-{% embed 'element/product/detail_suggestion.twg' with {'item': target} %}{% endembed %}
+
+{% if last_view_product %}
+    {% embed 'element/product/detail_suggestion.twg' with {'items': last_view_product} %}{% endembed %}
+{% endif %}
+
 {% endblock %}
+
+
+
+
 
 {% set html = load('html', 'helper') %}
 {% block bottom %}

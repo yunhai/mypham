@@ -17,11 +17,8 @@
         {% for item_list in manufacturer %}
         <div class="item {% if loop.index == 1 %} active {% endif %}">
             {% for item in item_list %}
-            <a class="col-md-2 manufacturer-item" href='{{ ('product/manufacturer'|url)~'/%s'|format(item.slug) }}' title='{{ item.title }}'>
-            {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
-            <div class="carousel-caption">
-                <h3>{{ item.title }}</h3>
-            </div>
+            <a class="col-md-2 manufacturer-item" href='{{ 'product/manufacturer/%s'|format(item.slug) }}' title='{{ item.title }}'>
+                {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
             </a>
             {% endfor %}
         </div>
