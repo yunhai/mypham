@@ -6,9 +6,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="user-question">
-                        <a class="float-left user-question" href="#"></a>
                         <strong>{{ item.fullname }}</strong>
-                        <span class="date"> - {{ item.created|date('d/m/Y') }}</span>
+                        <span class="date"> - {{ item.created|date('d/m/Y H:i') }}</span>
                    	</div>
                    	<div class="clearfix"></div>
                     <strong>{{ item.question|nl2br|raw }}</strong>

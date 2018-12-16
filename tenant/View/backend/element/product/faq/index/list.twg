@@ -10,8 +10,9 @@
                         </label>
                     </th>
                     <th class='col-sm-1'></th>
-                    <th class='col-sm-2'>{{ __('1002', 'Trả lời', 'faq') }}</th>
-                    <th>{{ __('1003', 'Câu hỏi', 'faq') }}</th>
+                    <th class='col-sm-2'>{{ __('1002', 'Trạng thái', 'faq') }}</th>
+                    <th class='col-sm-4'>{{ __('1003', 'Câu hỏi', 'faq') }}</th>
+                    <th>{{ __('1002', 'Câu trả lời', 'faq') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,7 @@
                         {{ item.question|nl2br }}
                         <span class='info dashed'>{{ item.fullname }} | {{ item.email }} | {{ item.created|date('h:i d/m/Y') }}</span>
                     </td>
+                    <td>{{ item.answer|raw }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

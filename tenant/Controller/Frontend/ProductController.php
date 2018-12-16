@@ -842,32 +842,40 @@ class ProductController extends Frontend
             'select' => 'id, created',
             'where' => 'string_5 = 1',
             'order' => 'id desc',
-            'limit' => 50,
+            'limit' => 200,
         ];
 
         $list = App::load('extension', 'service')->get($id, $model, $option);
 
-        $this->render('rating', compact('list'));
+        $analysis = [0, 0, 0, 0, 0, 0];
+        foreach($list as $item) {
+            $analysis[$item['rating']]++;
+        }
+
+        $this->render('rating', compact('list', 'analysis'));
     }
 
     public function vote()
     {
         $request = App::mp('request');
-        $data = [
-            'fullname' => $request->data['fullname'],
-            'email' => $request->data['email'],
-            'price' => $request->data['price'],
-            'content' => $request->data['content'],
-            'quantity' => $request->data['quantity'],
-            'shipping' => $request->data['shipping'],
-            'target_id' => $request->data['target'],
-            'target_model' => 'product-rating',
-            'status' => 0,
-        ];
+        $user = App::mp('login')->user();
 
-        $service = App::load('extension', 'service', ['productRating', 'extension', 'rating']);
-        $service->model()->init($service->model()->field());
-        $service->save($data);
+        if ($user) {
+            $data = [
+                'fullname' => $user['fullname'] ?? $request->data['fullname'],
+                'email' => $user['email'] ?? $request->data['email'],
+                'title' => $request->data['title'],
+                'content' => $request->data['content'],
+                'rating' => $request->data['rating'] ?? 3,
+                'target_id' => $request->data['target'],
+                'target_model' => 'product-rating',
+                'status' => 0,
+            ];
+
+            $service = App::load('extension', 'service', ['productRating', 'extension', 'rating']);
+            $service->model()->init($service->model()->field());
+            $service->save($data);
+        }
 
         return true;
     }
@@ -914,11 +922,6 @@ class ProductController extends Frontend
 
         $list = App::load('extension', 'service')->get($id, $model, $option);
 
-
-// print_r("<pre>");
-// print_r($list);
-// print_r("</pre>");
-// exit;
         $this->render('faq', compact('list'));
     }
 }

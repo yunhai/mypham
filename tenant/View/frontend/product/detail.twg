@@ -46,7 +46,7 @@
                     class='form-horizontal product-detail--form'>
                     <div class="form-group">
                         <label class='col-md-3 control-label'>
-                            Tùy chọn {{target.display_mode}}
+                            Tùy chọn {{ target.display_mode }}
                         </label>
                         <div class="col-md-9">
                             <div id="property-detail-item1">
