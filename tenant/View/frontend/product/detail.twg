@@ -5,18 +5,15 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 {% if target.gallery %}
-                    {% embed 'element/product/detail_slider.twg' with {'items': target.gallery} %}{% endembed %}
+                    {% embed 'element/product/detail_slider.twg' with { 'items': target.gallery } %}{% endembed %}
                 {% else %}
                 <div class="detail-img">
                     {{ target|media({'class': 'detail-img' }) }}
                 </div>
                 {% endif %}
-                <!--
-                <div class="btn-social">
-                    <div class="fb-save pull-right" data-uri="https://www.facebook.com/chuyentrangphunu/" data-size="small"></div>
-                    <div class="fb-like pull-right" data-href="https://www.facebook.com/chuyentrangphunu/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+                <div class='text-right' style='margin-top: 10px;'>
+                    <div class="addthis_inline_share_toolbox" addthis:url="{{ target|link('product') }}" addthis:title="{{ target.title }}"></div>
                 </div>
-                -->
             </div>
             <div class="details col-md-6 col-xs-12">
                 <h3 class="product-title">{{ target.title }}</h3>
@@ -60,19 +57,11 @@
                                     </div>
                                     {% endfor %}
                                 {% else %}
-                                {% if 0 %}
                                     {% for level1_id, level1 in target.property %}
                                         <div class="property-item_detail j-propertyDetail" data-id="{{ level1.id }}">
                                             <input id="j-propertyDetailInputa1" type="hidden" value="{{ level1.id }}" name="property_detail" class="j-propertyDetailInput">
-                                            {{ level1|media({'class': 'product-item_detail', 'alt': level1.title}) }}
+                                            {{ level1|media({'class': 'product-item_detail', 'alt': level1.title, 'width': '30px', 'height': '30px' }) }}
                                         </div>
-                                    {% endfor %}
-                                {% endif %}
-                                    {% for i in 1..10 %}
-                                    <div class="property-item_detail j-propertyDetail" data-id="a1">
-                                        <input id="j-propertyDetailInputa1" type="hidden" value="a1" name="property_detail" class="j-propertyDetailInput">
-                                        <img src="http://trang-diem.misskhue.com/wp-content/uploads/2012/07/son-moi-MAC-Ruby-Woo.jpg" class="product-detail-img">
-                                    </div>
                                     {% endfor %}
                                 {% endif %}
                             </div>

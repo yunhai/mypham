@@ -155,7 +155,9 @@ class ProductController extends Frontend
 
     default_mode -> active property child item.
 */
-    App::associate($target['property'], ['file' => 'file_id']);
+        if (!empty($target['property'])) {
+            $this->associate(array_values($target['property']));
+        }
 
         $this->render('detail', compact('target', 'option', 'current_manufacturer', 'manufacturer_list', 'last_view_product', 'filter', 'promotion_post'));
     }

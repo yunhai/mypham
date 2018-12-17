@@ -63,7 +63,7 @@ class Master
             foreach ($fields as $key => $field) {
                 $refer[$key] = Hash::combine($list, '{n}.' . $field, '{n}.' . $field);
             }
-            
+
             $this->refer($refer);
         }
     }

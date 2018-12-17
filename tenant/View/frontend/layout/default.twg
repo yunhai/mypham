@@ -13,20 +13,21 @@
     {% embed 'element/layout/asset/css.twg' %}{% endembed %}
 </head>
 <body>
-        {% embed 'element/layout/header/sp.twg' %}{% endembed %}
-        <div>
-            {% embed 'element/layout/header/header.twg' %}{% endembed %}
+    {% embed 'element/layout/header/sp.twg' %}{% endembed %}
+    <div>
+        {% embed 'element/layout/header/header.twg' %}{% endembed %}
 
-            <div class="container-wrap">
-                <div id="content">
-                    {% embed 'element/layout/header/breadcrumb.twg' %}{% endembed %}
-                    <main class='container-fluid'>
-                        {% block content %}{% endblock %}
-                    </main>
-                </div>
+        <div class="container-wrap">
+            <div id="content">
+                {% embed 'element/layout/header/breadcrumb.twg' %}{% endembed %}
+                <main class='container-fluid'>
+                    {% block content %}{% endblock %}
+                </main>
             </div>
-            {% include 'element/layout/footer/footer.twg' %}
         </div>
-        {% embed 'element/layout/asset/js.twg' %}{% endembed %}
+        {% include 'element/layout/footer/footer.twg' %}
+    </div>
+    {% embed 'element/layout/asset/js.twg' %}{% endembed %}
+    {% block bottom %}{% endblock %}
 </body>
 </html>

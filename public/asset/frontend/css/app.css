@@ -638,7 +638,7 @@ body.toggled {
 }
 .product-detail #carousel-custom {
     margin: auto;
-    width: 400px;
+/*    width: 400px; */
 }
 
 .product--slider__slider--img {
