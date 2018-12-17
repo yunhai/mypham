@@ -123,6 +123,7 @@
 }
 .product-image img {
     height: 200px;
+    max-width: 100%;
 }
 .product-info a {
     font-size: 14px;

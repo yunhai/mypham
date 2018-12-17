@@ -72,6 +72,7 @@
                 </div>
             </form>
             <hr />
+            <a href="{{ 'user/login/facebook'|url }}" class='social-login' title='Login bằng facebook'>{{ 'fa-login.png'|asset }}</a>
             <a href="{{ 'user/login/google'|url }}" class='social-login' title='Login bằng google'>{{ 'gg-login.png'|asset }}</a>
         </div>
     </div>
