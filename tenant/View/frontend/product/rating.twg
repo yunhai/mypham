@@ -1,48 +1,32 @@
 <div class='rating-list'>
-{% for item in list %}
-
-<div class="item-list row"><!--item-->
-    <div class='col-md-3'>
-        <div class="star">
-            <div class='rating-label'>Giá
-            <div class='star-ratings-css'>
-                <div class="star-ratings-css-top" style="width: {{ item.price * 20 }}%">
-                    {% for i in 1..5 %}<span>★</span>{% endfor %}
+    <div class="review-block">
+        <div class="row">
+            <h5>{{ list|length }} bình luận cho sản phẩm này</h5>
+        </div>
+        {% for item in list %}
+        <div class="row rating-item">
+            <div class="col-sm-12">
+                <div class="user-question">
+                    <strong>{{ item.fullname }}</strong>
+                    <span class="date"> - {{ item.created|date('d/m/Y H:i') }}</span>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="star-ratings-css-bottom">
-                    {% for i in 1..5 %}<span>★</span>{% endfor %}
+                <div class="clearfix"></div>
+                <div class="review-block-rate">
+                    {% for i in 1..5 %}
+                        <span class="fa fa-star {% if i <= item.rating %}active{% endif %}" aria-hidden="true"></span>
+                    {% endfor %}
                 </div>
-            </div>
+                <div class="clearfix"></div>
+                <div class="review-block-title">{{ item.title }}</div>
+                <div class="review-block-description">{{ item.content|raw }}</div>
             </div>
         </div>
-        <div class="star">
-            <div class='rating-label'>Chất lượng</div>
-            <div class='star-ratings-css'>
-                <div class="star-ratings-css-top" style="width: {{ item.quantity * 20 }}%">
-                    {% for i in 1..5 %}<span>★</span>{% endfor %}
-                </div>
-                <div class="star-ratings-css-bottom">
-                    {% for i in 1..5 %}<span>★</span>{% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="star">
-            <div class='rating-label'>Chuyển hàng</div>
-            <div class='star-ratings-css'>
-                <div class="star-ratings-css-top" style="width: {{ item.shipping * 20 }}%">
-                    {% for i in 1..5 %}<span>★</span>{% endfor %}
-                </div>
-                <div class="star-ratings-css-bottom">
-                    {% for i in 1..5 %}<span>★</span>{% endfor %}
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    <div class="col-md-9">
-        {{ item.content }}<br />
-        <span class='detail'>({{ item.fullname }}, {{ item.created|date('h:i d/m/Y') }})</span>
-    </div>
-</div><!--item-->
-
-{% endfor %}
 </div>
+<script>
+    {% for i in 5..1 %}
+        document.getElementById('j-ratingAnalysic{{i}}').innerHTML = {{ attribute(analysis, i) }};
+    {% endfor %}
+</script>

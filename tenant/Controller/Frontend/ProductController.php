@@ -141,6 +141,21 @@ class ProductController extends Frontend
         $manufacturer_id = $target['manufacturer_id'];
         $current_manufacturer = $manufacturer_list[$manufacturer_id] ?? [];
         $target['manufacturer_target'] = $current_manufacturer;
+/*
+    [display_mode] => 2
+    [default_mode] => 5c0b0631b94f2
+
+    'display_mode' => [
+        '1' => 'Hình ảnh',
+        '2' => 'Textbox'
+    ], 
+
+    if display_mode == 1: display like PRODUCT-Detail-Mỹ phẩm
+    if display_mode == 1: display like PRODUCT-Detail-THỜI TRANG - dropdown list
+
+    default_mode -> active property child item.
+*/
+    App::associate($target['property'], ['file' => 'file_id']);
 
         $this->render('detail', compact('target', 'option', 'current_manufacturer', 'manufacturer_list', 'last_view_product', 'filter', 'promotion_post'));
     }
@@ -209,10 +224,13 @@ class ProductController extends Frontend
         $manufacturer_id = $target['manufacturer_id'];
 
         $best_selling_list = $service->bestSelling(4);
+        $promotion_list = $service->promote(4);
         $same_manufacturer_list = $this->byManufacturer($manufacturer_id, 4);
 
         $this->associate($same_manufacturer_list);
         $this->associate($best_selling_list);
+        $this->associate($promotion_list);
+
         $this->set('sidebar', compact('same_manufacturer_list', 'promotion_list', 'best_selling_list'));
     }
 
@@ -246,7 +264,8 @@ class ProductController extends Frontend
         return $result;
     }
 
-    private function getByIdList($id_list) {
+    private function getByIdList($id_list) 
+    {
         $id_list = array_filter($id_list);
 
         if (empty($id_list)) {
@@ -282,12 +301,12 @@ class ProductController extends Frontend
     private function generateFilterBar($category = 0) 
     {
         $filter = App::mp('config')->get('product.filter_mode');
-        
+
         $model = App::load('manufacturer', 'model');
         $model->category(App::category()->flat('manufacturer'));
 
         $fashion_category = $this->getFashionCategoryId();
-        
+
         $subwhere = 1;
         $tmp = NON_FASHION_BRANCH;
         if (in_array($category, $fashion_category)) {
@@ -304,7 +323,7 @@ class ProductController extends Frontend
         $select = 'manufacturer.id, manufacturer.title, manufacturer.category_id';
         $where = 'manufacturer.status > 0 AND ' . $subwhere;
         $manufacturer = $model->find(compact('select', 'where'));
-        
+
         foreach($manufacturer as &$item) {
             $item['manufacturer']['slug'] = Text::slug($item['manufacturer']['title']) . '-' . $item['manufacturer']['id'];
         }
@@ -372,7 +391,7 @@ class ProductController extends Frontend
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
-        
+
         $category = array_shift($categories);
 
         $breadcrumb = [
@@ -749,34 +768,6 @@ class ProductController extends Frontend
         $this->render('index', compact('data', 'option'));
     }    
 
-    protected function other($target, $option = [])
-    {
-        $alias = $this->model()->alias();
-
-        $id = $target['id'];
-        $category = $target['category_id'];
-
-        $service = App::category();
-        $tmp = $service->extract($category);
-
-        if (false === empty($tmp)) {
-            $category = implode(',', array_keys($tmp));
-        }
-
-        $select = "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.file_id, {$alias}.seo_id";
-        $where = "{$alias}.id <> {$id} AND {$alias}.status > 0 AND {$alias}.category_id IN ({$category})";
-        $order = "{$alias}.id desc";
-        $limit = 8;
-
-        $others = $this->model()->find(compact('select', 'where', 'limit', 'order'));
-
-        $others = Hash::combine($others, '{n}.'.$alias.'.id', '{n}.'.$alias);
-        $this->associate($others);
-        $this->model()->checkPromotion($others);
-
-        return $others;
-    }
-
     public function bestSelling()
     {
         $model = $this->model();
@@ -797,6 +788,42 @@ class ProductController extends Frontend
 
         $option = [
             'page_title' => 'Sản phẩm bán chạy',
+            'page' => $data['page'],
+            'current_url' => App::load('url')->current(),
+        ];
+
+        $this->categoryAddon(0);
+        $this->render('index', compact('data', 'option'));
+    }
+
+    public function promote()
+    {
+        $model = $this->model();
+        $alias = $model->alias();
+
+        $option = [
+            'where' => "{$alias}.status > 0 AND CURDATE() BETWEEN extension.string_4 AND extension.string_5",
+            'join' => [
+                [
+                    'table' => 'extension',
+                    'alias' => 'extension',
+                    'type' => 'INNER',
+                    'condition' => 'extension.target_id = '.$alias.'.id AND extension.target_model ="'.$alias.'"',
+                ],
+            ],
+        ];
+        $data = $this->makeFilter($option);
+        if ($this->isAjax()) {
+            return $this->loadAjax($data);
+        }
+
+        $breadcrumb = [
+            ['title' => 'Sản phẩm khuyến mãi'],
+        ];
+        $this->set('breadcrumb', $breadcrumb);
+
+        $option = [
+            'page_title' => 'Sản phẩm khuyến mãi',
             'page' => $data['page'],
             'current_url' => App::load('url')->current(),
         ];
@@ -830,32 +857,40 @@ class ProductController extends Frontend
             'select' => 'id, created',
             'where' => 'string_5 = 1',
             'order' => 'id desc',
-            'limit' => 50,
+            'limit' => 200,
         ];
 
         $list = App::load('extension', 'service')->get($id, $model, $option);
 
-        $this->render('rating', compact('list'));
+        $analysis = [0, 0, 0, 0, 0, 0];
+        foreach($list as $item) {
+            $analysis[$item['rating']]++;
+        }
+
+        $this->render('rating', compact('list', 'analysis'));
     }
 
     public function vote()
     {
         $request = App::mp('request');
-        $data = [
-            'fullname' => $request->data['fullname'],
-            'email' => $request->data['email'],
-            'price' => $request->data['price'],
-            'content' => $request->data['content'],
-            'quantity' => $request->data['quantity'],
-            'shipping' => $request->data['shipping'],
-            'target_id' => $request->data['target'],
-            'target_model' => 'product-rating',
-            'status' => 0,
-        ];
+        $user = App::mp('login')->user();
 
-        $service = App::load('extension', 'service', ['productRating', 'extension', 'rating']);
-        $service->model()->init($service->model()->field());
-        $service->save($data);
+        if ($user) {
+            $data = [
+                'fullname' => $user['fullname'] ?? $request->data['fullname'],
+                'email' => $user['email'] ?? $request->data['email'],
+                'title' => $request->data['title'],
+                'content' => $request->data['content'],
+                'rating' => $request->data['rating'] ?? 3,
+                'target_id' => $request->data['target'],
+                'target_model' => 'product-rating',
+                'status' => 0,
+            ];
+
+            $service = App::load('extension', 'service', ['productRating', 'extension', 'rating']);
+            $service->model()->init($service->model()->field());
+            $service->save($data);
+        }
 
         return true;
     }
@@ -864,21 +899,24 @@ class ProductController extends Frontend
     {
         $request = App::mp('request');
 
-        $data = [
-            'fullname' => $request->data['fullname'],
-            'email' => $request->data['email'],
-            'category' => $request->data['category'],
-            'private' => isset($request->data['private']) ? $request->data['private'] : 0,
-            'question' => $request->data['question'],
-            'status' => 0,
-            'target_id' => $request->data['target'],
-            'target_model' => 'product-faq',
-        ];
+        $user = App::mp('login')->user();
+        if ($user) {
+            $data = [
+                'fullname' => $user['fullname'] ?? $request->data['fullname'],
+                'email' => $user['email'] ?? $request->data['email'],
+                'category' => $request->data['category'],
+                'private' => isset($request->data['private']) ? $request->data['private'] : 0,
+                'question' => $request->data['question'],
+                'status' => 0,
+                'target_id' => $request->data['target'],
+                'target_model' => 'product-faq',
+            ];
 
-        $service = App::load('extension', 'service', ['productFaq', 'extension', 'faq']);
-        $service->model()->init($service->model()->field());
-        $service->save($data);
-
+            $service = App::load('extension', 'service', ['productFaq', 'extension', 'faq']);
+            $service->model()->init($service->model()->field());
+            $service->save($data);
+        }
+        
         return true;
     }
 
@@ -891,13 +929,14 @@ class ProductController extends Frontend
         ];
 
         $option = [
-            'select' => 'id, created',
+            'select' => 'id, created, modified',
             'where' => 'string_4 = 0 AND string_5 = 1',
             'order' => 'id desc',
             'limit' => 200,
         ];
 
         $list = App::load('extension', 'service')->get($id, $model, $option);
+
         $this->render('faq', compact('list'));
     }
 }

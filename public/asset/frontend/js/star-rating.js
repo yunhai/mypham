@@ -104,12 +104,10 @@ $(function() {
 });
 
 $( document ).ready(function() {
-
   $('#stars').on('starrr:change', function(e, value){
     $('#count').html(value);
   });
-
   $('#stars-existing').on('starrr:change', function(e, value){
-    $('#count-existing').html(value);
+    $('#rating_value').val(value);
   });
 });

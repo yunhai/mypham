@@ -9,10 +9,9 @@
                         </label>
                     </th>
                     <th class='col-sm-1'></th>
-                    <th>{{ __('1002', 'Giá cả', 'rating') }}</th>
-                    <th>{{ __('1003', 'Chất lượng', 'rating') }}</th>
-                    <th>{{ __('1004', 'Chuyển hàng', 'rating') }}</th>
-                    <th class='col-sm-8'>{{ __('1005', 'Nội dung', 'rating') }}</th>
+                    <th>{{ __('1002', 'Đánh giá', 'rating') }}</th>
+                    <th class='col-sm-3'>{{ __('1004', 'Tiêu đề', 'rating') }}</th>
+                    <th class='col-sm-5'>{{ __('1005', 'Nội dung', 'rating') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,39 +24,23 @@
                     </td>
                     <td>{{ item.status|status(status) }}</td>
                     <td>
-                        <div class='star-ratings-css' title='{{ item.price }}★'>
-                            <div class="star-ratings-css-top" style="width: {{ item.price * 20 }}%">
+                        <div class='star-ratings-css' title='{{ item.rating }}★'>
+                            <div class="star-ratings-css-top" style="width: {{ item.rating * 20 }}%">
                                 {% for i in 1..5 %}<span>★</span>{% endfor %}
                             </div>
                             <div class="star-ratings-css-bottom">
                                 {% for i in 1..5 %}<span>★</span>{% endfor %}
                             </div>
                         </div>
+
+                        <span class='info dashed'>
+                            {{ item.fullname }} <br /> 
+                            {{ item.email }} <br /> 
+                            {{ item.created|date('d/m/Y H:i') }}
+                        </span>
                     </td>
-                    <td>
-                        <div class='star-ratings-css' title='{{ item.quantity }} ★'>
-                            <div class="star-ratings-css-top" style="width: {{ item.quantity * 20 }}%">
-                                {% for i in 1..5 %}<span>★</span>{% endfor %}
-                            </div>
-                            <div class="star-ratings-css-bottom">
-                                {% for i in 1..5 %}<span>★</span>{% endfor %}
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class='star-ratings-css' title='{{ item.shipping }} ★'>
-                            <div class="star-ratings-css-top" style="width: {{ item.shipping * 20 }}%">
-                                {% for i in 1..5 %}<span>★</span>{% endfor %}
-                            </div>
-                            <div class="star-ratings-css-bottom">
-                                {% for i in 1..5 %}<span>★</span>{% endfor %}
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        {{ item.content|nl2br }}
-                        <span class='info dashed'>{{ item.fullname }} | {{ item.email }} | {{ item.created|date('h:i d/m/Y') }}</span>
-                    </td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.content|nl2br }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

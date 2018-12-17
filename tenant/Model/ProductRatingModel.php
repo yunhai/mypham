@@ -6,11 +6,10 @@ class ProductRatingModel extends Extension {
 
     public function field() {
         return [
-            'string_1' => 'price',
-            'string_2' => 'quantity',
-            'string_3' => 'shipping',
+            'string_1' => 'rating',
             'string_5' => 'status',
             'text_1' => [
+                'title',
                 'content',
                 'fullname',
                 'email'

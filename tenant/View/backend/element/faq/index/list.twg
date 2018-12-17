@@ -12,8 +12,9 @@
                     </th>
                     <th class='col-sm-1'></th>
                     <th class='col-sm-2'>{{ __('1002', 'Trạng thái', 'faq') }}</th>
-                    <th>{{ __('1003', 'Câu hỏi', 'faq') }}</th>
-                    <th>{{ __('1004', 'Bài viết', 'faq') }}</th>
+                    <th class='col-sm-2'>{{ __('1003', 'Câu hỏi', 'faq') }}</th>
+                    <th class='col-sm-4'>{{ __('1005', 'Câu trả lời', 'faq') }}</th>
+                    <th class='col-sm-2'>{{ __('1004', 'Bài viết', 'faq') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,8 +34,8 @@
                     <td>
                         {{ item.question|nl2br }}
                         <span class='info dashed'>{{ item.fullname }} | {{ item.email }} | {{ item.created|date('h:i d/m/Y') }}</span>
-                        <span class='info remark'>{{ item.private ? 'Khóa không cho thành viên khác xem nội dung' : '' }}</span>
                     </td>
+                    <td>{{ item.answer|raw }}</td>
                     <td>
                         {% set target = attribute(attribute(option.origin, item.target_model), item.target_id) %}
                         <a href='{{ url.full(target.model ~ '/edit/' ~ target.id) }}' title='{{ target.title }}' target='_blank'>
