@@ -90,12 +90,12 @@ class CartController extends Cart
         }
 
         if (empty($request->data['buynow'])) {
-            $this->back();
+            return $this->back();
         }
 
         $this->redirect('/order/deliver');
     }
-    
+
     private function getTarget($id)
     {
         $product_lists = Session::read('product_lists');
@@ -121,7 +121,7 @@ class CartController extends Cart
                 'select' => 'id, title, price, file_id',
                 'where' => 'id = '. $id
             ];
-            
+
             $target = App::load('product', 'service')->get($option, $extends);
 
             if (empty($target[$id])) {

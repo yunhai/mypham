@@ -74,8 +74,8 @@
                         </div>
                     </div>
                     <div class="group-cart">
-                        <a href="#" id='j-addToCart' class="btn btn btn--addToCart"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
-                        <a href="#" id='j-buyNow' class="btn btn--buynow"> <i class="fa fa-check"></i>MUA NGAY</a>
+                        <a href="javascript:;" id='j-addToCart' class="btn btn btn--addToCart"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
+                        <a href="javascript:;" id='j-buyNow' class="btn btn--buynow"> <i class="fa fa-check"></i>MUA NGAY</a>
                     </div>
                 </form>
                 {% if promotion_post.id is not empty%}
