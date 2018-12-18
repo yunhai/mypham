@@ -3488,7 +3488,9 @@ ul.news-list {
     background-color: transparent;
 }
 
-.open>.dropdown-menu {}
+.user.open>.dropdown-menu div.child{
+    padding: 5px 0px 5px 5px;
+}
 
 .dropdown-menu {
     border-color: #ccc;
@@ -4983,4 +4985,8 @@ border-radius:0;
 }
 .clearFix {
     clear: both;
+}
+.btn-group.open .dropdown-toggle {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
