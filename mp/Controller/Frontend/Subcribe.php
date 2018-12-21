@@ -44,7 +44,6 @@ class Subcribe extends Frontend
             return $this->render('cancel_finish');
         }
 
-
         $this->render('cancel');
     }
 

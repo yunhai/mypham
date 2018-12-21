@@ -1,27 +1,3 @@
-{% set top_menu = [
-    {
-        'url': 'trung-tam-ho-tro'|url,
-        'title': 'Trung tâm hỗ trợ'
-    },
-    {
-        'url': 'thanh-toan'|url,
-        'title': 'Thanh toán'
-    },
-    {
-        'url': 'huong-dan-dat-hang'|url,
-        'title': 'Hướng dẫn đặt hàng'
-    },
-    {
-        'url': 'giao-nhan-hang'|url,
-        'title': 'Nhận hàng & Giao hàng'
-    },
-    {
-        'url': 'huong-dan-doi-tra-hang'|url,
-        'title': 'Hướng dẫn đổi trả hàng'
-    },
-]
-%}
-
 <div id="top-header" class="hidden-xs">
     <div class="container-fluid">
         <div class="row">
