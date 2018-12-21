@@ -85,7 +85,7 @@
 </div>
 
 {% if last_view_product %}
-{% embed 'element/product/detail_suggestion.twg' with {'items': last_view_product} %}{% endembed %}
+    {% embed 'element/product/detail_suggestion.twg' with {'items': last_view_product} %}{% endembed %}
 {% endif %}
 
 {% endblock %}

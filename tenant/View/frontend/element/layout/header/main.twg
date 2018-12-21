@@ -11,7 +11,7 @@
                 </div>
                 <div class="header-right">
                     <div class="col-md-5 col-sm-5">
-                        <form action="{{ 'product/search'|url }}" method='post'>
+                        <form action="{{ 'product/search'|url }}" method='get'>
                             <div id="custom-search-input box-search">
                                 <div class="input-group col-md-12 input-group-search">
                                     <input class="form-control" type="text" name="keyword" placeholder="Tìm kiếm ..." value='{{ search.keyword|default('') }}'/>
@@ -25,11 +25,10 @@
                         </form>
                     </div>
                     <div class="col-md-5 col-sm-5 hidden-sm">
-                   
                         <ul class="info-list">
                             {% if login().loggedin() %}
                                 <li class="btn-group show-on-hover user pull-right">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="line-height: 30px"> {{ login().user().fullname }} <span class="caret"></span></a>
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" style="line-height: 30px"> {{ login().user().fullname }} <span class="caret"></span></a>
                                     <div class="dropdown-menu" role="menu">
                                         <div class="child">
                                             <a class='' href='{{ 'user/update-password'|url }}' title='Đổi mật khẩu'>Đổi mật khẩu</a>
@@ -48,7 +47,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                {% else %}
+                            {% else %}
                                     <li class="user pull-right">
                                         <a href="{{ 'user/sign-up'|url }}">Đăng ký</a><br>
                                         <a href="{{ 'user/login'|url }}" title="Đăng nhập">Đăng nhập</a>

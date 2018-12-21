@@ -634,7 +634,7 @@ class ProductController extends Frontend
                $order_by = $alias . '.id desc';
         }
 
-        $page = empty($request->name['page']) ? 1 : $request->name['page'];
+        $page = $request->name['page'] ?? $request->param['page'] ?? 1;
 
         $default = [
             'select' => "{$alias}.id, {$alias}.title, {$alias}.price, {$alias}.category_id, {$alias}.file_id, {$alias}.seo_id",
@@ -662,93 +662,43 @@ class ProductController extends Frontend
         return $data;
     }
 
-    private function appApi()
-    {
-        $model = new \Mp\Model\Apps();
-
-        return $model->api(App::load('login')->targetId());
-    }
-
     public function search()
     {
         $request = App::mp('request');
 
-        $keyword = $category = $token = $search = '';
-        $page = 1;
-        if (!empty($request->data) && empty($request->data['ajax'])) {
-            extract($request->data);
+        $page = $request->param['page'] ?? 1;
+        $keyword = $request->param['keyword'] ?? 1;
 
-            $api = $this->appApi();
-            $token = "category={$category}&keyword=$keyword";
+        $alias = $this->model()->alias();
 
-            $security = new \Mp\Lib\Helper\Security();
-            $token = $security->encrypt($token, $api, 2);
-        } elseif (isset($request->get()['request'])) {
-            $tmp = $request->get()['request'];
-            $tmp = explode('/', $tmp);
+        $model = new \Mp\Model\Search();
 
-            $token = '';
-            foreach ($tmp as $value) {
-                if (0 === mb_strpos($value, 'token:')) {
-                    $token = str_replace('token:', '', $value);
-                    break;
-                }
+        $index = 0;
+        $keyword = Text::slug($keyword, '');
+        $keywordArray = explode(' ', $keyword);
+
+        $match = "keyword LIKE '%{$keyword}%'";
+        $option = [
+            'select' => 'id, target_id',
+            'where' => $match . ' AND target_model = "' . $alias . '"',
+            'limit' => '1000',
+        ];
+
+        $data = [];
+        $tmp = $model->find($option, 'all', 'target_id');
+        if ($tmp) {
+            if (empty($category)) {
+                $category = implode(',', array_keys($this->model()->category()));
             }
-            if ($token) {
-                $token = trim($token, '/');
-                $api = $this->appApi();
 
-                $security = new \Mp\Lib\Helper\Security();
-                $q = $security->decrypt($token, $api, 2);
-
-                $tmp = explode('&', $q);
-                foreach ($tmp as $str) {
-                    list($key, $value) = explode('=', $str);
-                    $$key = $value;
-                }
-            }
-        } else {
-            $page = $data = $search = [];
-        }
-
-        if (!empty($keyword)) {
-            $alias = $this->model()->alias();
-
-            $model = new \Mp\Model\Search();
-
-            $index = 0;
-            $keyword = Text::slug($keyword, '');
-            $keywordArray = explode(' ', $keyword);
-
-            $match = "keyword LIKE '%{$keyword}%'";
-            $match  = 1;
+            $id = implode(',', array_keys($tmp));
             $option = [
-                'select' => 'id, target_id',
-                'where' => $match.' AND target_model = "'.$alias.'"',
-                'limit' => '1000',
+                'where' => "{$alias}.status > 0 AND {$alias}.id IN (".$id.") AND {$alias}.category_id IN ({$category})",
             ];
-
-            $data = [];
-            $tmp = $model->find($option, 'all', 'target_id');
-            if ($tmp) {
-                if (empty($category)) {
-                    $category = implode(',', array_keys($this->model()->category()));
-                }
-
-                $id = implode(',', array_keys($tmp));
-                $option = [
-                    'where' => "{$alias}.status > 0 AND {$alias}.id IN (".$id.") AND {$alias}.category_id IN ({$category})",
-                ];
-                $data = $this->makeFilter($option);
-            }
-            $search = [
-                'category' => $category,
-                'keyword' => $keyword,
-            ];
-
-            $page = $data['page'] ?? 1;
+            $data = $this->makeFilter($option);
         }
 
+        $page = $data['page'] ?? 1;
         if ($this->isAjax()) {
             return $this->loadAjax($data);
         }
@@ -757,18 +707,20 @@ class ProductController extends Frontend
             ['title' => 'Tìm kiếm'],
         ];
         $this->set('breadcrumb', $breadcrumb);
-        $this->set('search', $request->data);
+        $this->set('search', $keyword || '');
+
+        $order_by = empty($request->param['order_by']) ? '' : "&order_by={$request->param['order_by']}"; 
 
         $option = [
             'page_title' => "Tìm kiếm [{$keyword}]",
-            'search' => $search,
+            'search' => compact('keyword'),
             'page' => $page,
-            'current_url' => App::load('url')->current().'/token:'.$token,
+            'current_url' => App::load('url')->current() . '?keyword=' . $keyword . $order_by,
         ];
 
         $this->categoryAddon(0);
         $this->render('index', compact('data', 'option'));
-    }    
+    }
 
     public function bestSelling()
     {

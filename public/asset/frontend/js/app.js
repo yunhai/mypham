@@ -5,7 +5,7 @@ $(document).ready(function(){
         var page = $(this).data('page') || 0;
 
         page = parseInt(page) + 1;
-        url = url + '/page:'+page;
+        url = url + '&page=' + page;
         $.ajax({
             type: "post",
             url: url,
@@ -15,7 +15,7 @@ $(document).ready(function(){
                 $(target).append(data.html);
 
                 var btn = $('.j-loadmore');
-                btn.data('page', data.current)
+                btn.data('page', data.current);
                 if (data.current == data.total) {
                     btn.unbind('click').hide();
                 }
