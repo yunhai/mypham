@@ -20,7 +20,6 @@ class ProductController extends Product
         switch ($request->query['action']) {
             case 'faq':
                 $act = isset($request->query[2]) ? $request->query[2] : '';
-
                 switch ($act) {
                     case 'update':
                         $this->updateFaq($request->query[3]);
@@ -503,6 +502,7 @@ class ProductController extends Product
             $error = [];
 
             $request->data[$alias] = $this->formatData($request->data[$alias]);
+
             $flag = $this->save($request->data, $error);
 
             if ($flag) {

@@ -1,7 +1,7 @@
 {% extends "layout/blank.twg" %}
 
 {% block content %}
-<div class='message-panel'>
-    Giỏ hàng của quý khách đã được hủy! <br />
-</div>
+    <div class='message-panel'>
+        Giỏ hàng của quý khách đã được hủy!
+    </div>
 {% endblock %}

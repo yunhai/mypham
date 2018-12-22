@@ -1,0 +1,7 @@
+{% extends "layout/blank.twg" %}
+
+{% block content %}
+    <div class='message-panel'>
+        Xin lỗi quý khách, sản phẩm [<a href="{{ target|link('product') }}" title="{{ target.title }}">{{ target.title }}</a>] hiện đã hêt hàng.
+    </div>
+{% endblock %}

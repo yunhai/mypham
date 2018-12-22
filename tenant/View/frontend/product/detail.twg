@@ -58,9 +58,9 @@
                                     {% endfor %}
                                 {% else %}
                                     {% for level1_id, level1 in target.property %}
-                                        <div class="property-item_detail j-propertyDetail" data-id="{{ level1.id }}">
-                                            <input id="j-propertyDetailInputa1" type="hidden" value="{{ level1.id }}" name="property_detail" class="j-propertyDetailInput">
-                                            {{ level1|media({'class': 'product-item_detail', 'alt': level1.title, 'width': '30px', 'height': '30px' }) }}
+                                        <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %}" data-id="{{level1_id}}">
+                                            <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput">
+                                            {{ level1|media({'class': 'product-item_detail', 'alt': level1.title, 'width': '50px', 'height': '50px', 'title': level1.title }) }}
                                         </div>
                                     {% endfor %}
                                 {% endif %}
@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <label for="amount" class='col-md-3 control-label'>Số lượng</label>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input id='amount' type="number" name="amount" required value='1' class='form-control'/>
                         </div>
                     </div>

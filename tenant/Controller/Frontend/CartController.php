@@ -34,6 +34,7 @@ class CartController extends Cart
     {
         $cart = Session::read('cart');
         $product = Session::read('product_lists');
+
         $this->associate($product);
         $this->render('detail', compact('cart', 'product'));
     }
@@ -58,17 +59,24 @@ class CartController extends Cart
                 $property_id = key($target['property']);
             }
         }
-        
-        $option = [];
-        if (isset($target['property'][$property_id])) {
-            $property = $target['property'][$property_id];
-            $price = $property['final_price'];
-            $option = [
-                'property_id' => $property['id'],
-                'property_text' => $property['title'],
-                'property_log' => $property,
-            ];
+
+        if (empty($target['property'][$property_id])) {
+            abort('NotFoundException');
         }
+
+        $option = [];
+        $property = $target['property'][$property_id];
+
+        if ($property['inventory'] == 0 || $property['inventory'] < $amount) {
+            return $this->render('out_of_stock', compact('target', 'property'));
+        }
+
+        $price = $property['final_price'];
+        $option = [
+            'property_id' => $property['id'],
+            'property_text' => $property['title'],
+            'property_log' => $property,
+        ];
 
         $cart = [
             'id' => $target['id'],
@@ -81,9 +89,9 @@ class CartController extends Cart
         if ($option) {
             $cart = array_merge($cart, $option);
         }
-    
-        $this->updateCart($cart);
 
+        $this->updateCart($cart);
+        $product_lists = Session::read('product_lists');
         if (empty($product_lists[$id])) {
             $product_lists[$id] = $target;
             Session::write('product_lists', $product_lists);

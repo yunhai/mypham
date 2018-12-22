@@ -41,9 +41,6 @@
                     <label class='control-label'>
                         Đơn giá
                     </label>
-                    <span class="text-danger pull-right control-label">
-                        {{ __('2001', 'Bắt buộc', 'global') }}
-                    </span>
                 </th>
                 <td>
                     <input class='form-control j-price j-price-{{ index }}' name='{{ name }}[price]' type='text' value='{{ item.price }}' placeholder="Đơn giá" />

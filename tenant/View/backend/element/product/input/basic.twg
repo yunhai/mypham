@@ -49,7 +49,7 @@
                     <label class='control-label' for="{{ alias }}-manufacturer">{{ __('2112', 'Tồn kho', alias) }}</label>
                 </th>
                 <td>
-                    <input id='product-inventory' class='form-control' name='{{ alias }}[inventory]' type='text' id='{{ alias }}-inventory' value='{{ attribute(target, alias).inventory }}' placeholder="{{ __('2101', 'Tồn kho', alias) }}" />
+                    <input id='product-inventory' class='form-control' name='{{ alias }}[inventory]' readonly disabled type='text' id='{{ alias }}-inventory' value='{{ attribute(target, alias).inventory }}' placeholder="{{ __('2101', 'Tồn kho', alias) }}" />
                 </td>
             </tr>
             <tr>

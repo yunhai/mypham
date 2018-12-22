@@ -2,6 +2,6 @@
 
 {% block content %}
     <div class='message-panel'>
-        Giỏ hàng của quý khách đã được cập nhật! <br />
+        Giỏ hàng của quý khách đã được cập nhật!
     </div>
 {% endblock %}
