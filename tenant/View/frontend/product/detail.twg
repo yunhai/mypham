@@ -51,16 +51,25 @@
                             <div id="property-detail-item1">
                                 {% if target.display_mode == 2 %}
                                     {% for level1_id, level1 in target.property %}
-                                    <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %}" data-id="{{level1_id}}">
+                                    <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %} {% if level1.inventory == 0%}product--outofstock{% endif %}" data-id="{{level1_id}}">
                                         <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput">
-                                        {{ level1.title }}
+                                        {% if level1.inventory %}
+                                            {{ level1.title }}
+                                        {% else %}
+                                            <span style='color: #222; text-decoration: line-through;'>{{ level1.title }}</span> (Tạm hết hàng)
+                                        {% endif %}
                                     </div>
                                     {% endfor %}
                                 {% else %}
                                     {% for level1_id, level1 in target.property %}
-                                        <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %}" data-id="{{level1_id}}">
+                                        <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %} {% if level1.inventory == 0%}product--outofstock{% endif %}" data-id="{{level1_id}}">
                                             <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput">
-                                            {{ level1|media({'class': 'product-item_detail', 'alt': level1.title, 'width': '50px', 'height': '50px', 'title': level1.title }) }}
+                                            {% if level1.inventory == 0 %}
+                                                {% set title = level1.title ~ ' (Tạm hết hàng)' %}
+                                            {% else %}
+                                                {% set title = level1.title %}
+                                            {% endif %}
+                                            {{ level1|media({'class': 'product-item_detail', 'alt': level1.title, 'width': '50px', 'height': '50px', 'title': title }) }}
                                         </div>
                                     {% endfor %}
                                 {% endif %}
@@ -74,8 +83,17 @@
                         </div>
                     </div>
                     <div class="group-cart">
-                        <a href="javascript:;" id='j-addToCart' class="btn btn btn--addToCart"><i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG</a>
-                        <a href="javascript:;" id='j-buyNow' class="btn btn--buynow"> <i class="fa fa-check"></i>MUA NGAY</a>
+                        <a href="javascript:;" id='j-addToCart' class="btn btn--addToCart">
+                            <i class="fa fa-shopping-cart"></i>THÊM VÀO GIỎ HÀNG
+                        </a>
+                        <a href="javascript:;" id='j-buyNow' class="btn btn--buynow">
+                            <i class="fa fa-check"></i>MUA NGAY
+                        </a>
+                        {% if target.inventory == 0 %}
+                        <a href="javascript:;" class="btn btn--outofstock">
+                            <i class="fa fa-ban"></i>TẠM HẾT HÀNG
+                        </a>
+                        {% endif %}
                     </div>
                 </form>
                 {% if promotion_post.id is not empty%}
@@ -124,9 +142,8 @@
 
 {% endblock %}
 
-
 {% set html = load('html', 'helper') %}
 {% block bottom %}
-{{ html.js(['product']) }}
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e3ba7c637c424ce"></script>
+    {{ html.js(['product']) }}
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e3ba7c637c424ce"></script>
 {% endblock %}
