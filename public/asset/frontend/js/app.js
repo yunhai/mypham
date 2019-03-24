@@ -1,4 +1,23 @@
 $(document).ready(function(){
+    $(".owl-carousel").owlCarousel({
+       loop: true,
+        autoplay: true,
+        items:1,
+        nav: false,
+        autoplayHoverPause: true,
+        animateOut: 'slideOutUp',
+        animateIn: 'slideInUp'
+    });
+    $(".owl-carousel-1").owlCarousel({
+       loop: true,
+        autoplay: true,
+        items:1,
+        nav: false,
+        autoplayHoverPause: true,
+         animateOut: 'slideOutUp',
+        animateIn: 'slideInUp'
+    });
+
     $(".j-loadmore").click(function() {
         var target = $(this).data('target');
         var url = $(this).data('url');

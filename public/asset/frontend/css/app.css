@@ -417,7 +417,7 @@ select {
     display: block
 }
 .manufacturer-item img {
-    height: 100px !important;
+    height: 50px !important;
 }
 .product-view {
     display: block;

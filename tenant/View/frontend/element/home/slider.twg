@@ -3,7 +3,7 @@
       {% for item in item_list %}
       {% set index = loop.index %}
       <a class="item {% if index == 1 %} active {% endif %}" href='{{ item.url|url }}' title='{{ item.title }}'>
-          {{ item|media({'class': 'home--slider--item img-responsive', 'alt': item.title}) }}
+          <li>{{ item|media({'class': 'home--slider--item img-responsive', 'alt': item.title}) }}</li>
       </a>
       {% endfor %}
   </div>

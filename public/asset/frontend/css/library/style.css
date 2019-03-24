@@ -4947,8 +4947,12 @@ border-radius:0;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+.product-description, .post-content, .product-description span, .product-description p{
+    font-family: Roboto,Arial,Helvetica,sans-serif !important;
+    font-size: 14px !important;
+}
 #list-product h3.title {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
     text-indent: 5px;
 }

@@ -6,9 +6,20 @@
     </div>
     <div class='col-md-4 col-sm-4 home--top_panel--promotion nopadding'>
         <div class="banner-adv">
-            {% for item in header_banner %}
-                {{ item|media({'class': 'img-responsive', 'alt': item.title}) }}
-            {% endfor %}
+            <div class="owl-carousel owl-theme">
+                {% for i,item in header_banner %}
+                    {% if i%2 == 0 %}
+                        {{ item|media({'class': 'item img-responsive', 'alt': item.title}) }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="owl-carousel-1 owl-theme">
+                {% for i,item in header_banner %}
+                    {% if i%2 != 0 %}
+                        {{ item|media({'class': 'item img-responsive', 'alt': item.title}) }}
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
