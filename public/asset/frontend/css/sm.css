@@ -10,5 +10,24 @@
     	width: 20%;
     	float:left;
     }
-
+     #hot-product-slide {
+        display: block;
+        height: 285px !important;
+        overflow: hidden;
+    }
+    .home--top_panel {
+        height: 285px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .home--top_panel img {
+        width: 100%;
+    }
+    .home--top_panel--slider {
+        padding-right: 0;
+    }
+    .home--top_panel--slider img {
+        height: 285px !important;
+        width: 100%;
+    }
 }

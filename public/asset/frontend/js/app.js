@@ -1,22 +1,28 @@
 $(document).ready(function(){
-    $(".owl-carousel").owlCarousel({
-       loop: true,
-        autoplay: true,
-        items:1,
-        nav: false,
-        autoplayHoverPause: true,
-        animateOut: 'slideOutUp',
-        animateIn: 'slideInUp'
-    });
-    $(".owl-carousel-1").owlCarousel({
-       loop: true,
-        autoplay: true,
-        items:1,
-        nav: false,
-        autoplayHoverPause: true,
-         animateOut: 'slideOutUp',
-        animateIn: 'slideInUp'
-    });
+    if($(".banner-adv .owl-carousel").length > 0){
+        $(".banner-adv .owl-carousel").owlCarousel({
+            loop:$(".banner-adv .owl-carousel > .item").length <= 1 ? false : true,
+            autoplay: true,
+            items:1,
+            nav: false,
+            autoplayHoverPause: false,
+            animateOut: 'slideOutUp',
+            animateIn: 'slideInUp',
+            autoplayTimeout:3000,
+        });
+    }
+    if($(".banner-adv .owl-carousel-1").length > 0){
+        $(".banner-adv .owl-carousel-1").owlCarousel({
+            loop:$(".banner-adv .owl-carousel-1 > .item").length <= 1 ? false : true,
+            autoplay: true,
+            items:1,
+            nav: false,
+            autoplayHoverPause: false,
+             animateOut: 'slideOutUp',
+            animateIn: 'slideInUp',
+            autoplayTimeout:3000,
+        });
+    }
 
     $(".j-loadmore").click(function() {
         var target = $(this).data('target');

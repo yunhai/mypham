@@ -1187,3 +1187,26 @@ form.send-comment .btn {
     -webkit-filter: grayscale(100%);
     filter: gray;
 }
+
+@media (max-width: 480px) {
+     #hot-product-slide {
+        display: block;
+        height: 100px !important;
+        overflow: hidden;
+    }
+    .home--top_panel {
+        height: 100px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .home--top_panel img {
+        width: 100%;
+    }
+    .home--top_panel--slider {
+        padding-right: 0;
+    }
+    .home--top_panel--slider img {
+        height: 100px !important;
+        width: 100%;
+    }
+}

@@ -1,23 +1,27 @@
 {% extends "layout/home.twg" %}
 {% block content %}
 <div class='home--top_panel'>
-    <div class='col-md-8 col-sm-8 home--top_panel--slider nopadding'>
+    <div class='col-md-8 col-sm-8 col-xs-8 home--top_panel--slider nopadding'>
         {% embed 'element/home/slider.twg' with {item_list: slider_banner} %}{% endembed %}
     </div>
-    <div class='col-md-4 col-sm-4 home--top_panel--promotion nopadding'>
+    <div class='col-md-4 col-sm-4 col-xs-4 home--top_panel--promotion nopadding'>
         <div class="banner-adv">
             <div class="owl-carousel owl-theme">
-                {% for i,item in header_banner %}
-                    {% if i%2 == 0 %}
+                {% set i = 0 %}
+                {% for item in header_banner %}
+                    {% if i%2 == 0 or i == 0 %}
                         {{ item|media({'class': 'item img-responsive', 'alt': item.title}) }}
                     {% endif %}
+                    {% set i = i +1 %}
                 {% endfor %}
             </div>
             <div class="owl-carousel-1 owl-theme">
-                {% for i,item in header_banner %}
-                    {% if i%2 != 0 %}
+                {% set i = 0 %}
+                {% for item in header_banner %}
+                    {% if i%2 != 0 and i != 0 %}
                         {{ item|media({'class': 'item img-responsive', 'alt': item.title}) }}
                     {% endif %}
+                    {% set i = i +1 %}
                 {% endfor %}
             </div>
         </div>
