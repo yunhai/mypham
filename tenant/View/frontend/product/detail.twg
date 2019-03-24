@@ -52,7 +52,7 @@
                                 {% if target.display_mode == 2 %}
                                     {% for level1_id, level1 in target.property %}
                                     <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %} {% if level1.inventory == 0%}product--outofstock{% endif %}" data-id="{{level1_id}}">
-                                        <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput">
+                                        <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput" {% if level1_id != target.default_mode %}disabled="disabled"{% endif %}>
                                         {% if level1.inventory %}
                                             {{ level1.title }}
                                         {% else %}
@@ -63,7 +63,7 @@
                                 {% else %}
                                     {% for level1_id, level1 in target.property %}
                                         <div class="property-item j-property {% if level1_id == target.default_mode %}active{% endif %} {% if level1.inventory == 0%}product--outofstock{% endif %}" data-id="{{level1_id}}">
-                                            <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput">
+                                            <input id="j-propertyInput{{level1_id}}" type="hidden" value="{{ level1_id }}" name="property" class="j-propertyInput" {% if level1_id != target.default_mode %}disabled="disabled"{% endif %}>
                                             {% if level1.inventory == 0 %}
                                                 {% set title = level1.title ~ ' (Tạm hết hàng)' %}
                                             {% else %}

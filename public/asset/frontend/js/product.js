@@ -11,11 +11,13 @@ $('.j-property').click(function() {
 })
 
 $('#j-buyNow').click(function() {
-    $('#product-detail--form').append('<input type="hidden" value="1" name="buynow" />')
+    $("#buyname").remove();
+    $('#product-detail--form').append('<input id="buyname" type="hidden" value="1" name="buynow" />')
     $('#product-detail--form').submit();
 })
 
 $('#j-addToCart').click(function() {
+    $("#buyname").remove();
     $('#product-detail--form').submit();
 })
 

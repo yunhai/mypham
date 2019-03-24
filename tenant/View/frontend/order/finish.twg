@@ -3,6 +3,7 @@
 {% block content %}
     <div class="notification-message">
         Cám ơn quý khách đã đặt hàng chúng tôi!<br />
+        Mã đặt hàng của quý khách là <b>{{ order.code }}</b>.<br />
         Chúng tôi sẽ xác nhận đơn hàng với khách hàng trong thời gian sớm nhất.<br />
         (Chi tiết đơn hàng đã được gửi vào email của khách hàng)
     </div>

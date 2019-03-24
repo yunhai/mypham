@@ -141,6 +141,7 @@ class OrderController extends Order
         } else {
             $info['payment_text'] = 'Thanh toán khi nhận hàng';
         }
+        Session::write('order.code', $order_code);
 
         $this->email($info);
 
@@ -180,10 +181,11 @@ class OrderController extends Order
 
     public function finish()
     {
+        $order = Session::read('order');
         Session::delete('cart');
         Session::delete('order');
 
-        $this->render('finish');
+        $this->render('finish', compact('order'));
     }
 
     protected function save($cart = [], &$code = '')
