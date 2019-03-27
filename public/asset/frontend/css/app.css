@@ -981,6 +981,7 @@ width: 640px;
 .product-other .product_image {
     width: 50%;
     float: left;
+    padding-right: 10px;
 }
 .product-other .product_image img{
     width: 100%;
