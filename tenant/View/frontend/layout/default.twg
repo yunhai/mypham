@@ -10,6 +10,7 @@
     <meta name='description' content='{{ meta.description }}' />
     <meta name='keywords' content='{{ meta.keyword }}' />
     <meta name='canonical' content='{{ meta.canonical }}' />
+    {% embed 'element/layout/asset/icon.twg' %}{% endembed %}
     {% embed 'element/layout/asset/css.twg' %}{% endembed %}
 </head>
 <body>
