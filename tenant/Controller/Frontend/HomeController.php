@@ -35,8 +35,13 @@ class HomeController extends Frontend
         $home_product = $service->home();
 
         $best_selling_product = $service->bestSelling(10); // san pham ban chay
-
-        $this->render('index', compact('slider_banner', 'header_banner', 'home_product', 'best_selling_product', 'manufacturer'));
+        $count_best_selling_product = count($best_selling_product);
+        $isMobile = false;
+        if (preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $_SERVER['HTTP_USER_AGENT']))
+        {
+            $isMobile = true;
+        }
+        $this->render('index', compact('slider_banner', 'header_banner', 'home_product', 'best_selling_product', 'count_best_selling_product', 'manufacturer', 'isMobile'));
     }
 
     private function banner()

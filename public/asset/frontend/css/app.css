@@ -1188,7 +1188,11 @@ form.send-comment .btn {
     -webkit-filter: grayscale(100%);
     filter: gray;
 }
-
+.img-home {
+    height: 300px !important;
+    width: 85%;
+    margin: 0 auto;
+}
 @media (max-width: 480px) {
      #hot-product-slide {
         display: block;
