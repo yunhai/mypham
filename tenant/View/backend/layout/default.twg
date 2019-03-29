@@ -15,6 +15,10 @@
         {{ html.js(['html5shiv.min', 'respond.min', 'excanvas'], 'js/ie') }}
     <![endif]-->
     {{ html.js(['jquery.min']) }}
+    <link rel="icon" href="/asset/backend/img/icon_32x32.png" sizes="32x32">
+    <link rel="icon" href="/asset/backend/img/icon_192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="/asset/backend/img/icon_192x192.png">
+    <meta name="msapplication-TileImage" content="/asset/backend/img/icon_192x192.png">
 </head>
 
 <body>
